@@ -1,0 +1,109 @@
+  <% @t.each  do |f| %>
+                                 <table class="table datatable">
+                                    <tbody>
+                                       <tr>
+                                      <td><span class="city-img"><img src="/assets/city-img.png" alt="city-img"/></span></td>
+                                          <td>
+                                             <div class="destination-cell-block">
+                                                <h4><%= f.try(:departure_state)%> , <%= f.try(:departure_city)%></h4>
+                                                <p><img src="/assets/cal.png" alt="calendar icon"/><%= f.try(:date)%></p>
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="right-arrow"></div>
+                                          </td>
+                                          <td>
+                                             <div class="destination-cell-block weight-cell-block">
+                                                <h4>Weight</h4>
+                                                <p><img src="/assets/weight-icon.png" alt="calendar icon"/><%= f.try(:total_weight)%></p>
+                                             </div>
+                                          </td>
+                                          <td>
+                                             <div class="right-arrow"></div>
+                                          </td>
+                                          <td>
+                                             <div class="destination-cell-block">
+                                                <h4><%= f.try(:arrival_state)%> , <%= f.try(:arrival_city)%></h4>
+                                                <!-- <p><img src="/assets/cash-icon.png" alt="calendar icon"/><%#= f.try(:arrival_date)%></p> -->
+                                             </div>
+                                          </td>
+                                           <td><button class="btn btn-green" type="button" data-toggle="modal" data-target="#view_<%= f.id%>">View Detail</button></td>
+
+                                         
+                                       </tr>
+                                    </tbody>
+
+                              <%= form_tag('/cancel_transaction', method: :post,id: "transaction_form") do %>
+                                         <div class="modal fade global-modal2 " id="view_<%= f.id %>" role="dialog">
+                            <div class="modal-dialog">
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            
+                    <!-- service_view Modal -->
+                          <h4 class="modal-title">View Transaction</h4>
+                                </div>
+                                <div class="modal-body">
+                          <ul class="view-servicemodal">
+                             
+                             <li>
+                                <label>Departure Country</label> 
+                                <span><%= f.try(:departure_state) %> , <%= f.try(:departure_city) %></span>
+                             </li>
+                             
+                             <li>
+                               <label> Arrival Country</label>
+                               <span><%= f.try(:arrival_state) %> , <%= f.try(:arrival_city) %></span>
+                             </li>
+
+                              <li>
+                               <label> Weight </label>
+                               <span><%= f.try(:total_weight) %></span>
+                             </li>
+
+                              <li>
+                               <label> Total Price </label>
+                               <span>$<%= f.try(:total_amount) %></span>
+                             </li>
+
+                             <li>
+                               <label> Departure Date</label>
+                               <span><%= f.try(:date) %></span>
+                             </li>
+
+                               <%= hidden_field_tag "laggage_id", f.id %>
+                               <%= hidden_field_tag "departure_country", f.departure_country %>
+                               <%= hidden_field_tag "weight", f.total_weight %>
+                               <%= hidden_field_tag "amount", f.total_amount %>
+                   
+                            </ul>
+                            <div class="clearfix">
+                            <%if f.refund_status == false && f.laggage_status == false %>
+                            <div class="  col-sm-8 col-sm-offset-4 butn-center">
+                              <button class="btn btn-dark-red btn-md" type="submit">Cancel Payment</button>
+                            </div>
+                           <%else%>
+                           <div class="  col-sm-8 col-sm-offset-4 butn-center">
+                              <button class="btn btn-green btn-md" type="submit" disabled data-toggle="modal">Received</button>
+                            </div>
+                           <%end%>
+                            </div>
+                                </div>
+                                
+                              </div>
+                              
+                            </div>
+                          </div>
+                            <%end%>
+
+                                 </table>
+                                 <%end%>
+                             
+
+                          <div class="custom-pagination">
+                                  <%=will_paginate @t, :param_name => 'page_1', renderer: BootstrapPagination::Rails %>
+                              </div>
+
+
+  

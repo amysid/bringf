@@ -1,0 +1,53 @@
+			       <div class="price-chart-block">
+					 <div class="table-responsive">
+					   <table class="table table-bordered">
+						<thead>
+						  <tr>
+							<th class="countries-cell">Countries</th>
+							<th class="weight-cell">Weight</th>
+							<th colspan="4" class="national-cell text-center-cell">National</th>
+							<th colspan="4" class="regional-cell text-center-cell"><span class="reg-bdr">Regional</span></th>
+							<th colspan="4" class="international-cell text-center-cell">International</th>
+							
+						  </tr>
+						</thead>
+						<tbody>
+						
+						  <tr class="tabel-subhead">
+							<td class="countries-cell"></td>
+							<td class="weight-cell"></td>
+							<td>Bus</td>
+							<td><span class="reg-bdr">Train</span></td>
+							<td><span class="reg-bdr">Plane</span></td>
+							<td><span class="reg-bdr">Ship</span></td>
+							<td><span class="reg-bdr">Bus</span></td>
+							<td><span class="reg-bdr">Train</span></td>
+							<td><span class="reg-bdr">Plane</span></td>
+							<td><span class="reg-bdr">Ship</span></td>
+							<td><span class="reg-bdr">Bus</span></td>
+							<td><span class="reg-bdr">Train</span></td>
+							<td><span class="reg-bdr">Plane</span></td>
+							<td><span class="reg-bdr">Ship</span></td>
+						  </tr>
+						 <% @pricing_informations&.each do |m| %>
+						 <tr>
+							<td><%= m.country_name %></td>
+							<td class="weight-cell"><%= m.weight_from %> <%= m.try(:weight_from_unit) %> - <%= m.weight_to %> <%= m.try(:weight_to_unit) %> </td>
+							<td>$<%= m.by_road_price_national%></td>
+							<td>$<%= m.by_track_price_national%></td>
+							<td>$<%= m.by_air_price_national%></td>
+							<td>$<%= m.by_water_price_national%></td>
+							<td>$<%= m.by_road_price_regional%></td>
+							<td>$<%= m.by_track_price_regional%></td>
+							<td>$<%= m.by_air_price_regional%></td>
+							<td>$<%= m.by_water_price_regional%></td>
+							<td>$<%= m.by_road_price_international%></td>
+							<td>$<%= m.by_track_price_international%></td>
+							<td>$<%= m.by_air_price_international%></td>
+							<td>$<%= m.by_water_price_international%></td>
+						 </tr>
+					   <% end %>
+						</tbody>
+					  </table>
+					 </div>
+				   </div>

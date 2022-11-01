@@ -1,0 +1,650 @@
+
+<section class="common-banner-sec text-center" style="background-image:url(/assets/my-account-banner.png);">
+   <div class="banner-text-parent">
+      <div class="banner-text-child">
+         <h1>Ship Anything, Anytime, Anywhere</h1>
+         <p>There is no hidden place where you wouldn’t go, and where your parcel will not reach. </p>
+      </div>
+   </div>
+</section>
+<!-- Main Start -->
+<main>
+   <section class="account-section common-section">
+      <div class="container">
+         <div class="static-page-head">
+            <h2 class="common-content-heading">My Account</h2>
+         </div>
+         <div class="custom-tab-block clearfix">
+            <div class="left-tab-col f-left">
+               <ul class="nav nav-tabs tabs-left">
+                  <li class="active"><a href="#myaccount" data-toggle="tab">My Account</a></li>
+                  <li><a href="#notification" data-toggle="tab">Notification</a></li>
+                  <li><a href="#reset-password" data-toggle="tab">Reset Password</a></li>
+                  <li><a href="#transactions" data-toggle="tab">Transactions</a></li>
+                  <li><a href="#settings" data-toggle="tab">Settings</a></li>
+               </ul>
+            </div>
+            <!-- Left Col End -->
+            <div class="right-tab-col f-right">
+               <!-- Tab panes -->
+               <div class="tab-content">
+                  <div class="tab-pane active" id="myaccount">
+                     <!-- <form class="my-account-form"> -->
+                     <%= form_for @user, url: "/users/#{current_user.id}", method: :put, html: {class: "my-account-form", id: "edit_user",multipart: true, autocomplete: :off} do |f| %>
+                     <div class="form-box common-form common-form-full">
+                        <div class="row">
+                           <div class="col-sm-9">
+                              <div class="form-group">
+                                 
+                                 <%= f.text_field :first_name , class: "form-control ",  placeholder: "First Name" %>
+                              </div>
+                              <div class="form-group">
+                                 <!-- <input placeholder="Last Name*" class="form-control" type="text"/> -->
+                                 <%= f.text_field :last_name , class: "form-control ",  placeholder: "Last Name"%>
+                              </div>
+                              <div class="form-group">
+                                 <!-- <input placeholder="Date of Birth*" class="form-control" type="text"/> -->
+                                 <%= f.text_field :dob , id: "edit_dob", class: "form-control ", placeholder: "DOB"%>
+                              </div>
+                              <div class="form-group">
+                                 <!-- <input placeholder="Email*" class="form-control" type="email"/> -->
+                                 <%= f.text_field :email , class: "form-control " , :readonly => true, placeholder: "Email"%>
+                              </div>
+                              <div class="form-group select-with-field">
+                                 <%= f.select("country_code", all_iso_codes, {:include_blank => "Dailing code"}, {:class => "form-control"}) %>
+                                 <!-- <input type="text" placeholder="Phone No." class="form-control" name="text"/> -->
+                                 <%= f.text_field :phone_no, class: "form-control",  placeholder: "Phone Number"%>
+                              </div>
+                              <div class="form-group">
+                                 <!-- <input placeholder="Address" class="form-control" type="text"/> -->
+                                 <%= f.text_field :address, class: "form-control", placeholder: "Address"%>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <%= f.select :country, Country.all.order("country_name asc").collect {|s| [s.country_name]},{:prompt => "Select Country"},  :include_blank => true, :class => "form-control blackdropicon", id: "edit_user_country_website" %>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <%= f.select(:state,(@states),{:include_blank => "Please select state"}, { :class => 'form-control blackdropicon', id: "edit_user_state_website"}) %>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <!-- <input placeholder="City" class="form-control" type="text"/> -->
+                                       <%#= f.text_field :city, class: "form-control", placeholder: "City"%>
+                                       <%= f.select(:city,(@all_cities),{:include_blank => "Please select city"}, class: "form-control blackdropicon" )%> 
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <!-- <input placeholder="Zip Code" class="form-control" type="text"/> -->
+                                       <%= f.text_field :zip, class: "form-control", placeholder: "Zip"%>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-sm-3">
+                             
+                              <% if @user.image.blank? %>
+                              <div class="form-group addupload upload-preview">
+                                 <label for="file-upload" class="custom-file-upload ">
+                                 <img src="/assets/userimage.png" id="user_pic">
+                                 </span>
+                                 </label>
+                                 <input id="file-upload" type="file" name="user[image]" accept="image/*" >
+                              </div>
+                              <% else %>
+                              <div class="form-group addupload upload-preview">
+                                 <label for="file-upload" class="custom-file-upload ">
+                                 <span class="fileinput-preview thumbnail">  
+                                 <%= image_tag @user.image_url, id: "user_pic" %> 
+                                 </span>
+                                 </label>
+                                 <input id="file-upload" type="file" name="user[image]" accept="image/*" >
+                              </div>
+                              <% end %>
+                           </div>
+                        </div>
+                        <!-- signup-field-block end -->
+                        <div class="submit-btn-block">
+                           <!-- <button class="btn btn-dark-red" type="submit">UPDATE PROFILE</button> -->
+                           <%= submit_tag 'UPDATE PROFILE', :class => "btn btn-dark-red"%>
+                        </div>
+                     </div>
+                     <!-- </form> -->
+                     <% end %>
+                  </div>
+                  <!-- MY Account Tab End -->
+                  
+
+
+                  <div class="tab-pane" id="notification">
+                      <div class="col-sm-7 col-md-9">
+                        <h3 class="page-head">Notifications</h3>
+                     </div>
+                     <% @temp = 0 %>
+                     <div class="notif-list-block">
+                     <% @r&.each  do |f| %>
+                     <table class="table datatable">
+                        <tbody>
+                           <tr>
+                              <td>
+                                 <ul class="notification-list">
+                                    <li>
+                                       <h3>
+                                          <i class="fa fa-star"></i>Your package departed from <%= Laggage.find_by(id: f.laggage_id).departure_state %>, <%= Laggage.find_by(id: f.laggage_id).departure_city %> to <%= Laggage.find_by(id: f.laggage_id).arrival_state %>, <%= Laggage.find_by(id: f.laggage_id).arrival_city %> has been received.
+                                          <!-- <span class="notify-date"><%#= Date.today%></span> -->
+                                       </h3>
+                                       <p>Please give rating to the traveler.</p>
+                                    </li>
+                                 </ul>
+                              </td>
+                              <%if f.rating_status == false%>
+                              <td><button class="btn btn-green" type="button" data-toggle="modal" data-target="#view_<%= f.id%>">Rating</button></td>
+                              <%else%>
+                              <td><button class="btn btn-red btn-rated" type="button" disabled data-toggle="modal" data-target="#view_<%= f.id%>">Rated</button></td>
+                              <%end%>
+                           </tr>
+                        </tbody>
+                        <div class="modal fade global-modal2 " id="view_<%= f.id %>" role="dialog">
+                           <div class="modal-dialog max-WT-450">
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <!-- service_view Modal -->
+                                 <%= form_tag('/rating',id: "rating_form", method: :post) do %>
+                                    <h4 class="modal-title">Share Your Rating</h4>
+                                 </div>
+                                    <div class="rating-modal">
+                                      <div class="modal-body">
+                                       <div class="row">
+                                        <%= hidden_field_tag "user_id", f.id %>
+                                          <div class="col-sm-12 text-center">
+                                             <%= label_tag "Ratings:"%>
+                                             <div class="rating">
+                                                <input type="radio" id="star<%=@temp = @temp + 1%>" name="star" value="5" /><label class = "full" for="star<%=@temp%>"></label>
+                                                <input type="radio" id="star<%=@temp = @temp + 1%>" name="star" value="4" /><label class = "full" for="star<%=@temp%>"></label>
+                                                <input type="radio" id="star<%=@temp = @temp + 1%>" name="star" value="3" /><label class = "full" for="star<%=@temp%>"></label>
+                                                <input type="radio" id="star<%=@temp = @temp + 1%>" name="star" value="2" /><label class = "full" for="star<%=@temp%>"></label>
+                                                <input type="radio" id="star<%=@temp = @temp + 1%>" name="star" value="1" /><label class = "full" for="star<%=@temp%>"></label>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="button-box text-center" style="margin-top:20px;">
+                                          <%= link_to "Cancel", edit_user_path, :class=> "btn btn-red btn-sm" %>
+                                          <button type="submit" class="btn btn-green btn-sm">Submit</button>
+                                       </div>
+                                    </div>
+                                 </div>
+                               <%end%>
+                              </div>
+                           </div>
+                        </div>
+                      </table>
+                    <%end%> <!-- loop end -->
+                 </div>
+                  </div>
+               <!-- </div> -->
+               
+               <!-- notification -->
+               <div class="tab-pane" id="reset-password">
+                  <!-- <form class="reset-form"> -->
+                  <%= form_for @user, url: update_password_user_path(@user), method: :put, html: {id: "update_user_password"} do |f|%>   
+                  <div class="form-box common-form">
+                     <div class="form-group">
+                        <!-- <input placeholder="Current Password*" class="form-control" type="password"/> -->
+                        <%= password_field_tag :old_password, nil, class: 'form-control', required: true, placeholder: "Current Password*" %>
+                     </div>
+                     <div class="form-group">
+                        <!-- <input placeholder="New Password*" class="form-control" type="password"/> -->
+                        <%= password_field_tag :new_password, nil, class: 'form-control',required: true, placeholder: "New Password*" , id: "new_password"%>
+                     </div>
+                     <div class="form-group">
+                        <!-- <input placeholder="Confirm Password*" class="form-control" type="password"/> -->
+                        <%= password_field_tag :confirm_password, nil, class: 'form-control',required: true, placeholder:"Confirm Password*", id: "confirm_password" %>
+                     </div>
+                     <div class="button-box text-center mt20">
+                        <!-- <button class="btn btn-dark-red submit-btn" type="submit">UPDATE PASSWORD</button> -->
+                        <%= f.submit "UPDATE PASSWORD", class: "btn btn-dark-red submit-btn" %>
+                     </div>
+                  </div>
+                  <!-- </form> -->
+                  <% end %>
+               </div>
+               
+               <!-- reset-password tab End-->
+               <div class="tab-pane" id="transactions">
+                  <div class="row">
+                     <div class="col-sm-7 col-md-9">
+                        <h3 class="page-head">All Transactions</h3>
+                     </div>
+                     <!-- <div class="col-sm-5 col-md-3">
+                        <div class="datepicker-block">
+                           <%#= text_field_tag 'filter_transactions', edit_user_path, id: "filter_transactions",:class => 'form-control custom-control' %>
+                        </div>
+                     </div> -->
+                  </div>
+                  <div class="transaction-table">
+                     <div class="table-responsive">
+                        <div class= "transaction_lists", id="list_tranasctions">
+                           <%= render 'transactios_list' %>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- transactions Tab -->
+               <div class="tab-pane" id="settings">
+                  <%= form_for @bank_detail, url: bank_details_users_path, html:  {id: "bank_details"}  do |f| %>
+                  <div class="form-box common-form">
+                     
+                     <h3 class="form-head">Bank Details</h3>
+                     <div class="form-group">
+                        <%= f.text_field :account_number, placeholder: "Bank Account Number", class: "form-control", value: BankDetail.find_by(user_id: current_user.id).try(:account_number)%>
+                     </div>
+                     <div class="form-group">
+                        <%= f.text_field :holder_name, placeholder: "Account Holder Name", class: "form-control" , value: BankDetail.find_by(user_id: current_user.id).try(:holder_name)%>
+                     </div>
+                     <div class="form-group">
+                        <%= f.text_field :spacial_code, placeholder: "Swift Code", class: "form-control",value: BankDetail.find_by(user_id: current_user.id).try(:spacial_code)%>
+                     </div>
+                     <div class="form-group">
+                        <%#= f.select :account_type,options_for_select(["Current Account", "Savings Account", "Recurring Deposit Account","Fixed Deposit Account"]), {:placeholder => "Select Type of Account"},class:  "form-control blackdropicon", id:"account_type",value: BankDetail.find_by(user_id: current_user.id).try(:account_type) %> 
+                     
+                      <%= f.select :account_type,options_for_select(['Current Account', 'Savings Account', 'Recurring Deposit Account', 'Fixed Deposit Account'], { selected: BankDetail.find_by(user_id: current_user.id).try(:account_type) }),{:include_blank => "Select Type of Account"},class:  "form-control blackdropicon", id:"account_type" %>
+                     </div>
+                    
+                     <div class="submit-btn-block">
+                        <button class="btn btn-dark-red submit-btn" type="submit">SAVE</button>
+                     </div>
+                  </div>
+                  <%end%>                        
+               </div>
+               <!-- settings Tab -->
+            </div>
+         </div>
+         <!-- Right Col End -->
+         <!-- Row End -->
+      </div>
+      <!-- Custom Tab Block End -->
+      </div>
+   </section>
+   <!-- Account Section End -->
+</main>
+<!-- Main End -->
+<!-- =============Bootstrap=============== -->
+<div id="add-reciever-modal" class="modal fade global-modal" role="dialog">
+   <div class="modal-dialog">
+      <!-- Modal content-->
+      <form class="add-reciever-form">
+         <div class="modal-content">
+            <div class="modal-body">
+               <h4 class="modal-head">Add Receiver</h4>
+               <div class="form-box common-form">
+                  <div class="form-group">
+                     <input placeholder="Receiver Emai ID" class="form-control text-center" type="email">
+                  </div>
+                  <div class="submit-btn-block">
+                     <button class="btn btn-dark-red" type="submit">NOTIFY RECEIVER</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
+<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+</body>
+<script type="text/javascript">
+   jQuery('.navbar-nav li.active').removeClass('active');
+   jQuery('.business').addClass('active');
+   
+   function readURL(input) {
+   
+   if (input.files && input.files[0]) {
+       var reader = new FileReader();
+   
+       reader.onload = function (e) {
+           jQuery('#user_pic').attr('src', e.target.result);
+       }
+   
+       reader.readAsDataURL(input.files[0]);
+   }
+   }
+   
+   $("#file-upload").change(function(){
+     readURL(this);
+   });
+   
+   
+</script>
+<script>
+   jQuery(document).ready(function(){
+     // var $j = $.noConflict();
+     jQuery("#edit_dob").datepicker({
+       autoclose: true,
+       format: 'yyyy-mm-dd',
+       endDate: '+0d'
+      });
+   
+    var dtPckr = $('#edit_dob')
+   
+   var datePicker = $('#edit_dob').datepicker();
+   
+   jQuery(".content-wrapper").scroll(function() {
+     datePicker.datepicker('hide');
+     jQuery('#edit_dob').blur();
+   });
+   
+   jQuery(window).resize(function() {
+     datePicker.datepicker('hide');
+     jQuery('#edit_dob').blur();
+   });
+   
+   
+   });
+</script>
+<script>
+   jQuery("#edit_user_country_website").change(function(){
+     var state_value = jQuery(this).val();
+    
+    jQuery.ajax({
+    
+      url:  "/users/country_change",
+   
+         type: "POST",
+         data: { country_name: state_value},
+   
+         
+          dataType: "JSON",
+          success: function(response){
+          console.log(response); 
+          var str="";
+          jQuery.each( response.state , function(i,l){
+                        str += '<option value="'+l+'">' + l+'</option>';
+                         
+                     });
+          jQuery('#edit_user_state_website').empty().append('<option value="">Select State</option>');
+          jQuery('#edit_user_state_website').append(str);
+   
+         }
+   
+          });
+   
+   });
+</script>
+<script> 
+   jQuery(document).on('change', '#edit_user_state_website', function(e){
+    var input_state = $(this);
+          var state_value = $(this).val();
+          var user_city = $("#edit_user_city_website");
+          if($(this).val() == "") {
+          user_city.html("");
+   
+          } else {
+               var opt = '<option value="" selected="">Please select city</option>';
+                   $.ajax({
+                    type: 'POST',
+                    url: '/users/state_change',
+                    data: {
+                      state_name: state_value, country_name: $('#edit_user_country_website').val()
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                            if(data.length == 0){
+   
+                              } else {
+                                  $.each(data.city, function(k,v) {
+                                    console.log(data);
+                                      opt += '<option value='+ v +'>' + v + '</option>';
+                                      /// do stuff
+                                  });
+                                  user_city.html(opt);
+   
+                            }
+                       }
+                  });
+              }
+      });  
+   
+   
+</script>
+<script>
+   jQuery(document).ready(function(){
+     var preview = jQuery(".upload-preview img");
+   
+   jQuery("#user_pic").change(function(event){
+      var input = jQuery(event.currentTarget);
+      var file = input[0].files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+   });
+   });
+</script>
+<script>
+   jQuery(document).ready(function(){
+     
+     jQuery("#update_user_password").validate({
+    
+       
+       rules: {
+         
+   
+         "user[old_password]":{
+           required: true,
+           minlength: 8,
+           maxlength: 32
+   
+         },    
+         "new_password":{ 
+           },
+         "confirm_password":{
+            equalTo: "#new_password"
+         } 
+            
+       },
+      
+     });
+   
+    
+     jQuery.validator.addMethod("userRegex", function(value, element) {
+       return this.optional(element) || /^(?=[^@]*[A-Za-z])([a-zA-Z -])+$/i.test(value);
+     }, "Please enter characters only.");
+   
+     jQuery.validator.addMethod("noSpace", function(value, element) { 
+       return value.indexOf(" ") < 0;
+     }, "No space please.");
+   
+     jQuery.validator.addMethod("emailRegex", function(value, element) { 
+       return this.optional(element) || /^[A-Z0-9_]+([\.][A-Z0-9_]+)*@[A-Z0-9-]+(\.[a-zA-Z]{2,3})+$/i.test(value);
+     }, "Please enter a valid email address.");
+   
+   
+   
+   });
+   
+</script> 
+<script>
+   jQuery(document).ready(function(){
+     
+     jQuery("#edit_user").validate({
+    
+       
+       rules: {
+         "user[first_name]":{
+           required: true,
+           // noSpace: true,
+           userRegex: true,
+           minlength: 2,
+           maxlength: 30
+         },
+         "user[last_name]":{
+           required: true,
+           // noSpace: true,
+           userRegex: true,
+           minlength: 2,
+           maxlength: 30
+         },
+         "user[dob]":{
+           required: true,
+         },
+         "user[email]":{
+           required: true,
+           emailRegex: true,
+           maxlength: 50
+         },
+   
+         "user[password]":{
+           
+           minlength: 8,
+           maxlength: 32
+         },
+   
+         "user[phone_no]":{
+           required: true,
+           digits: true,
+           minlength: 7,
+           maxlength: 15
+         },      
+         "user[country]":{
+           required: true
+           
+         },    
+         "user[state]":{
+           required: true
+           
+         },   
+         
+         
+   
+         
+         "user[address]":{
+           required: true,
+           minlength: 2,
+           maxlength: 250
+         }, 
+   
+          "user[zip]":{
+           required: true,
+           minlength: 2,
+           maxlength: 25
+           
+         }    
+          
+            
+       },
+      
+     });
+   
+    
+   
+     jQuery.validator.addMethod("userRegex", function(value, element) {
+       return this.optional(element) || /^(?=[^@]*[A-Za-z])([a-zA-Z -])+$/i.test(value);
+     }, "Please enter characters only.");
+   
+     jQuery.validator.addMethod("noSpace", function(value, element) { 
+       return value.indexOf(" ") < 0;
+     }, "No space please.");
+   
+     jQuery.validator.addMethod("emailRegex", function(value, element) { 
+       return this.optional(element) || /^[A-Z0-9_]+([\.][A-Z0-9_]+)*@[A-Z0-9-]+(\.[a-zA-Z]{2,3})+$/i.test(value);
+     }, "Please enter a valid email address.");
+   
+   
+   
+   });
+   
+   
+</script>
+<script>
+   $('#file-upload').change(function () {
+       
+           if(this.files[0].size/(1000*1024*1) > 5) {
+           alert("Please upload file below 5 MB.");
+             $('#err-label').text('Please upload file below 5 MB');
+             this.value = "";
+             return false;
+           }
+           var ext = this.value.split('.').pop();
+           switch (ext) {
+               case 'jpg':
+               case 'jpeg':
+               case 'png':
+               break;
+               default:
+               // hideLoading();
+               alert("This is not an allowed file type. Please upload image file jpg, jpeg, png.");
+               this.value = "";
+                  $('#err-label').text('This is not an allowed file type.').fadeOut(10000);
+           }
+       });
+</script>
+<script type="text/javascript">
+   $(document.body).on("click", ".pagination a", function(){
+      $.getScript(this.href);
+      return false;
+   });
+   
+   
+</script>
+<script>
+   $(document).on('ready page:change', function() {
+        $('#filter_transactions').datetimepicker({
+         format: 'LL'
+        });
+    });
+</script>
+<script>
+   <script>
+   $("#filter_transactions").click(function(){
+     var filt2 = $(this).val();
+     alert(filt2)
+     $.ajax({
+              url:"/users/:id/edit",
+              type:"get",
+              data: {filt2: filt2},
+            });
+   });  
+</script>
+<script>
+    
+ jQuery(document).ready(function(){
+   
+   jQuery("#bank_details").validate({
+  
+     
+     rules: {
+       "bank_detail[account_number]":{
+         required: true,
+         noSpace: true,
+         digits: true,
+         minlength: 7,
+         maxlength: 16
+       },
+       "bank_detail[holder_name]":{
+         required: true,
+         userRegex: true,
+         minlength: 2,
+         maxlength: 30
+       },
+       "bank_detail[account_type]":{
+         required: true,
+        }
+    }
+   });
+   jQuery.validator.addMethod("noSpace", function(value, element) { 
+     return value.indexOf(" ") < 0;
+   }, "No space please.");
+   jQuery.validator.addMethod("userRegex", function(value, element) {
+     return this.optional(element) || /^(?=[^@]*[A-Za-z])([a-zA-Z -])+$/i.test(value);
+   }, "Please enter characters only.");
+ 
+ });
+ 
+</script>
+

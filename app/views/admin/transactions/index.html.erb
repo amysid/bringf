@@ -1,0 +1,138 @@
+
+    <section class="content">
+      <div class="clearfix">
+        <div class="global-heading user-head">Transaction History</div>
+        <!-- <div class="aduser-btn"><a href="/admin/countries/new" class="btn btn-add">Add Country </a></div> -->
+      </div>
+    
+
+      <div class="transaction-dashboard-box">
+        <div class="dashboard-box">
+              <div class="row">
+                  
+                  <!-- <div class="col-sm-4">
+                    <div class="outer-box pull-left">
+                        <h3> Total Revenue </h3>
+                        <div class="inner-box">
+                            <div class="count">
+                              500K<span>USD</span>
+                            </div>
+                        </div>
+                    </div>
+                  </div> -->
+
+                  <div class="col-lg-4">
+                    <div class="small-box bg-aqua">
+                      <div class="inner">
+                       <h3>$ <%=Transaction.revenue_total_data %> </h3>
+
+                       <p>Total Revenue</p>
+                      </div>
+                   <div class="icon">
+                  <i class="ion ion-bag"></i>
+                   </div>
+            
+                 </div>
+                 </div>
+                  
+                  <!-- <div class="col-sm-4">
+                    <div class="outer-box">
+                        <h3> Traveller Revenue </h3>
+                        <div class="inner-box">
+                            <div class="count">
+                              300K<span>USD</span>
+                            </div>
+                        </div>
+                    </div>
+                  </div> -->
+                 
+                   <div class="col-lg-4">
+          <!-- small box -->
+                    <div class="small-box bg-green">
+                     <div class="inner">
+                     <h3>$ <%=Transaction.revenue_shipper_data %> </h3>
+
+                     <p>Revenue Shipper</p>
+                     </div>
+                    <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                    </div>
+            
+                    </div>
+                 </div>
+
+                  <!-- <div class="col-sm-4">
+                    <div class="outer-box pull-right">
+                        <h3> Shipper Revenue </h3>
+                        <div class="inner-box">
+                            <div class="count">
+                              200K<span>USD</span>
+                            </div>
+                        </div>
+                    </div>
+                  </div> -->
+                  
+                   <div class="col-lg-4">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>$ <%=Transaction.revenue_traveller_data %> </h3>
+
+              <p>Revenue Traveler</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+            
+          </div>
+        </div>
+              
+              </div>
+
+          </div>
+        </div>
+
+      <div class=" clearfix">
+        <!-- <h3>Country List</h3> -->
+        <div class="table-responsive cus-table">
+           <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th> Sender Email</th>
+                  <th>Transaction Date</th>
+                  <th>Total Amount</th>
+                  <th>Country Tax</th>
+                  <th> Shipping Charges</th>
+                  <th>Admin Commission</th>
+                  <th>Traveler Earning</th>
+                  <th> More Details</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% @transactions&.each do |m| %>
+                <tr>
+                  <td><%= m.try(:email)%></td>
+                  <td><%= m.try(:date)%></td>
+
+                  <td>$ <%= m.try(:total_amount)%></td>
+                  <td>$ <%= m.try(:country_tax)%></td>
+                  <td>$ <%= (m.try(:total_amount) -  m.try(:admin_earning_by_shipper) -  m.try(:country_tax)).round(2)%> </td>
+
+                  <td>$ <%= (m.try(:admin_earning_by_traveller) + m.try(:country_tax)).round(2)%></td>
+                  <td>$ <%=((m.try(:total_amount) -  m.try(:admin_earning_by_shipper) -  m.try(:country_tax)).round(2))- ((m.try(:admin_earning_by_traveller) + m.try(:country_tax)).round(2))%></td>
+                  <td>
+                    <%= link_to 'View', admin_transaction_path(m.id, laggage_id: m.laggage_id),:class=>"btn btn-primary" %>
+                       <% if m.laggage.status == "received" %>
+                          <%= link_to 'Delivered', "#",disabled: true,:class=>"btn btn-green" %>
+                       <%else%>
+                         <%= link_to 'Not Delivered', "#", disabled: true, :class=>"btn btn-warning" %>
+                       <%end%>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+            <%#= will_paginate @users, :param_name => 'page_1', renderer: BootstrapPagination::Rails %>
+        </div>
+      </div>
+    </section>

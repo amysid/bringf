@@ -1,0 +1,96 @@
+    <section class="content">
+      <div class="clearfix">
+        <div class="global-heading user-head">Content Management</div>
+      </div>
+     
+     <div id="content-content">
+        <%#= render partial: "index"%>
+        <div class=" clearfix">
+       
+         <div class="table-responsive cus-table">
+           <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  
+                  <th>Title</th>
+                  <th>Last Update On</th>
+                  <!-- <th>Slug</th> -->
+                  <!-- <th>Published</th> -->
+                  <th colspan="2">Actions</th>
+                </tr>
+              </thead>
+             
+                 <% @contents.each do |m| %>
+              <tbody>
+                <tr>
+                  
+                  <td><%= "#{m.try(:title)}" %></td>
+                  <td><%= m.try(:updated_at).to_date rescue "" %></td>
+                  <!-- <td><%#= "#{m.try(:slug)}" %></td> -->
+                  <!-- <td><%#= "#{m.try(:published)}"%></td> -->
+                  <td><%= link_to 'Edit', edit_admin_content_path(m),:class=>"btn btn-success", method: :get %>
+                  <%#= link_to 'Delete', admin_content_path(id: m.id),:data => {:confirm => "Are you sure you want to delete this content?"},:class=> "btn btn-danger", method: :delete %></td>
+                </tr>
+              </tbody>
+            <% end %> 
+             
+             <tbody>
+                <tr>
+                  <td><%= "Faq"%></td>
+                  <td><%= Faq.last.updated_at.to_date rescue "" %></td>
+                  <td><%= link_to 'View', admin_faqs_path(:id),:class=>"btn btn-success" %></td>
+                </tr>
+              </tbody>
+
+              <tbody>
+                <tr>
+                  <td><%= "Privacy & Statement"%></td>
+                  <td><%= Privacy.last.updated_at.to_date rescue "" %></td>
+                  <td><%= link_to 'Edit', edit_admin_privacy_path(Privacy.first),:class=>"btn btn-success" %></td>
+                </tr>
+              </tbody>
+
+              <tbody>
+                <tr>
+                  <td><%= "Terms & Conditions"%></td>
+                  <td><%= Condition.last.updated_at.to_date rescue "" %></td>
+                  <td><%= link_to 'Edit', edit_admin_condition_path(Condition.first),:class=>"btn btn-success" %></td>
+                </tr>
+              </tbody>
+
+               <tbody>
+                <tr>
+                  <td><%= "Blog"%></td>
+                  <td><%= Blog.last.updated_at.to_date rescue "" %></td>
+                  <td><%= link_to 'Edit', edit_admin_blog_path(Blog.first),:class=>"btn btn-success" %></td>
+                </tr>
+              </tbody>
+
+               <tbody>
+                <tr>
+                  <td><%= "Refund Policy"%></td>
+                  <td><%= RefundPolicy.last.updated_at.to_date rescue "" %></td>
+                  <td><%= link_to 'Edit', edit_admin_refund_policy_path(RefundPolicy.first),:class=>"btn btn-success" %></td>
+                </tr>
+              </tbody>
+
+               <tbody>
+                <tr>
+                  <td><%= "Disclaimer Policy"%></td>
+                  <td><%= DisclaimerPolicy.last.updated_at.to_date rescue "" %></td>
+                  <td><%= link_to 'Edit', edit_admin_disclaimer_policy_path(DisclaimerPolicy.first),:class=>"btn btn-success" %></td>
+                </tr>
+              </tbody>
+
+            </table>
+           <%#= will_paginate @contents,  renderer: BootstrapPagination::Rails %>
+
+
+
+        </div>
+      </div>
+     </div>
+    </section>
+
+
+

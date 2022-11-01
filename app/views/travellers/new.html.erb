@@ -1,0 +1,611 @@
+
+      <section class="common-banner-sec text-center" style="background-image:url(/assets/traveller-banner.png);">
+         <div class="banner-text-parent">
+            <div class="banner-text-child">
+               <h1>Ship Anything, Anytime, Anywhere</h1>
+               <p>There is no hidden place where you wouldn’t go, and where your parcel will not reach. </p>
+            </div>
+         </div>
+      </section>
+      <!-- Main Start -->
+      <main>
+         <section class="treveller-section common-section">
+            <div class="container">
+                <%= form_for @traveller, url: travellers_path, method: :post, html: {id: "traveller-dsign-up-form", class: "traveller-form"} do |f| %>
+               
+                  <fieldset>
+                     <legend>List Your Journey</legend>
+                         
+                     <div class="form-box common-form">
+                        <div class="row">
+                           <div class="col-sm-6">
+                              <div class="row">
+                                 
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                          <%= f.text_field :weight_upto, class: "form-control custom-control",  placeholder: "Weight upto"%> 
+<!--                                        <input placeholder="Weight upto" class="form-control" type="text">
+ -->                                    </div>
+                                 </div>
+                                 
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <%= f.select :weight_unit,options_for_select(["Lbs", "Kg"]), {:include_blank => false},class:  "form-control blackdropicon", id:"traveller_weight_unit"  %> 
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <label class="control-label">Mode Of Travel</label>
+                              <%= f.select :mode_of_travel,options_for_select(["Plane", "Bus", "Train", "Ship"]), {:include_blank => "select mode of travel"},class:  "form-control blackdropicon", id:"mode_of_travel"  %> 
+                                    
+                                    </div>
+                                 </div>
+                              </div>
+                              <h3 class="form-head">Departure Date & Time</h3>
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+<!--                                        <input placeholder="Date" class="form-control datepicker" type="text"/>
+ -->                                        <%= f.text_field :departure_date, class: "form-control custom-control", id: "departure_date_id", placeholder: "Departure Date"%> 
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                     <%= f.text_field :departure_time, class: "form-control timepicker",  placeholder: "Departure Time", id: "datetimepicker1"%>
+
+                                      
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- Col left End -->
+                        </div>
+                        <div class="row">
+                           <!-- Inner Col left Start -->
+                           <div class="col-sm-6">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <label class="control-label">Departure</label>
+                                          <%= f.select :departure_country, Country.all.order("country_name asc").collect {|s| [s.country_name]},{:prompt => "Select Country"},  :include_blank => true, :class => "form-control blackdropicon", id: "departure_country"%>
+                                      <!--  <select class="form-control blackdropicon">
+                                       </select> -->
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <%= f.select(:departure_state,(@states),{:include_blank => "Please select state"}, { :class => 'form-control blackdropicon',id: "departure_state" }) %>
+                                       <!--  NOTE - previous class is - user_state select-dropdown form-control
+                                       <select class="form-control blackdropicon">
+                                       </select> -->
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                         <%#= f.text_field :departure_city, class: "form-control custom-control",  placeholder: "Departure City"%>
+                                         <%= f.select :departure_city , CS.cities((CS.states(CS.countries.key(:departure_country))).key(:departure_state).to_s, CS.countries.key(:departure_state).to_s),{:include_blank => "Please select city"}, class: "form-control blackdropicon" %> 
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-12">
+                                    <div class="form-group">
+                                         <%= f.text_field :departure_address, class: "form-control custom-control",  placeholder: "Departure Address"%> 
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <%= f.text_field :departure_zip, class: "form-control custom-control",  placeholder: "Zip"%> 
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- Inner Col left End -->
+                           <div class="col-sm-6">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <label class="control-label">Departure Meeting Location</label>
+                                       <%= f.select :departure_meeting_country, Country.all.order("country_name asc").collect {|s| [s.country_name]},{:prompt => "Select Country"},  :include_blank => true, :class => "form-control blackdropicon", id: "departure_meeting_country"%>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <%= f.select(:departure_meeting_state,(@states),{:include_blank => "Please select state"}, { :class => 'form-control blackdropicon', id: "departure_meeting_state" }) %>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <%= f.select :departure_meeting_city , CS.cities((CS.states(CS.countries.key(:departure_meeting_country))).key(:departure_meeting_state).to_s, CS.countries.key(:departure_meeting_state).to_s),{:include_blank => "Please select city"}, class: "form-control blackdropicon" %> 
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-12">
+                                    <div class="form-group">
+                                      <%= f.text_field :departure_meeting_address, class: "form-control custom-control",  placeholder: "Departure Meeting Address"%> 
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <div class="form-group">
+                                       <%= f.text_field :departure_meeting_zip, class: "form-control custom-control",  placeholder: "Zip"%> 
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-sm-6">
+                              <h3 class="form-head">Arrival Date & Time</h3>
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+<!--                                        <input placeholder="Date" class="form-control datepicker" type="text"/>
+ -->                                        <%= f.text_field :arrival_date, class: "form-control custom-control", id: "arrival_date_id", placeholder: "Arrival Date"%> 
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                      <%= f.text_field :arrival_time, class: "form-control timepicker",  placeholder: "Arrival Time", id: "datetimepicker2"%>
+
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- Col left End -->
+                        </div>
+                        <div class="row">
+                           <!-- Inner Col left Start -->
+                           <div class="col-sm-6">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <label class="control-label">Arrival</label>
+                                       <%= f.select :arrival_country, Country.all.order("country_name asc").collect {|s| [s.country_name]},{:prompt => "Select Country"},  :include_blank => true, :class => "form-control blackdropicon", id: "arrival_country"%>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                      <%= f.select(:arrival_state,(@states),{:include_blank => "Please select state"}, { :class => 'form-control blackdropicon', id: "arrival_state"}) %>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                    <%= f.select :arrival_city , CS.cities((CS.states(CS.countries.key(:arrival_country))).key(:arrival_state).to_s, CS.countries.key(:arrival_state).to_s),{:include_blank => "Please select city"}, class: "form-control blackdropicon" %> 
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-12">
+                                    <div class="form-group">
+                                       <%= f.text_field :arrival_address, class: "form-control custom-control",  placeholder: "Arrival Address"%> 
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <div class="form-group">
+                       <%= f.text_field :arrival_zip, class: "form-control custom-control",  placeholder: "Zip"%>                                    
+                        </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- Inner Col left End -->
+                           <div class="col-sm-6">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <label class="control-label">Arrival Meeting Location</label>
+                                        <%= f.select :arrival_meeting_country, Country.all.order("country_name asc").collect {|s| [s.country_name]},{:prompt => "Select Country"},  :include_blank => true, :class => "form-control blackdropicon", id: "arrival_meeting_country"%>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                      <%= f.select(:arrival_meeting_state,(@states),{:include_blank => "Please select state"}, { :class => 'form-control blackdropicon', id: "arrival_meeting_state"}) %>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                     <%= f.select :arrival_meeting_city , CS.cities((CS.states(CS.countries.key(:arrival_meeting_country))).key(:arrival_meeting_state).to_s, CS.countries.key(:arrival_meeting_state).to_s),{:include_blank => "Please select city"}, class: "form-control blackdropicon" %> 
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-12">
+                                    <div class="form-group">
+                                       <%= f.text_field :arrival_meeting_address, class: "form-control custom-control",  placeholder: "Arrival Address"%> 
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <div class="form-group">
+                                       <%= f.text_field :arrival_meeting_zip, class: "form-control custom-control",  placeholder: "Zip"%>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <div class="form-group">
+                                     <%= f.text_field :contact_person, class: "form-control custom-control",  placeholder: "Contact Person"%>          
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <div class="form-group">
+                                    <%= f.text_field :contact_phone, class: "form-control custom-control",  placeholder: "Phone Number"%>                                            
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <div class="form-group">
+                                      <%= f.text_field :last_date_to_recieve_item, class: "form-control custom-control",id:"last_date_receive_item_id",  placeholder: "Last date to receive item"%> 
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- form-box common-form end -->
+					  <div class="submit-btn-block">
+<!-- 						<button class="btn btn-dark-red">CANCEL</button>
+						<button class="btn btn-gray">SEARCH</button>
+ -->                        <a class="btn btn-dark-red" href="/dashboards">Cancel</a>
+                           <%= f.submit 'Search', :class => "btn btn-gray"%>
+					  </div>
+                  </fieldset>
+                 <%end%>
+				 
+               <!-- Form End -->
+            </div>
+         </section>
+         <!-- Account Section End -->
+        
+      </main>
+      <!-- Main End -->
+      
+
+      
+
+
+ <script>
+  jQuery(document).ready(function(){   
+ 
+      jQuery("#traveller-sign-up-form").validate({      
+ 
+        rules: {  
+               "traveller[weight_upto]":{  
+                 required: true,  
+                 regxfloat: /^[+-]?\d+(\.\d+)?$/         
+               },  
+               "traveller[departure_date]":{  
+                 required: true         
+               },  
+               "traveller[departure_time]":{  
+                 required: true         
+               },        
+              "traveller[mode_of_travel]":{  
+                 required: true         
+               },  
+               "traveller[departure_country]":{  
+                 required: true         
+               },  
+               "traveller[departure_state]":{  
+                 required: true         
+               },  
+              
+                "traveller[departure_address]":{  
+                 required: true         
+               },  
+                "traveller[departure_zip]":{  
+                 required: true         
+               },  
+                "traveller[departure_meeting_country]":{  
+                 required: true         
+               },  
+                "traveller[departure_meeting_state]":{  
+                 required: true         
+               },  
+               
+                "traveller[departure_meeting_address]":{  
+                 required: true         
+               },  
+                "traveller[departure_meeting_zip]":{  
+                 required: true         
+               },  
+                "traveller[arrival_date]":{  
+                 required: true ,
+                 greaterThan: "#departure_date_id" 
+       
+               },  
+               "traveller[arrival_time]":{  
+                 required: true         
+               },  
+                "traveller[arrival_country]":{  
+                 required: true         
+               },  
+               "traveller[arrival_state]":{  
+                 required: true         
+               },  
+              
+               "traveller[arrival_address]":{  
+                 required: true         
+               },  
+               "traveller[arrival_zip]":{  
+                 required: true         
+               },  
+                "traveller[departure_meeting_state]":{  
+                 required: true         
+               },  
+                "traveller[departure_meeting_city]":{  
+                 required: true 
+               },  
+                "traveller[departure_meeting_address]":{  
+                 required: true         
+               },  
+                "traveller[departure_meeting_zip]":{  
+                 required: true         
+               },  
+                "traveller[arrival_meeting_country]":{  
+                 required: true         
+               },  
+                "traveller[arrival_meeting_state]":{  
+                 required: true         
+               },  
+              
+                "traveller[arrival_meeting_address]":{  
+                 required: true         
+               },  
+                "traveller[arrival_meeting_zip]":{  
+                 required: true         
+               },  
+                "traveller[contact_person]":{  
+                 required: true,  
+                 userRegex: true,  
+                 minlength: 2,  
+                 maxlength: 30         
+               },  
+                  "traveller[contact_phone]":{  
+                 required: true,  
+                  digits: true,  
+                 minlength: 7,  
+                 maxlength: 15         
+               },  
+                "traveller[last_date_to_recieve_item]":{  
+                 required: true,
+                greaterThan1: "#arrival_date_id" 
+         
+               },                  
+             },     
+           });    
+           jQuery.validator.addMethod("regxfloat", function(value, element, regexpr) {           
+             return regexpr.test(value);  
+            }, "Please enter only digits.");    
+           jQuery.validator.addMethod("userRegex", function(value, element) {  
+             return this.optional(element) || /^(?=[^@]*[A-Za-z])([a-zA-Z -])+$/i.test(value);  
+           }, "Please enter characters only.");  
+           jQuery.validator.addMethod("noSpace", function(value, element) {  
+             return value.indexOf(" ") < 0;  
+           }, "No space please.");  
+           jQuery.validator.addMethod("emailRegex", function(value, element) {  
+             return this.optional(element) || /^[A-Z0-9_]+([\.][A-Z0-9_]+)*@[A-Z0-9-]+(\.[a-zA-Z]{2,3})+$/i.test(value);  
+           }, "Please enter a valid email address.");  
+           
+           
+    jQuery.validator.addMethod("greaterThan", 
+      function(value, element, params) {
+
+    if (!/Invalid|NaN/.test(new Date(value))) {
+        return new Date(value) >= new Date($(params).val());
+    }
+
+    return isNaN(value) && isNaN($(params).val()) 
+        || (Number(value) >= Number($(params).val())); 
+},'Must be greater or equal to departure date.');
+
+    jQuery.validator.addMethod("greaterThan1", 
+      function(value, element, params) {
+
+    if (!/Invalid|NaN/.test(new Date(value))) {
+        return new Date(value) >= new Date($(params).val());
+    }
+
+    return isNaN(value) && isNaN($(params).val()) 
+        || (Number(value) >= Number($(params).val())); 
+},'Must be greater or equal to arrival date.');
+
+
+});
+
+   </script>
+
+<script>
+jQuery(document).on('change', '#departure_state', function(e){
+    var input_state = $(this);
+          var state_value = $(this).val();
+          var user_city = $("#traveller_departure_city");
+          if($(this).val() == "") {
+          user_city.html("");
+   
+          } else {
+               var opt = '<option value="" selected="">Please select city</option>';
+                   $.ajax({
+                    type: 'POST',
+                    url: '/travellers/state_change',
+                    data: {
+                      state_name: state_value, country_name: $('#departure_country').val()
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                            if(data.length == 0){
+   
+                              } else {
+                                  $.each(data.city, function(k,v) {
+                                    console.log(data);
+                                      opt += '<option value='+ v +'>' + v + '</option>';
+                                    
+                                  });
+                                  user_city.html(opt);
+   
+                            }
+                       }
+                  });
+              }
+      });  
+   
+   </script>
+
+   <script>
+  jQuery(document).on('change', '#departure_meeting_state', function(e){
+    var input_state = $(this);
+          var state_value = $(this).val();
+          var user_city = $("#traveller_departure_meeting_city");
+          if($(this).val() == "") {
+          user_city.html("");
+   
+          } else {
+               var opt = '<option value="" selected="">Please select city</option>';
+                   $.ajax({
+                    type: 'POST',
+                    url: '/travellers/state_change',
+                    data: {
+                      state_name: state_value, country_name: $('#departure_meeting_country').val()
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                            if(data.length == 0){
+   
+                              } else {
+                                  $.each(data.city, function(k,v) {
+                                    console.log(data);
+                                      opt += '<option value='+ v +'>' + v + '</option>';
+                                  });
+                                  user_city.html(opt);
+   
+                            }
+                       }
+                  });
+              }
+      });  
+
+</script>
+<script>
+   jQuery(document).on('change', '#arrival_state', function(e){
+    var input_state = $(this);
+          var state_value = $(this).val();
+          var user_city = $("#traveller_arrival_city");
+          if($(this).val() == "") {
+          user_city.html("");
+   
+          } else {
+               var opt = '<option value="" selected="">Please select city</option>';
+                   $.ajax({
+                    type: 'POST',
+                    url: '/travellers/state_change',
+                    data: {
+                      state_name: state_value, country_name: $('#arrival_country').val()
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                            if(data.length == 0){
+   
+                              } else {
+                                  $.each(data.city, function(k,v) {
+                                    console.log(data);
+                                      opt += '<option value='+ v +'>' + v + '</option>';
+                                  });
+                                  user_city.html(opt);
+   
+                            }
+                       }
+                  });
+              }
+      });  
+
+</script>
+   <script>
+   jQuery(document).on('change', '#arrival_meeting_state', function(e){
+    var input_state = $(this);
+          var state_value = $(this).val();
+          var user_city = $("#traveller_arrival_meeting_city");
+          if($(this).val() == "") {
+          user_city.html("");
+   
+          } else {
+               var opt = '<option value="" selected="">Please select city</option>';
+                   $.ajax({
+                    type: 'POST',
+                    url: '/travellers/state_change',
+                    data: {
+                      state_name: state_value, country_name: $('#arrival_meeting_country').val()
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                            if(data.length == 0){
+   
+                              } else {
+                                  $.each(data.city, function(k,v) {
+                                    console.log(data);
+                                      opt += '<option value='+ v +'>' + v + '</option>';
+                                  });
+                                  user_city.html(opt);
+   
+                            }
+                       }
+                  });
+              }
+      });  
+</script>
+
+<script>
+jQuery("#departure_country, #departure_meeting_country, #arrival_country, #arrival_meeting_country").change(function(){
+  var state_value = jQuery(this).val();
+  var slider = "#" + this.id;
+ jQuery.ajax({
+ 
+   url:  "/travellers/country_change",
+      type: "POST",
+      data: { country_name: state_value
+
+      },
+       dataType: "JSON",
+       success: function(response){
+       console.log(response); 
+       var str="";
+       jQuery.each( response.state , function(i,l){
+                     str += '<option value="'+l+'">' + l+'</option>';
+                      
+                 
+                  });
+    if(slider == "#departure_country") {
+       jQuery('#departure_state').empty().append('<option value="">Select State</option>');
+       jQuery('#departure_state').append(str);
+
+     } else if(slider == "#departure_meeting_country"){
+        jQuery('#departure_meeting_state').empty().append('<option value="">Select State</option>');
+       jQuery(' #departure_meeting_state').append(str);
+
+     } else if(slider == "#arrival_country"){
+        jQuery(' #arrival_state').empty().append('<option value="">Select State</option>');
+       jQuery(' #arrival_state').append(str);
+
+     } else {
+        jQuery('#arrival_meeting_state').empty().append('<option value="">Select State</option>');
+       jQuery('#arrival_meeting_state').append(str);
+
+     }
+
+     
+
+      }
+
+       });
+
+});
+
+
+    $(document).on('ready page:change', function() {
+        $('#datetimepicker1, #datetimepicker2').datetimepicker({
+         format: 'LT'
+        });
+
+        $('#departure_date_id, #arrival_date_id, #last_date_receive_item_id').datetimepicker({
+         format: 'LL',
+         minDate:  new Date().setHours(0,0,0,0)
+        });
+    });
+
+</script>
+

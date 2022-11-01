@@ -1,0 +1,2 @@
+class DisclaimerPolicy < ApplicationRecord
+end

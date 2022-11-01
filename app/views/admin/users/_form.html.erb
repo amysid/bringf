@@ -1,0 +1,358 @@
+<div class="login-part">
+   <h2 > USER MANAGEMENT </h2>
+   <div class="login-detail createpro-detail1">
+      <% if params[:action] == 'new' or params[:action] == 'create' %>
+            <div class="heading__custom text-center m-0">
+               <h2>Create User</h2>
+            </div>
+        <% elsif params[:action] == 'edit' %>
+          <div class="heading__custom text-center m-0">
+               <h2>Edit User</h2>
+            </div>
+         <%end%>  
+         <%= form_for [:admin, @user], html: {:id => 'cat_form', class: "form-horizontal", multipart: true, autocomplete: :off } do |f|%>
+         <div class="row">
+            <div class="col-sm-4">
+             
+
+
+  <% if @user.image.blank? %>
+    
+    <div class="form-group addupload upload-preview">
+                      <label for="file-upload" class="custom-file-upload ">
+                     <img src="/assets/userimage.png" id="user_pic">
+                  </span>
+                    </label>
+                    
+                    <input id="file-upload" type="file" name="user[image]" accept="image/*" >
+            
+          </div>
+
+  <% else %>
+       <div class="form-group addupload upload-preview">
+                    
+             <label for="file-upload" class="custom-file-upload ">
+              <span class="fileinput-preview thumbnail">  
+                <%= image_tag @user.image_url, id: "user_pic" %> 
+              </span>
+
+            </label>
+          <input id="file-upload" type="file" name="user[image]" accept="image/*" >
+   
+          </div>
+
+   <% end %>
+
+            </div>
+            <div class="col-sm-8">
+               <div class="right-form">
+                  <div class="form-group">
+                     <label for="">FIRST NAME<span class="required">*</span> </label>
+                     <!-- <input type="text" class="form-control custom-control" value="first_name"> -->
+                     <%= f.text_field :first_name, class: "form-control custom-control",  placeholder: "First Name"%> 
+                     
+                  </div>
+                  <div class="form-group">
+                     <label for="">LAST NAME<span class="required">*</span> </label>
+                     <!-- <input type="text" class="form-control custom-control"> -->
+                     <%= f.text_field :last_name, class: "form-control custom-control",  placeholder: "Last Name"%>
+                      
+                  </div>
+                  <div class="form-group">
+                     <label for="">DOB<span class="required">*</span> </label>
+                     <div class="input-icon">
+                      <%= f.text_field :dob, class: "form-control custom-control", id: "dob", placeholder: "Date Of Birth"%>
+                        <!-- <input id="dob" class="form-control custom-control" type="input" name="user[dob]"> -->
+                         <%#= f.text_field :dob, class: "form-control custom-control",  placeholder: "DOB"%>
+                        <!-- <i class="fas fa-calendar-alt"></i> -->
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="">EMAIL<span class="required"></span> </label>
+                     <!-- <input type="text" class="form-control custom-control"> -->
+                      
+                      <%= f.email_field :email, class: "form-control custom-control",  placeholder: "Email Address" %>
+                  </div>
+                  <div class="form-group">
+                     <label for="">PASSWORD<span class="required">*</span> </label>
+                     <!-- <input type="text" class="form-control custom-control"> -->
+                      <%= f.password_field :password, class: "form-control custom-control",  placeholder: "Password" %>
+                  </div>
+                  <div class="form-group">
+                     <label for="">PHONE NUMBER<span class="required">*</span> </label>
+                     <div class="row">
+                        
+                        <div class="col-sm-4">
+                         <%= f.select("country_code", all_iso_codes, {:include_blank => "Dailing code"}, {:class => "form-control"}) %>
+                        </div>
+                        
+                        <div class="col-sm-8">
+                           <!-- <input type="text" class="form-control custom-control"> -->
+                           
+                            <%= f.text_field :phone_no, class: "form-control custom-control",  placeholder: "Phone Number"%>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="">ADDRESS<span class="required">*</span> </label>
+
+                     <%#= f.text_field :country, class: "form-control custom-control",  placeholder: "Country Name"%>
+                     <%= f.select :country, Country.all.order("country_name asc").collect {|s| [s.country_name]},{:prompt => "Select Country"},  :include_blank => true, :class => "form-control custom-control"%>
+                     
+                     <div class="row sub-add">
+                        <div class="col-sm-4">
+                        <%#= f.text_field :state, class: "form-control custom-control",  placeholder: "State Name"%>  
+                         <%#= f.select(:state , @states.collect {|key, value| [ value ] }, {:include_blank => "Please select state"}, { :class => 'select-dropdown form-control' }) %>
+                      
+                        <%= f.select(:state,(@states),{:include_blank => "Please select state"}, { :class => 'user_state select-dropdown form-control' }) %>
+
+                        </div>
+                        <div class="col-sm-8">
+                           <!-- <input type="text" class="form-control custom-control"> -->
+                           <%= f.text_field :city, class: "form-control custom-control",  placeholder: "City Name"%>
+                        </div>
+                     </div>
+                     <div class="sub-add">
+                        <!-- <input type="text" class="form-control custom-control"> -->
+                        <%= f.text_field :address, class: "form-control custom-control",  placeholder: "Address"%>
+                     </div>
+                     <!-- <input type="text" class="form-control custom-control"> -->
+                     <%= f.text_field :zip, class: "form-control custom-control",  placeholder: "Zip"%>
+                     <div class="form-add">
+                        <!-- <button class="btn btn-primary btn-md"> Add user </button> -->
+                        <%= submit_tag 'Submit', :class => "btn btn-primary btn-md"%>
+                        <a class="btn btn-primary btn-md" href="/admin/users">Cancel</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      <!-- </form> -->
+      <% end %>
+
+   </div>
+</div>
+
+<script type="text/javascript">
+    jQuery('.navbar-nav li.active').removeClass('active');
+    jQuery('.business').addClass('active');
+
+    function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            jQuery('#user_pic').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#file-upload").change(function(){
+      readURL(this);
+  });
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+<script>
+   
+jQuery(document).ready(function(){
+  
+  jQuery("#cat_form").validate({
+ 
+    
+    rules: {
+      "user[first_name]":{
+        required: true,
+        // noSpace: true,
+        userRegex: true,
+        minlength: 2,
+        maxlength: 30
+      },
+      "user[last_name]":{
+        required: true,
+        // noSpace: true,
+        userRegex: true,
+        minlength: 2,
+        maxlength: 30
+      },
+      "user[dob]":{
+        required: true,
+      },
+      "user[email]":{
+        required: true,
+        emailRegex: true,
+        maxlength: 50
+      },
+
+      "user[password]":{
+        required: true,
+        minlength: 8,
+        maxlength: 32
+      },
+
+      "user[country_code]":{
+        required: true
+      },
+      "user[phone_no]":{
+        required: true,
+        digits: true,
+        minlength: 7,
+        maxlength: 15
+      },      
+      "user[country]":{
+        required: true
+        
+      },    
+      "user[state]":{
+        required: true
+        
+      },   
+      
+      "user[city]":{
+
+        userRegex: true,
+        minlength: 3,
+        maxlength: 30,
+        required: true
+        
+      }, 
+
+      
+      "user[address]":{
+        required: true,
+        minlength: 2,
+        maxlength: 250
+      }, 
+
+       "user[zip]":{
+        required: true,
+        minlength: 2,
+        maxlength: 25
+        
+      }    
+       
+         
+    },
+   
+  });
+
+  jQuery("#user-kyc-form").validate({
+    rules:{
+      "user[address_proof_image]":{
+        required: true
+      },
+      "user[identity_proof_image]":{
+        required: true
+      },
+      "user[pan_card_image]":{
+        required: true
+      }
+    }
+  });
+
+  jQuery.validator.addMethod("userRegex", function(value, element) {
+    return this.optional(element) || /^(?=[^@]*[A-Za-z])([a-zA-Z -])+$/i.test(value);
+  }, "Please enter characters only.");
+
+  jQuery.validator.addMethod("noSpace", function(value, element) { 
+    return value.indexOf(" ") < 0;
+  }, "No space please.");
+
+  jQuery.validator.addMethod("emailRegex", function(value, element) { 
+    return this.optional(element) || /^[A-Z0-9_]+([\.][A-Z0-9_]+)*@[A-Z0-9-]+(\.[a-zA-Z]{2,3})+$/i.test(value);
+  }, "Please enter a valid email address.");
+
+
+
+});
+
+
+</script>
+
+<script>
+jQuery(document).ready(function(){
+  // var $j = $.noConflict();
+  jQuery("#dob").datepicker({
+    autoclose: true,
+    format: 'yyyy-mm-dd',
+    endDate: '+0d'
+   });
+
+ var dtPckr = $('#dob')
+
+var datePicker = $('#dob').datepicker();
+
+jQuery(".content-wrapper").scroll(function() {
+  datePicker.datepicker('hide');
+  jQuery('#dob').blur();
+});
+
+jQuery(window).resize(function() {
+  datePicker.datepicker('hide');
+  jQuery('#dob').blur();
+});
+
+
+});
+</script>
+
+
+
+<script>
+jQuery("#user_country").change(function(){
+  var state_value = jQuery(this).val();
+ 
+ jQuery.ajax({
+ 
+   url:  "/admin/users/country_change",
+      type: "POST",
+      data: { country_name: state_value
+
+      },
+       dataType: "JSON",
+       success: function(response){
+       console.log(response); 
+       var str="";
+       jQuery.each( response.state , function(i,l){
+                     str += '<option value="'+l+'">' + l+'</option>';
+                      
+                  });
+       jQuery('#user_state').empty().append('<option value="">Select State</option>');
+       jQuery('#user_state').append(str);
+
+      }
+
+       });
+
+});
+</script>
+
+
+
+  <script>
+   jQuery(document).ready(function(){
+     var preview = jQuery(".upload-preview img");
+   
+   jQuery("#user_pic").change(function(event){
+      var input = jQuery(event.currentTarget);
+      var file = input[0].files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+   });
+});
+</script>
+
+

@@ -1,0 +1,34 @@
+
+	  <section class="common-banner-sec text-center" style="background-image:url(/assets/about-banner.png);">
+          <div class="banner-text-parent">
+            <div class="banner-text-child">
+              <h1>Ship Anything, Anytime, Anywhere</h1>
+              <p>There is no hidden place where you wouldn’t go, and where your parcel will not reach. </p>
+            </div>
+         </div>
+    </section>
+	  
+      <!-- Main Start -->
+      <main>
+        <section class="about-us-sec pd30">
+            <div class="container">
+               <div class="about-us-sec">
+                 <h2 class="common-content-heading">About Us</h2>
+                 <p class="common-paragraph">
+                 
+              <%= Content.find_by(title: "About").try(:body).html_safe rescue ""%>
+              </p>
+              
+             
+            </div>  
+           </div>
+        </section> 
+       
+
+        
+		 
+		 
+		 
+      </main>
+      <!-- Main End -->
+      

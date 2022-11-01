@@ -1,0 +1,562 @@
+<section class="content">
+	<div class="global-heading"> Payment Settings</div>
+	<div class="payment-setting-block">
+		<div class="payment-tab">	
+			<ul class="nav nav-pills nav-stacked">
+				<li class="active"><a data-toggle="tab" href="#price-info">Pricing Information</a></li>
+	       		<!-- <li class=""><a data-toggle="tab" href="#setting">Settings</a></li> -->
+	    	</ul>
+    	</div> 
+            <%= form_for @pricing_information, url: @pricing_information.new_record? ? admin_pricing_informations_path : admin_pricing_information_path , html:  {id: "admin_pricing_information"}  do |f| %>
+
+		<div class="tab-content">
+		  	<div id="price-info" class="tab-pane fade in active">
+		    	<div class="filter-block">
+		    		<div class="row">
+		    			<div class="col-sm-3">
+				    		<div class="form-group">
+								<label>Country</label>
+<!-- 		  			<select class="form-control custom-control">
+ -->								
+   <%= f.collection_select(:country_id, Country.order(:country_name),:id,:country_name, {:prompt => "Please select country"}, {class: "form-control"}) %>
+<!-- 		                        </select>
+ -->							</div>
+						</div>
+					</div>
+					<h5> Weights </h5>
+					<div class="row">
+		    			<div class="col-sm-8">
+		    				<div class="row">
+		    					<div class="col-sm-6">
+				    				<div class="row">
+				    					<div class="col-sm-6">
+				    						<div class="form-group">
+											<label>From</label>
+											  <%= f.text_field :weight_from, class: "form-control custom-control"%>
+                 <li class="error custom_error_add" style="display: none;">Weight limit is not looking right.</li>
+											</div>
+				    					</div>
+				    					<div class="col-sm-4">
+				    						<div class="select-weight">
+					    						 <%= f.select :weight_from_unit,options_for_select(["Lbs", "Kg"], @unit), {:include_blank => false},class:  "form-control custom-control", id:"weight_from_unit_id" %> 
+					    						 
+						                    </div>
+						                    
+						                    <li class="error custom_error_unit" style="display: none;">Weight unit must be same.</li>
+				    					</div>
+				    				</div>
+				    			</div>
+				    			<div class="col-sm-6">
+				    				<div class="row">
+				    					<div class="col-sm-6">
+				    						<div class="form-group">
+											<label>To</label>
+											  <%= f.text_field :weight_to, class: "form-control custom-control"%>
+                        <li class="error custom_error_add" style="display: none;">Weight limit is not looking right.</li>
+											</div>
+				    					</div>
+				    					<div class="col-sm-4">
+				    						<div class="select-weight">
+				    							
+					    						 <%= f.select :weight_to_unit,options_for_select(["Lbs", "Kg"], @unit1), {:include_blank => false},class:  "form-control custom-control", id:"weight_to_unit_id" %> 
+					                    	</div>
+					                    	 <li class="error custom_error_add_unit" style="display: none;">Weight unit must be same.</li>
+				    					</div>
+				    				</div>
+				    			</div>
+					    		
+							</div>
+						</div>
+					</div>
+		    		<fieldset class="global-fieldset">
+  						<legend>REGIONAL</legend>
+				        <div class="filter-form">
+				        <!-- <form action="/admin/users" method="get" accept-charset="UTF-8" enctype="multipart/form-data" id="web-user-val" class="form-common clearfix"> -->
+				           <!-- <form class="form-common clearfix" action="/admin/users" accept-charset="UTF-8" method="get"><input name="utf8" value="✓" type="hidden">
+ -->				           		<div class="vehicle-block">
+				         
+					           		<div class="row">
+					           			<div class="col-sm-6">
+					           				<div class="country-field">
+									            <div class="form-group">
+									            	<div class="vehicle-input">
+											            <i class="fa fa-truck" aria-hidden="true"></i>
+											             <%= f.text_field :by_road_price_regional, class: "form-control prosearch-bar custom-control", id: "road_r" %>
+											            <!-- <input name="search" class="form-control prosearch-bar custom-control" id="first_name_serch" type="text"> -->
+											            <span>USD</span>
+											        </div>
+									            </div>
+						          			</div>
+					           			</div>
+					           			<div class="col-sm-6">
+					           				<div class="country-field">
+									            <div class="form-group">
+									            	<div class="vehicle-input">
+											            <i class="fa fa-plane" aria-hidden="true"></i>
+											             <%= f.text_field :by_air_price_regional, class: "form-control prosearch-bar custom-control", id: "air_r" %>
+											            <!-- <input name="search" class="form-control prosearch-bar custom-control" id="first_name_serch" type="text"> -->
+											            <span>USD</span>
+											        </div>
+									            </div>
+						          			</div>
+					           			</div>
+					           		</div>
+					           	</div>
+				           		<div class="vehicle-block">
+					           		<div class="row">
+					           			<div class="col-sm-6">
+					           				<div class="country-field">
+									            <div class="form-group">
+									            	<div class="vehicle-input">
+											            <i class="fa fa-train" aria-hidden="true"></i>
+											            <%= f.text_field :by_track_price_regional, class: "form-control prosearch-bar custom-control", id: "track_r" %>
+											            <!-- <input name="search" class="form-control prosearch-bar custom-control" id="first_name_serch" type="text"> -->
+											            <span>USD</span>
+											        </div>
+									            </div>
+						          			</div>
+					           			</div>
+					           			<div class="col-sm-6">
+					           				<div class="country-field">
+									            <div class="form-group">
+									            	<div class="vehicle-input">
+											            <i class="fa fa-ship" aria-hidden="true"></i>
+											            <%= f.text_field :by_water_price_regional, class: "form-control prosearch-bar custom-control", id: "water_r" %>
+											            <!-- <input name="search" class="form-control prosearch-bar custom-control" id="first_name_serch" type="text"> -->
+											            <span>USD</span>
+											        </div>
+									            </div>
+						          			</div>
+					           			</div>
+					           		</div>
+					           	</div>
+				        	<!-- </form>       -->
+				   		</div>
+ 					</fieldset>
+ 					<fieldset class="global-fieldset">
+  						<legend>NATIONAL</legend>
+				        <div class="filter-form">
+				        <!-- <form action="/admin/users" method="get" accept-charset="UTF-8" enctype="multipart/form-data" id="web-user-val" class="form-common clearfix"> -->
+				          <!--  <form class="form-common clearfix" action="/admin/users" accept-charset="UTF-8" method="get"><input name="utf8" value="✓" type="hidden"> -->
+				           		<div class="vehicle-block">
+					           		<div class="row">
+					           			<div class="col-sm-6">
+					           				<div class="country-field">
+									            <div class="form-group">
+									            	<div class="vehicle-input">
+											            <i class="fa fa-truck" aria-hidden="true"></i>
+											           <%= f.text_field :by_road_price_national, class: "form-control prosearch-bar custom-control", id: "road_n" %>
+											            <!-- <input name="search" class="form-control prosearch-bar custom-control" id="first_name_serch" type="text"> -->
+											            <span>USD</span>
+											        </div>
+									            </div>
+						          			</div>
+					           			</div>
+					           			<div class="col-sm-6">
+					           				<div class="country-field">
+									            <div class="form-group">
+									            	<div class="vehicle-input">
+											            <i class="fa fa-plane" aria-hidden="true"></i>
+											           <%= f.text_field :by_air_price_national, class: "form-control prosearch-bar custom-control", id: "air_n" %>
+											            <!-- <input name="search" class="form-control prosearch-bar custom-control" id="first_name_serch" type="text"> -->
+											            <span>USD</span>
+											        </div>
+									            </div>
+						          			</div>
+					           			</div>
+					           		</div>
+					           	</div>
+				           		<div class="vehicle-block">
+					           		<div class="row">
+					           			<div class="col-sm-6">
+					           				<div class="country-field">
+									            <div class="form-group">
+									            	<div class="vehicle-input">
+											            <i class="fa fa-train" aria-hidden="true"></i>
+											           <%= f.text_field :by_track_price_national, class: "form-control prosearch-bar custom-control", id: "track_n" %>
+											            <!-- <input name="search" class="form-control prosearch-bar custom-control" id="first_name_serch" type="text"> -->
+											            <span>USD</span>
+											        </div>
+									            </div>
+						          			</div>
+					           			</div>
+					           			<div class="col-sm-6">
+					           				<div class="country-field">
+									            <div class="form-group">
+									            	<div class="vehicle-input">
+											            <i class="fa fa-ship" aria-hidden="true"></i>
+											           <%= f.text_field :by_water_price_national, class: "form-control prosearch-bar custom-control", id: "water_n" %>
+											            <!-- <input name="search" class="form-control prosearch-bar custom-control" id="first_name_serch" type="text"> -->
+											            <span>USD</span>
+											        </div>
+									            </div>
+						          			</div>
+					           			</div>
+					           		</div>
+					           	</div>
+<!-- 				        	</form>      
+ -->				   		</div>
+ 					</fieldset>
+ 					<fieldset class="global-fieldset">
+  						<legend>INTERNATIONAL</legend>
+				        <div class="filter-form">
+				        <!-- <form action="/admin/users" method="get" accept-charset="UTF-8" enctype="multipart/form-data" id="web-user-val" class="form-common clearfix"> -->
+				           <!-- <form class="form-common clearfix" action="/admin/users" accept-charset="UTF-8" method="get"><input name="utf8" value="✓" type="hidden"> -->
+				           		<div class="vehicle-block">
+					           		<div class="row">
+					           			<div class="col-sm-6">
+					           				<div class="country-field">
+									            <div class="form-group">
+									            	<div class="vehicle-input">
+											            <i class="fa fa-truck" aria-hidden="true"></i>
+											            <%= f.text_field :by_road_price_international, class: "form-control prosearch-bar custom-control", id: "road_i" %>
+											            <!-- <input name="search" class="form-control prosearch-bar custom-control" id="first_name_serch" type="text"> -->
+											            <span>USD</span>
+											        </div>
+									            </div>
+						          			</div>
+					           			</div>
+					           			<div class="col-sm-6">
+					           				<div class="country-field">
+									            <div class="form-group">
+									            	<div class="vehicle-input">
+											            <i class="fa fa-plane" aria-hidden="true"></i>
+											            <%= f.text_field :by_air_price_international, class: "form-control prosearch-bar custom-control", id: "air_i" %>
+											            <!-- <input name="search" class="form-control prosearch-bar custom-control" id="first_name_serch" type="text"> -->
+											            <span>USD</span>
+											        </div>
+									            </div>
+						          			</div>
+					           			</div>
+					           		</div>
+					           	</div>
+				           		<div class="vehicle-block">
+					           		<div class="row">
+					           			<div class="col-sm-6">
+					           				<div class="country-field">
+									            <div class="form-group">
+									            	<div class="vehicle-input">
+											            <i class="fa fa-train" aria-hidden="true"></i>
+											           <%= f.text_field :by_track_price_international, class: "form-control prosearch-bar custom-control", id: "track_i" %>
+											            <!-- <input name="search" class="form-control prosearch-bar custom-control" id="first_name_serch" type="text"> -->
+											            <span>USD</span>
+											        </div>
+									            </div>
+						          			</div>
+					           			</div>
+					           			<div class="col-sm-6">
+					           				<div class="country-field">
+									            <div class="form-group">
+									            	<div class="vehicle-input">
+											            <i class="fa fa-ship" aria-hidden="true"></i>
+											           <%= f.text_field :by_water_price_international, class: "form-control prosearch-bar custom-control", id: "water_i" %>
+											            <!-- <input name="search" class="form-control prosearch-bar custom-control" id="first_name_serch" type="text"> -->
+											            <span>USD</span>
+											        </div>
+									            </div>
+						          			</div>
+					           			</div>
+					           		</div>
+					           	</div>
+<!-- 				        	</form>      
+ -->				   		</div>
+ 					</fieldset>
+ 					<div class="form-group">
+		            	<div class="checkbox">
+                    <label><%= f.check_box :is_publish %>Published</label>
+		              	</div>
+			              <div class="form-add">
+                            <%= f.submit 'Save', :class => "btn btn-primary btn-md"%>
+			              </div>
+            		</div>
+     			</div>
+     			
+		  	</div>
+            <%end%>
+			<!-- <div id="setting" class="tab-pane fade">
+				<div class="filter-block">
+					<div class="commission-outerblock">
+						<div class="commission-block">
+								<h5> Travellers Commission  </h5>
+								 <p class="radio-box">
+								    <input type="radio" id="test1" name="radio-group">
+								    <label for="test1">Percentage</label>
+								  </p>
+								  <p class="radio-box">
+								    <input type="radio" id="test3" name="radio-group">
+								    <label for="test3">Fixed Amount</label>
+								  </p>
+								<input type="text" class="form-control custom-control">
+						</div>
+					</div>
+					<div class="commission-outerblock">
+						<div class="commission-block">
+								<h5> Shipper Commission  </h5>
+								 <p class="radio-box">
+								    <input type="radio" id="test2" name="radio-group">
+								    <label for="test2">Percentage</label>
+								  </p>
+								  <p class="radio-box">
+								    <input type="radio" id="test4" name="radio-group">
+								    <label for="test4">Fixed Amount</label>
+								  </p>
+								 <input type="text" class="form-control custom-control">
+						</div>
+					</div>
+					<div class="text-center form-group">
+						<input type="submit"  class="btn btn-primary">Save</input>
+					</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+</section>
+
+
+
+
+<script type="text/javascript">
+    
+$("#admin_pricing_information").validate({
+
+	
+  rules: {
+  	"pricing_information[country_id]":{
+        required: true
+      },
+     "pricing_information[weight_to]": {
+     	required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+    },
+  	"pricing_information[weight_from]":{
+        required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+      },
+      "pricing_information[weight_from_unit]":{
+        required: true
+      },
+      
+      "pricing_information[weight_to_unit]":{
+        required: true
+      },
+      "pricing_information[by_road_price_regional]":{
+        required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+      },
+      "pricing_information[by_track_price_regional]":{
+        required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+      },
+      "pricing_information[by_air_price_regional]":{
+        required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+      },
+      "pricing_information[by_water_price_regional]":{
+        required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+      },
+    "pricing_information[by_road_price_national]":{
+        required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+      },
+      "pricing_information[by_track_price_national]":{
+        required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+      },
+      "pricing_information[by_air_price_national]":{
+        required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+      },
+      "pricing_information[by_water_price_national]":{
+        required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+      },
+      "pricing_information[by_road_price_international]":{
+        required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+      },
+      "pricing_information[by_track_price_international]":{
+        required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+      },
+      "pricing_information[by_air_price_international]":{
+        required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+      },
+      "pricing_information[by_water_price_international]":{
+        required: true,
+        regxfloat: /^[+-]?\d+(\.\d+)?$/ ,
+      }     
+  },
+   messages: {
+      "pricing_information[country_id]":{
+        required: "Please select the country."
+      }, 
+     
+    },
+  submitHandler: function(form){
+        form.submit();
+      }
+	
+});
+
+$.validator.addMethod("regxfloat", function(value, element, regexpr) {          
+    return regexpr.test(value);
+}, "Invalid Format");
+
+
+$("#pricing_information_weight_to").change(function(){
+   
+   var a = $("#pricing_information_weight_from").val();
+   // alert($("#pricing_information_weight_to").val());
+   if(Number(a)> Number($(this).val()))
+   {
+   	  $(".custom_error_add").show();
+   }
+   else
+   {
+   	$(".custom_error_add").hide();
+   }
+
+});
+$("#pricing_information_weight_from").change(function(){
+	
+   var a = $("#pricing_information_weight_to").val();
+   // alert($("#pricing_information_weight_to").val());
+
+   if(Number(a) < Number($(this).val()))
+   {
+   	  $(".custom_error_add").show();
+   }
+   else
+   {
+   	$(".custom_error_add").hide();
+   }
+
+});
+
+
+</script>
+<style type="text/css">
+ #admin_pricing_information{display: inline-block;
+width: calc(100% - 170px);}
+
+</style>
+
+
+
+<script>
+$('#road_r').keyup(function() {
+    $(this).val(
+        $(this).val()
+            .replace(/^[0^]*/, '') // Remove starting non-zero characters
+            // .replace(/[^\d]*/g, '') // Remove non-digit characters
+        );
+    });
+$('#air_r').keyup(function() {
+    $(this).val(
+        $(this).val()
+            .replace(/^[0^]*/, '') // Remove starting non-zero characters
+            // .replace(/[^\d]*/g, '') // Remove non-digit characters
+        );
+    });
+$('#track_r').keyup(function() {
+    $(this).val(
+        $(this).val()
+            .replace(/^[0^]*/, '') // Remove starting non-zero characters
+            // .replace(/[^\d]*/g, '') // Remove non-digit characters
+        );
+    });
+$('#water_r').keyup(function() {
+    $(this).val(
+        $(this).val()
+            .replace(/^[0^]*/, '') // Remove starting non-zero characters
+            // .replace(/[^\d]*/g, '') // Remove non-digit characters
+        );
+    });
+$('#road_n').keyup(function() {
+    $(this).val(
+        $(this).val()
+            .replace(/^[0^]*/, '') // Remove starting non-zero characters
+            // .replace(/[^\d]*/g, '') // Remove non-digit characters
+        );
+    });
+$('#air_n').keyup(function() {
+    $(this).val(
+        $(this).val()
+            .replace(/^[0^]*/, '') // Remove starting non-zero characters
+            // .replace(/[^\d]*/g, '') // Remove non-digit characters
+        );
+    });
+$('#track_n').keyup(function() {
+    $(this).val(
+        $(this).val()
+            .replace(/^[0^]*/, '') // Remove starting non-zero characters
+            // .replace(/[^\d]*/g, '') // Remove non-digit characters
+        );
+    });
+$('#water_n').keyup(function() {
+    $(this).val(
+        $(this).val()
+            .replace(/^[0^]*/, '') // Remove starting non-zero characters
+            // .replace(/[^\d]*/g, '') // Remove non-digit characters
+        );
+    });
+$('#road_i').keyup(function() {
+    $(this).val(
+        $(this).val()
+            .replace(/^[0^]*/, '') // Remove starting non-zero characters
+            // .replace(/[^\d]*/g, '') // Remove non-digit characters
+        );
+    });
+$('#air_i').keyup(function() {
+    $(this).val(
+        $(this).val()
+            .replace(/^[0^]*/, '') // Remove starting non-zero characters
+            // .replace(/[^\d]*/g, '') // Remove non-digit characters
+        );
+    });
+$('#track_i').keyup(function() {
+    $(this).val(
+        $(this).val()
+            .replace(/^[0^]*/, '') // Remove starting non-zero characters
+            // .replace(/[^\d]*/g, '') // Remove non-digit characters
+        );
+    });
+$('#water_i').keyup(function() {
+    $(this).val(
+        $(this).val()
+            .replace(/^[0^]*/, '') // Remove starting non-zero characters
+            // .replace(/[^\d]*/g, '') // Remove non-digit characters
+        );
+    });
+</script>
+
+<script>
+  $("#weight_from_unit_id").change(function(){
+    var weight_from_unit = $(this).val();
+    weight_to_unit = $("#weight_to_unit_id").val();
+    if(weight_from_unit != weight_to_unit)
+      {
+        $(".custom_error_add_unit").show();
+      }
+    else
+      {  
+        $(".custom_error_add_unit").hide();
+      }
+  });
+</script>
+<script>
+  jQuery("#weight_to_unit_id").change(function(){
+    var weight_to_unit = $(this).val();
+    weight_from_unit = $("#weight_from_unit_id").val();
+    if(weight_from_unit != weight_to_unit)
+      {
+        $(".custom_error_add_unit").show();
+      }
+    else
+      {
+      	$(".custom_error_add_unit").hide();
+      }
+    });
+</script>

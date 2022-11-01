@@ -1,0 +1,289 @@
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB773Z_aXOkVknmIt75oVc8ukS4-ezXqO8&libraries=places" type="text/javascript"> 
+    </script>
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>BringItFast</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+      <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+   </head>
+   <body>
+     
+      <!-- header End -->
+      <section class="banner-section text-center">
+	    <div class="container">
+		 <div class="banner-content">
+		   <h1>Ship Anything, Anytime, Anywhere</h1>
+		   <p>There is no hidden place where you wouldn’t go, and where your parcel will not reach.</p>
+		   <div class="banner-form-block">
+		     <!-- <form class="banner-form"> -->
+		     	<%= form_tag(traveller_list_travellers_path,method: :get, class: "banner-form", :id => "traveller_list") do %>
+			   <div class="form-group departure-group">
+			     <!-- <input type="text" class="form-control" placeholder="Departure Location"/> -->
+			     <%= text_field_tag :departure_address,nil,:class=>"form-control", required: true, :id => "country",:placeholder=> "Departure Location" %>
+			   </div>
+			   <div class="form-group final-destination">
+			     <!-- <input type="text" class="form-control" placeholder="Final Destination"/> -->
+			     <%= text_field_tag :arrival_address,nil,:class=>"form-control", required: true, :id => "arrival_country",:placeholder=> "Final Destination" %>
+			   </div>
+			   <div class="form-group departure-date">
+			     <!-- <input type="text" class="form-control departure-field" placeholder="Date"/> -->
+			      <%= text_field_tag :departure_date,nil,:class=> "form-control", required: true, :id => "eparture_date", :placeholder=> "Departure Date"%>
+
+
+			   </div>
+			   <div class="banner-action-btn">
+			   <!-- <button class="btn btn-red" type="submit">Send</button> -->
+			    <%#= submit_tag "Send",:class=>"btn btn-red"%>
+
+			   <button class="btn btn-red" type="submit">Send</button> 
+			   <a href="/users/new" class="btn btn-green">Carry </a>
+			</div>
+			 <!-- </form> -->
+			 <% end %>
+		   </div>
+		 </div>
+		</div>
+	  
+	  </section>
+      <!-- Main Start -->
+      <main>
+         <section class="what-we-do-section text-center">
+		   <div class="container">
+		      <div class="section-head">
+			    <h2>What We Do</h2>
+				<p>Our goal is to make shipping more accessible to everyone by lowering the cost and
+                   improving the speed of delivery. For this aim, we are connecting travelers with shipping
+                    customers to achieve it.</p>
+			  </div>
+			  <!-- <button class="btn btn-black explore-btn">Explore Now</button> -->
+		   </div>
+		 </section>
+		 
+		 <section class="feature-section text-center">
+		   <div class="container">
+		      <div class="section-head white">
+			    <h2>Our Commitments</h2>
+				<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p> -->
+			  </div>
+			  <div class="row">
+			  
+			    <div class="col-sm-4">
+				  <div class="feature-block">
+				     <span class="f-icon">
+					   <img src="/assets/feature-icon1.png" alt="Icon"/>
+					 </span>
+					 <h3>Efficient</h3>
+					 <p>The transaction between shipping customers, travelers, and receivers are done in direct contact where the travelers are the middle man and the carrier of the parcel to be delivered. This way, the package is passed from one another until delivery.</p>
+						<!-- <a href="javascript:void(0);" class="readmore">Read more...</a> -->
+				  </div>
+				</div>
+				
+				
+				<div class="col-sm-4">
+				  <div class="feature-block">
+				     <span class="f-icon">
+					   <img src="/assets/feature-icon2.png" alt="Icon"/>
+					 </span>
+					 <h3>Affordable</h3>
+					 <p>The cost of shipping item via BringItFast is one of the cheapest options on the market. Shipping customers pay less for what they have been paying while travelers make more money during their planned schedule.</p>
+						<!-- <a href="javascript:void(0);" class="readmore">Read more...</a> -->
+				  </div>
+				</div>
+				
+				<div class="col-sm-4">
+				  <div class="feature-block">
+				     <span class="f-icon">
+					   <img src="/assets/feature-icon3.png" alt="Icon"/>
+					 </span>
+					 <h3>Secure</h3>
+					 <p>The company ensures that an agreement upon meeting between the shipper and traveler is done
+after the shipping party has listed all items to be carried with pictures and relevant information to
+ensure the safety of the transaction. While on the other hand, the traveler is responsible for
+checking each item at the meeting.</p>
+						<!-- <a href="javascript:void(0);" class="readmore">Read more...</a> -->
+				  </div>
+				</div>
+				
+			  </div>
+			  
+		   </div>
+		 </section>
+		 
+		  <section class="how-it-works-section text-center">
+		   <div class="container">
+		      <div class="section-head">
+			    <h2>How It Works?</h2>
+				<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p> -->
+			  </div>
+			  <div class="row">
+			     <div class="col-sm-4">
+				    <div class="whatwedo-block">
+			        <span class="inner-icon">
+					   <img src="/assets/tweet-icon.png" alt="Icon"/>
+					</span>
+					<p>Once registered, a member can either send or carry items. If he wants to send, he should
+list all the information about the item with the time willing to send. After doing that, then
+search for potential travelers based on its location and delivery destination. When found, he
+chooses the one based on its needs and waits for the carrier approval to get his information
+and meeting location. If the carrier after the meeting takes the items, the transaction will
+continue but if denied, the transaction will be canceled and items not taken.</p>
+			       </div>
+				 </div>
+				 
+				 <div class="col-sm-4">
+				    <div class="whatwedo-block">
+			        <span class="inner-icon">
+					   <img src="/assets/briefcase.png" alt="Icon"/>
+					</span>
+					<p>The cost is the most crucial factor in this transaction. Here, the shipper will have to pay the
+fees for the item based on its delivery location, its weight, and size. Once it is done, he will be
+able to see all listed carriers based on its search. On the other hand, the carrier will receive his
+earnings once the items have been delivered to the receiver.</p>
+			       </div>
+				 </div>
+				 
+				  <div class="col-sm-4">
+				    <div class="whatwedo-block">
+			        <span class="inner-icon">
+					   <img src="/assets/checkmark.png" alt="Icon"/>
+					</span>
+					<p>The receiver is the one who marks the end of the transaction. Once he received the parcel,
+he will be notified on the site and it will mark the end.</p>
+			       </div>
+				 </div>
+				 
+			  </div>
+			  <!-- <button class="btn btn-dark-red explore-btn">Explore Now</button> -->
+		   </div>
+		 </section>
+		 
+		 <section class="home-video-section text-center">
+		   <div class="video-content">
+		      <span class="play-btn"></span>
+			  <div class="section-head white">
+			    <h2>There is no hidden place where you wouldn’t go, and where your parcel will not reach.</h2>
+				<!-- <p>What is crowdshipping? How does BrignItFast work?</p> -->
+			  </div>
+		   </div>
+		 </section>
+		 
+		 
+		  <section class="safety-trust-section">
+		    <div class="custom-container">
+			  <div class="safety-trust-block clearfix">
+			    <div class="safety-trust-info f-left">
+				  <h2>Safety and Trust in crowdshipping</h2>
+				  <h3>Why should we trust our members?</h3>
+				  <p>Crowdshipping main concern is security. A visitor of the website, once registered become a
+                     member who agrees to respect the policy and terms of the company. By doing so, he is
+                     identifiable with a unique code by the company. This will ensure the protection of every item
+                     being carried and all the members.</p>
+				  <!-- <a class="learnmore btn btn-dark-red" href="javascript:void(0);">Learn more...</a> -->
+				</div>
+				<div class="safety-trust-img f-right">
+				</div>
+			  </div>
+			</div>
+		  </section>
+		  
+		  <section class="testimonial-section">
+		    <div class="container">
+			  <div class="section-head">
+			    <h2>What our customers say</h2>
+			  </div>
+			  
+			  <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+                           
+
+                            <!-- Carousel Slides / Quotes -->
+                            <div class="carousel-inner">
+
+                                <!-- Quote 1 -->
+                                <div class="item active">
+                                    <blockquote>
+									   <div class="client-msg">
+                                        <p>The transaction between shipping customers, travelers, and receivers are done in direct contact where the travelers are the middle man and the carrier of the parcel to be delivered. This way, the package is passed from one another until delivery.</p>
+									   </div>
+                                   </blockquote>
+                                </div>
+                                <!-- Quote 2 -->
+                                <div class="item">
+                                    <blockquote>
+									   <div class="client-msg">
+                                        <p>The cost of shipping items via BringItFast is very cheap. This form of shipping is called Crowdshipping, where shipping customers pay less for what they used to pay while travelers earn free money on their planned schedule.</p>
+									   </div>
+                                   </blockquote>
+                                </div>
+                                <!-- Quote 3 -->
+                                <div class="item">
+                                    <blockquote>
+									   <div class="client-msg">
+                                        <p>The company ensures that an agreement upon meeting between the shipper and traveler is done after the shipping party has listed all items to be carried with pictures and relevant information to ensure the safety of the transaction. While on the other hand, the traveler is responsible for checking each item at the meeting.</p>
+									   </div>
+                                   </blockquote>
+                                </div>
+                            </div>
+
+                            <!-- Carousel Buttons Next/Prev -->
+                            <!-- <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
+                            <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a> -->
+                        </div>
+			  
+			  
+			</div>
+		  </section>
+		  
+		 
+		 
+		 
+      </main>
+      <!-- Main End -->
+    
+   </body>
+</html>
+
+
+
+ 
+
+<script type="text/javascript">  
+    function initialize() {   
+       var input = document.getElementById('country');
+       var input1 = document.getElementById('arrival_country');
+       var autocomplete = new google.maps.places.Autocomplete(input);  
+       var autocomplete1 = new google.maps.places.Autocomplete(input1);
+         }    
+        google.maps.event.addDomListener(window, 'load', initialize);  
+
+
+    $(document).on('ready page:change', function() {
+        
+        $('#eparture_date').datetimepicker({
+         format: 'LL',
+         minDate: new Date()
+        });
+    });
+
+     </script>
+
+
+
+
+<!-- $(document).on('turbolinks:load', function() { -->
+
+
+
+<!-- AIzaSyB773Z_aXOkVknmIt75oVc8ukS4-ezXqO8 -->
+
+
+
+
+
+
+  

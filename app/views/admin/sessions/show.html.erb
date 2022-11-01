@@ -1,0 +1,52 @@
+<div class="login-box">
+  <div class="login-logo">
+    <%#= link_to 'Salon POS', admin_homes_path %>
+    <!-- <a><img src="/assets/POS_logo.jpg" width="200px" height="200px"></a> -->
+  </div>
+  <div class="login-box-body">
+    <p class="login-box-msg">Please enter your email address.</p>
+    <%= form_tag forget_password_admin_sessions_path, id: "login_form" do  %>
+      <div class="form-group has-feedback">
+        <%= label_tag :email %>
+        <%= text_field_tag :email,params[:email], :class => "form-control", :maxlength => 30%>
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+     
+      <div class="row">
+        <div class="col-xs-12">
+          <input name="role" value="admin" hidden></input>
+          <br><%= submit_tag "Send", :class => "btn btn-primary btn-block btn-flat" %>
+        </div>
+      </div> <!--row end-->
+    <% end %>
+  </div>
+</div>
+
+
+<script>
+   
+jQuery(document).ready(function(){
+  
+  jQuery("#login_form").validate({
+ 
+    
+    rules: {
+      
+      "email":{
+        required: true,
+        emailRegex: true,
+        maxlength: 50
+      }  
+    },
+   
+  });
+
+  jQuery.validator.addMethod("emailRegex", function(value, element) { 
+    return this.optional(element) || /^[A-Z0-9_]+([\.][A-Z0-9_]+)*@[A-Z0-9-]+(\.[a-zA-Z]{2,3})+$/i.test(value);
+  }, "Please enter a valid email address.");
+
+
+});
+
+
+</script>

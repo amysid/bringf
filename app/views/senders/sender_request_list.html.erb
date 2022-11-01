@@ -1,0 +1,236 @@
+      <section class="common-banner-sec text-center" style="background-image:url(/assets/traveller-banner.png);">
+         <div class="banner-text-parent">
+            <div class="banner-text-child">
+               <h1>Ship Anything, Anytime, Anywhere</h1>
+               <p>There is no hidden place where you wouldn’t go, and where your parcel will not reach.  </p>
+            </div>
+         </div>
+      </section>
+      <!-- Main Start -->
+      <main>
+         <section class="treveller-section common-section">
+            <div class="container">
+               <div class="static-page-head">
+                  <h2 class="common-content-heading">Confirm Order</h2>
+               </div>
+               <li class="sender-heading">You have searched from <%= @user_laggage.departure_state %> ,<%= @user_laggage.departure_city %> to <%= @user_laggage.arrival_state %> ,<%= @user_laggage.arrival_city%> on <%= @user_laggage.date.to_date&.strftime("%B " "%d, " "%Y")%><a href="/senders/<%= @user_laggage.id%>/edit"> Edit Luggage</a></li>
+              
+               <!-- biling-info-block Start -->
+               <%if @list_of_travellers.present?%>
+               <div class="biling-info-block sender-biling-info clearfix">
+
+                <% @count = 1 %>
+                <% @list_of_travellers&.each do |m| %>
+                 <div class="clearfix"> 
+                    <div class="package-photo-block">
+                     
+
+
+                     <div class="sender-user-img">
+                      <%#= image_tag(m.user.image.url) %>
+                       <% if m.user.image.blank? %>
+    
+                                        <div class="form-group addupload upload-preview">
+                                          <label for="file-upload" class="custom-file-upload ">
+                                            <img src="/assets/userimage.png" id="user_pic">
+                                              </span>
+                                          </label>
+                                       </div>
+
+                                       <% else %>
+                                        <div class="form-group addupload upload-preview">
+                                         <label for="file-upload" class="custom-file-upload ">
+                                           <%= image_tag(m.user.image.url) %> 
+                                        </label>
+                                       </div>
+
+                                  <% end %>
+
+                     </div>
+                     <div class="rating">
+                      <%if m.user.ratings.present?%>
+                       <%= puts "--user----#{m.user.inspect}---ratings-----#{m.user.ratings.inspect}----------"%>
+                      <%#m.try(:user).try(:ratings).pluck(:star).max.times do  %>
+                      <% ((m.try(:user).try(:ratings).pluck(:star).inject{ |sum, el| sum + el }.to_f / m.try(:user).try(:ratings).pluck(:star).size).to_i).times do  %>
+                        <i class="active star"></i>
+                      <%end%>
+                      <%end%>
+                     </div>
+                  </div>
+                  
+
+
+                  <div class="package-detail-block">
+                     <div class="arival-departure clearfix">
+                        <div class="arival-city common-city-style f-left">
+                           <span><img src="/assets/location2.png" alt="location icon"/><%= m.try(:departure_state) %>, <%= m.try(:departure_city) %></span>
+                           <div class="billing-date"><img src="/assets/cal.png" alt="calendar icon"/><%= "#{m.try(:departure_date)&.to_date&.strftime("%B " "%d, " "%Y")}"%></div>
+                           <div class="billing-date"><img src="/assets/alarm-icon.png" alt="alarm icon"/><%= m.try(:departure_time).strftime(" %I:%M %p")  rescue ""%></div>
+                        </div>
+                        <div class="middle-plane-icon f-left">
+                            <% if m["mode_of_travel"] == "Ship" %>
+                            <span class="plane-icon"><img src="/assets/ship-icon.png" alt="plane icon"/></span>
+                            <% elsif m["mode_of_travel"] == "Plane" %>
+                            <span class="plane-icon"><img src="/assets/plane-icon.png" alt="plane icon"/></span>
+                            <% elsif m["mode_of_travel"] == "Bus" %>
+                            <span class="plane-icon"><img src="/assets/car-icon.png" alt="plane icon"/></span>
+                            <% else %>
+                            <span class="plane-icon"><img src="/assets/train-icon.png" alt="plane icon"/></span>
+                           <% end %>
+
+                        </div>
+                        <div class="destination-city common-city-style f-right">
+                           <div class="estination-city-inner">
+                              <span><img src="/assets/location2.png" alt="location icon"/><%= m.try(:arrival_state) %>, <%= m.try(:arrival_city) %></span>
+                              <div class="billing-date"><img src="/assets/cal.png" alt="calendar icon"/><%= "#{m.try(:arrival_date)&.to_date&.strftime("%B " "%d, " "%Y")}"%></div>
+                              <div class="billing-date"><img src="/assets/alarm-icon.png" alt="alarm icon"/><%= m.try(:arrival_time).strftime(" %I:%M %p") rescue "" %></div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="clearfix meeting-location-block">
+                        <div class="meeting-loc-left">
+                           <p><span>Meeting Location:</span><%=  m.try(:full_address) %></p>
+                           <p><span>Can Carry:</span><%= m.try(:weight_upto)%> <%= m.weight_unit%></p>
+                        </div>
+                     </div>
+                      <button name="button" type="button" class="data_view btn btn-green f-right", id= "#contact_travellers<%= @count %>" value="<%= @count %>" >
+                      <strong>Contact Traveler</strong>
+                  </button>
+                  </div>
+                </div>
+                 
+                 <div class="traveller-earning", id="travel_earning<%= @count %>" style="display: none;">
+
+                  
+                    <%= form_tag('/create_transaction', method: :post,id: "transaction_form") do %>
+                   
+                     <fieldset class="global-fieldset">
+                   <legend>Details</legend>
+                  <form>
+                  <h3>Order Detail</h3>
+                   <ul class="earning-detail-list">
+                  <li class="clearfix">
+                   <strong class="f-left">Shipping Charges</strong><span class="f-right"><%= number_to_currency(@shipping_charges) %></span>
+                  </li>
+                  <li class="clearfix">
+                    <strong class="f-left">Commission</strong><span class="f-right"><%= number_to_currency(@admin_commission_from_shipper) %></span>
+                  </li>
+                  <li class="clearfix">
+                    <strong class="f-left">Tax</strong><span class="f-right"><%= number_to_currency(@tax) %></span>
+                  </li>
+                  <li class="total-earning clearfix">
+                   <strong class="f-left r-color">Total</strong><span class="f-right"><%= number_to_currency(@total_price) %></span>
+                  </li>
+                </ul>
+                  <div class="text-right earning-btns">
+                   <!-- <button class="btn btn-dark-red">BACK</button> -->
+                  <!-- <a href="#paybycard" class="btn btn-gray">Pay With Paypal</a> -->
+
+                   <!-- start -->
+                    <div class="tab-content">
+                    <div id="paybycard" class="tab-pane fade in active">
+                      <div class="add-card-form">
+                    
+                    <%= hidden_field_tag "traveller_id", m.id %>
+                    <%= hidden_field_tag "shipping_charges", @shipping_charges %>
+                    <%= hidden_field_tag "country_tax", @tax %>
+                    <%= hidden_field_tag "total_price", @total_price %>
+                    <%= hidden_field_tag "admin_commission_from_shipper", @admin_commission_from_shipper %>
+                    <%= hidden_field_tag "user_laggage_id", @user_laggage.id %>
+                    <%= hidden_field_tag "admin_commission_from_traveller", @admin_commission_from_traveller %>
+
+                 </br>
+                                      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                        data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                                        data-description="pay for service"
+                                        data-locale="auto">
+                                       </script>
+
+                      </div>
+                    </div>
+                    <div id="payafterservice" class="tab-pane fade">
+                                         <div class="text-center cus_confirm-booking">
+                        <a onclick="$('#book_form').submit();">CONFIRM BOOKING</a>
+                      </div>
+                    </div>
+
+            
+
+      
+
+
+
+
+       <div class="modal fade add-modal" id="editModal" role="dialog">
+       <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="addbody text-left">
+           <%#= form_for :state, url:  transaction_lists_path  do |f| %>
+           <div class="checkbox">
+           <label><%#= f.check_box : %> Published </label>
+           </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center">
+          <%#= submit_tag 'Submit', :class => "btn btn-primary btn-md"%>
+        </div>
+        <%#end%>
+      </div>
+      
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+                  </div>
+                   <!-- end -->
+
+                 </div>
+               </fieldset>
+                <%end%>
+                </div>
+              
+               <% @count = @count +1  %>
+
+                  <% end %>
+                  <!-- package-detail-block -->
+               </div>
+               <!-- biling-info-block End -->
+              <%else%>
+                <div class="no-item">
+                   <p class="no-found text-center">No Traveler found in the searched area.</p>
+                </div>
+              <%end%>
+         
+         
+         
+        
+            </div>
+         </section>
+         <!-- Account Section End -->
+        
+      </main>
+      <!-- Main End -->
+    
+
+
+
+     <script>
+jQuery(".data_view").click(function(){
+  var id = "#travel_earning"+$(this).val();
+  jQuery(id).toggle();
+ 
+});
+</script>

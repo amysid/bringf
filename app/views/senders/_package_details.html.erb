@@ -1,0 +1,71 @@
+            <div class="row">
+             <div class="col-sm-6">
+              <div class="form-group">
+
+                 
+                 <%= a.text_field :package_content, class: "form-control custom-control",  placeholder: "Package Content", minlength: 2, maxlength: 35, pattern: "[a-zA-Z0-9\s]+", required: true%> 
+
+              </div>
+             </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                              <div class="row">
+                  <div class="col-md-6">
+                                    <div class="form-group">
+                                       <!-- <input placeholder="Weight upto" class="form-control" type="text"/> -->
+
+                                       <%= a.text_field :weight, class: "form-control custom-control",  placeholder: "Weight upto", required: true, pattern: "[0-9]+"%> 
+
+                                      
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                      <%= a.select :weight_unit,options_for_select(["Lbs", "Kg"]), {:include_blank => false},class:  "form-control blackdropicon", id:"sender_size"  %> 
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+               <div class="col-sm-6">
+                <div class="form-group">
+                <%#= a.select :size,options_for_select(["small", "medium", "large", "extra large"], { selected: @package.size }),{:include_blank => "Select Size"},class:  "form-control blackdropicon", id:"size", value: @package.try(:size)  %> 
+                
+                 <%= a.select :size,options_for_select(['small', 'medium', 'large', 'extra large'], { selected: @package.try(:size)}),{:include_blank => "select Size"},class:  "form-control blackdropicon", id:"size" %>
+
+                 
+              </div>
+               </div>
+            </div>
+         
+
+                   <!-- <div class= "job_photos">
+                        <%#= a.fields_for :images do |m| %>
+                           <div class="user-edit-main post-job-pro">
+                              <div class="userprofile-imgbox">
+                                <div class="row">
+                                <div class="col-sm-6">
+                                 <div class="upd-here edi upload-image" onclick="$('#showcropModla').trigger('click');">
+                                 <span class="upload-proimg filename" title="Uplaod Photo">
+                                 <%#= m.file_field :package_image,:class=>"btn btn-pri btn-blue btn-file upload", :class => "showcropModla",:accept=>"Image/*",:value => "gggggg" %>
+                                 </span>
+                                  <span class="browse-file-icon"><input type="file"><i class="fa fa-paperclip"></i></span>
+                                  </div>
+                                </div>
+                                 <div class="col-sm-6">
+                                 
+                                </div>
+                              </div>
+                              </div>
+                           </div>
+                           <div class="text-left">
+
+                           </div>
+                         <div class="text-right">  <%#= m.link_to_remove "Remove" , class: "btn btn-dark-red mb10", id: "remove"%></div>
+                           <%#end%>
+                          <div class="text-right">  <%#= a.link_to_add 'Add More Images', :images, class: "btn btn-dark-red" %></div>
+                    </div> -->
+
+            
+            <%= a.link_to_remove 'Remove'.html_safe, class: "btn btn-dark-red mb10"%>
+                 

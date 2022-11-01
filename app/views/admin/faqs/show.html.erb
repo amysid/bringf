@@ -1,0 +1,28 @@
+<section class="content">
+    <div class="global-heading">Question Answer</div>
+      <div class="global-box clearfix staic-box-s">
+        <div class="global-view">
+          <div class="details-row">
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Question</label>
+                <span class="col-sm-9 control-label"><%= @faq.try(:question) %></span>
+              </div>
+            </div>
+          </div>
+          <div class="details-row">
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Answer</label>
+                <span class="col-sm-9 control-label"><%= @faq.try(:answer) %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gbl-back-btn">
+          <a href=" /admin/faqs">Back</a>
+        </div>
+    </div>
+</section>
+
+

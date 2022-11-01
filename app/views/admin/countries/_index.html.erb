@@ -1,0 +1,38 @@
+ <div class="clearfix">
+        <h3>Country List</h3>
+        <div class="table-responsive cus-table">
+           <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  
+                  <th>Country</th>
+                  <th>Country Code</th>
+                  <th>Tax</th>
+                  <!-- <th>Address</th> -->
+                  <!-- <th>Age</th> -->
+                  <th colspan="3">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% @countries.each do |m| %>
+                <tr>
+                  
+                  <td><%= m.try(:country_name)%></td>
+                  <td><%= m.try(:iso_code)%></td>
+                  <td><%= m.try(:tax_percentage)%>%</td>
+                  <!-- <td></td> -->
+
+                  <td><%= link_to 'Edit', edit_admin_country_path(m),:class=>"btn btn-success", method: :get %>
+                  <%= link_to 'Delete', admin_country_path(id: m.id),:data => {:confirm => "Are you sure you want to delete this country ?"},:class=>"btn btn-danger", method: :delete %></td>
+
+                
+
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+
+
+             <%= will_paginate @countries,  renderer: BootstrapPagination::Rails %>
+          </div>
+        </div>

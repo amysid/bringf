@@ -1,0 +1,55 @@
+/*=========For Shubham =========*/
+/*****Shubham***********/
+/****About-us******/
+.common-banner-sec{padding-top:70px; background-size: cover; background-repeat: no-repeat; background-position: right center; min-height: 320px; position: relative;}
+.banner-text-parent{height: 320px; width: 100%;display:table}
+.banner-text-child{display: table-cell;vertical-align: middle;}
+.banner-text-child h1 {margin: 0px; margin-bottom: 10px; color: #fff; font-weight:600;letter-spacing: 1px; font-size: 32px; line-height: 38px;}
+.banner-text-child p {margin: 0px; margin-bottom: 30px; font-size: 20px; color: #fff; font-weight: 100;}
+.common-content-heading {margin-top: 0px; font-size: 30px; font-weight:600; color: #750000;}
+p.common-paragraph {font-weight: 600; color: #4c5359; letter-spacing: 1px; margin-bottom: 20px;}
+.pd30{padding:30px 0px;}
+.banner-text-parent p.common-paragraph {color:#fff;}
+.about-us-sec{padding:4em 0;}
+
+/*======= sendEmail-section =======*/
+.sendEmail-section{  padding:80px 10px 50px;  background-size: cover; background-repeat: no-repeat; background-position: right center;background:url("../assets/awesome-email-img.png");min-height:300px;}
+.sendEmail-hdng{color: #4c5259; margin: 0 0 5px; font-size:32px;}
+.sendEmail-section p{font-size: 20px; color: #4d5459;}
+.sendEmail-section .input-group{ border-radius: 4px; padding: 6px 0; background-color:transparent; max-width: 520px;}
+.sendEmail-section .input-group .form-control{ box-shadow: 0 0 0 !important; font-size: 20px; height:39px;border: 2px solid #444;height:44px;}
+.sendEmail-section .input-group .btn{border: 1px solid transparent;background:#750000;box-shadow:0 0 0!important;text-transform: uppercase;font-size: 17px; padding: 6px 20px;color:#fff;height: 44px;}
+.sendEmail-section .input-group .btn:hover,
+.sendEmail-section .input-group .btn:focus{color:#fff;background:rgba(117, 0, 0,0.8);}
+
+.sendEmail-section .input-group .input-group-btn{padding-left:20px;}
+
+
+
+/****common-form*******/
+.common-form{max-width:500px;margin:0 auto;font-family:arial;}
+.form-box{padding:40px;}
+.common-form .form-control,
+.custom-form-control.form-control{border-radius:4px;min-height:45px;border:1px solid #ddd;color:#4c5259;font-size:16px;font-family: arial;}
+
+.common-form .form-control::-webkit-input-placeholder,
+.custom-form-control.form-control::-webkit-input-placeholder {color:#444;font-size:16px;}
+
+.common-form .form-control::-moz-placeholder,
+.custom-form-control.form-control::-moz-placeholder {color:#444;font-size:16px;}
+
+.common-form .form-control:-ms-input-placeholder,
+.custom-form-control.form-control:-ms-input-placeholder{color:#444;font-size:16px;}
+
+.common-form .form-control:-moz-placeholder,
+.custom-form-control.form-control:-moz-placeholder{color:#444;font-size:16px;}
+
+.submit-btn{width:60%;}
+
+.mt20{margin-top:20px;}
+
+/**sender*****/
+.sender-main-sec{padding:4em 0;}
+.sender-sec{max-width:700px;margin:0 auto}
+.sender-heading{font-size:24px;color:#720000;line-height:30px;margin:0 0 25px;font-weight:600;}
+p.common-paragraph a{color:#720000;text-decoration:underline;}

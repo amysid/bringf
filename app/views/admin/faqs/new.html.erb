@@ -1,0 +1,44 @@
+
+
+<div class="login-part">
+  <div class="clearfix">
+    <div class="global-heading user-head">Create a New Question & Answer</div>
+   <!--  <div class="aduser-btn"><a href="/admin/countries" class="btn btn-add"> << Back to list </a></div> -->
+   </div>
+  <div class="login-detail createpro-detail1">
+    <!-- <form class="form-common"> -->
+    <%#= form_for :country, url: admin_countries_path, html:  {id: "admin_country"}  do |f| %>
+   <%= form_tag admin_faqs_path, id: "add_faq" do  %>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="country_mng-form">
+                       
+            <div class="form-group">
+               <label for="">Question<span class="required">*</span> </label>
+               <%#= f.text_field :iso_code, class: "form-control custom-control",  placeholder: "ISO Code"%>
+               <%= text_field_tag :question,params[:question], class: "form-control custom-control" %>
+            </div>
+            <div class="form-group">
+              <label for="">Answer<span class="required">*</span> </label>
+              <div class="input-icon">
+              <%#= f.text_field :tax_percentage, class: "form-control custom-control",  placeholder: "Tax Percentage"%>
+              <%= text_field_tag :answer,params[:answer], class: "form-control custom-control" %>
+                <i class="fas fa-calendar-alt"></i>
+              </div>
+            </div>
+            <div class="form-group">
+              
+              <div class="form-add">
+                <%#= submit_tag 'Submit', :class => "btn btn-primary btn-md"%>
+                <%= submit_tag 'SUBMIT', :class => "btn btn-default common-btn black"%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <!-- </form> -->
+  </div>
+</div>
+
+

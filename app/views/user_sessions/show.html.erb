@@ -1,0 +1,133 @@
+<!-- <div class="login-box">
+  <div class="login-logo">
+   
+  </div>
+  <div class="login-box-body">
+    <p class="login-box-msg">Please enter your email address.</p>
+    <%#= form_tag forget_password_user_sessions_path, id: "login_form" do  %>
+      <div class="form-group has-feedback">
+        <%#= label_tag :email %>
+        <%#= text_field_tag :email,params[:email], :class => "form-control", :maxlength => 30%>
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+     
+      <div class="row">
+        <div class="col-xs-12">
+          <input name="role" value="user" hidden></input>
+          <br><%#= submit_tag "Send", :class => "btn btn-primary btn-block btn-flat" %>
+        </div>
+      </div> 
+    <%# end %>
+  </div>
+</div> -->
+
+
+
+
+  <section class="common-banner-sec text-center" style="background-image:url(/assets/about-banner.png);">
+          <div class="banner-text-parent">
+            <div class="banner-text-child">
+              <h1>Ship Anything, Anytime, Anywhere</h1>
+              <p>There is no hidden place where you wouldn’t go, and where your parcel will not reach. </p>
+            </div>
+         </div>
+    </section>
+    
+      <!-- Main Start -->
+      <main>
+        <section class="about-us-sec pd30">
+            <div class="container">
+               <div class="common-form-page text-center">
+                    <h2 class="common-content-heading">Please enter your email address.</h2>
+                    <p class="common-paragraph">There is no hidden place where you wouldn’t go, and where your parcel will not reach.</p>
+                    <!-- <form class="login-form"> -->
+                    <%= form_tag forget_password_user_sessions_path, id: "login_form", class: "login-form" do  %>
+                     <div class="form-box common-form">
+
+          
+                       <div class="form-group">
+                          <!-- <input type="email" placeholder="Email ID" class="form-control"/> -->
+                          <input type="email" class="form-control" placeholder="Email*" name="email" required="true" maxlength="50">
+                       </div>
+              
+             
+             
+                       <div class="button-box text-center mt20">
+                          <!-- <button class="btn btn-dark-red submit-btn" type="submit">LOGIN</button> -->
+                          <%= submit_tag "Send", :class => "btn btn-dark-red submit-btn" %>
+                       </div>
+                      </div>
+         
+          
+                   <% end %>
+                   </div> 
+           </div>
+        </section> 
+ 
+      </main>
+      <!-- Main End -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+   
+jQuery(document).ready(function(){
+  
+  jQuery("#login_form").validate({
+ 
+    
+    rules: {
+      
+      "email":{
+        required: true,
+        emailRegex: true,
+        maxlength: 50
+      }  
+    },
+   
+  });
+
+  jQuery.validator.addMethod("emailRegex", function(value, element) { 
+    return this.optional(element) || /^[A-Z0-9_]+([\.][A-Z0-9_]+)*@[A-Z0-9-]+(\.[a-zA-Z]{2,3})+$/i.test(value);
+  }, "Please enter a valid email address.");
+
+
+});
+
+
+</script>

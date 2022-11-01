@@ -1,0 +1,72 @@
+	<div class="journey-request-tabs">
+					<div class="text-right filter-s">
+
+						<label>Filter</label>
+						   <%= select_tag "Month", options_for_select(["Please Select","By Date", "By Weight", "By Price" ]) , id: "select_filter_type", class: "form-control" %>
+						</div>
+			 <% @carried_laggages&.each do |m| %>
+					
+					<div class="journey-request-part">
+						<div class="row">
+							<div class="col-sm-1">
+								<div class="indication yellow">
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<label>
+									<%= "#{m.try(:departure_country)}"%> ,<%= "#{m.try(:departure_state)}"%>
+								</label>
+								<div class="unit-content">
+									<i class="fa fa-calendar"></i>
+									<span> <%= "#{m.try(:date)&.to_date&.strftime("%B " "%d, " "%Y")}"%></span>
+								</div>
+							</div>
+							<div class="col-sm-3 text-center">
+								<label><i class="fa fa-arrow-right"></i></label>
+								<div class="unit-content">
+									<i class="fa fa-balance-scale" aria-hidden="true"></i>
+									<span><%= "#{m.try(:total_weight)}"%> <%= m.try(:package_details).first.try(:weight_unit)%></span>
+									
+								</div>
+							</div>
+							<div class="col-sm-4 text-right">
+								<label>
+									<%= "#{m.try(:arrival_country)}"%> ,<%= "#{m.try(:arrival_state)}"%>
+								</label>
+								<div class="unit-content">
+									<i class="fa fa-money"></i>
+									<span>$ <%= Transaction.find_by(laggage_id: m.id).try(:total_amount)%></span>
+								</div>
+							</div>
+						</div>
+					</div>
+			     <%end%>
+
+	             <%#= will_paginate @journeyrequests,  renderer: BootstrapPagination::Rails %>
+	             <%#= will_paginate @journeyrequests, :param_name => 'page_1', :type => 'pending',renderer: BootstrapPagination::Rails %>
+	             <div class="table_pagination text-right">
+    <div class="btn-group btn-group-custom" role="group pull-right">
+      <%#=will_paginate @pending_requests, :param_name => 'page_1', renderer: BootstrapPagination::Rails %>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+$("#select_filter_type").change(function(){
+  var filt = $(this).val();
+  $.ajax({
+           url:"/admin/journeyrequests/sort_order",
+           type:"GET",
+           data: {filt: filt } 
+     });
+});  
+</script>
+
+<style type="text/css">
+</style>
+<style type="text/css">
+.filter-s select{width:80px;display:inline-block;}
+.journey-request-tabs{height:600px;overflow-y:auto;}
+</style>

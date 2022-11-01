@@ -1,0 +1,8 @@
+$("#carried").html('<%=escape_javascript(render :partial => "carried_laggages", sent_laggages: @sent_laggages, received_laggages: @received_laggages,  carried_laggages: @carried_laggages).html_safe %>');
+
+
+$("#sent").html('<%=escape_javascript(render :partial => "sent_laggages", sent_laggages: @sent_laggages, received_laggages: @received_laggages,  carried_laggages: @carried_laggages).html_safe %>');
+
+
+$("#received").html('<%=escape_javascript(render :partial => "received_laggages", sent_laggages: @sent_laggages, received_laggages: @received_laggages,  carried_laggages: @carried_laggages).html_safe %>');
+

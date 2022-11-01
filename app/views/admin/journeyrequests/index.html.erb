@@ -1,0 +1,45 @@
+<div class="content">
+		
+	<div class="global-heading">Journey / Request Logs</div>
+	<div class="journey-request-block">
+		<ul class="nav nav-tabs">
+			
+			<li class="active"><a data-toggle="tab" href="#carried">CARRIED</a></li>
+			<li><a data-toggle="tab" href="#sent">SENT</a></li>
+			<li><a data-toggle="tab" href="#received">RECEIVED</a></li>
+		</ul>
+		
+		<div class="tab-content">
+			<div id="carried" class="tab-pane fade in active">
+			  <div id = "pending_request" class = "pending_request_class">
+                 <%= render 'pending' %>
+              </div>
+			 </div>
+			<div id="sent" class="tab-pane fade">
+	          <div id = "accepted_request">
+                   <%= render 'accepted' %>
+	          </div>
+			</div>
+			
+			<div id="received" class="tab-pane fade">
+		      <div id = "received_request">
+                 <%= render 'received' %>
+		      <div>
+			</div>
+		</div>
+	   </div>			
+     </div>			
+    </div>
+   </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+     $(function() {
+     $(document.body).on("click", ".pagination a", function(){
+       $.getScript(this.href);
+       return false;
+     });
+   });
+ </script>

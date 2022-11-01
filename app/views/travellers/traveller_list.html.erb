@@ -1,0 +1,26 @@
+
+	  <section class="common-banner-sec text-center" style="background-image:url(/assets/about-banner.png);">
+          <div class="banner-text-parent">
+            <div class="banner-text-child">
+              <h1>Ship Anything, Anytime, Anywhere</h1>
+              <p class="common-paragraph">There is no hidden place where you wouldn’t go, and where your parcel will not reach. </p>
+            </div>
+         </div>
+    </section>
+	  
+      <!-- Main Start -->
+      <main>
+        <section class="sender-main-sec">
+            <div class="container">
+               <div class="sender-sec text-center">
+                  <h3 class="sender-heading">You have searched for travelers going from <%= @departure[0] %>,<%=@departure[1]%> to <%= @arrival[0] %>,<%=@arrival[1]%> on <%= @date%></h3>
+                  <p class="common-paragraph">There are <%= @list.count %> travelers, who are travelling to your destination city on <%= @date%></p>
+                  <p class="common-paragraph"><a href="/user_sessions/new">Login </a> or <a href="/users/new">Register</a> to view the travelers information and book your shipping to be delivered
+                  </p>
+                </div> 
+           </div>
+        </section> 
+
+      </main>
+      <!-- Main End -->
+     

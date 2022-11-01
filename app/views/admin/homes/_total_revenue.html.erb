@@ -1,0 +1,17 @@
+<div class="col-sm-12">
+<div id="random_chart_id2" class="graph">
+        <%= column_chart @hash1, id: SecureRandom.hex(7), width: "100%", height: "250px", library: {
+      title: {text: 'Total Revenue By Date'},
+      yAxis: {
+          title: {
+              text: 'Amount(in dollars)'
+          }
+      },
+      xAxis: {
+          title: {
+              text: 'Dates'
+          }
+      }
+      }%>
+      </div>
+      </div>

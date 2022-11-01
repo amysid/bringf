@@ -1,0 +1,15 @@
+ <div id="random_chart_id" class="graph">
+        <%= column_chart @hash, id: SecureRandom.hex(7), width: "100%", height: "250px", library: {
+      title: {text: 'State wise revenue(Based on revenue)'},
+      yAxis: {
+          title: {
+              text: 'Amount(in dollars)'
+          }
+      },
+      xAxis: {
+          title: {
+              text: 'State Names'
+          }
+      }
+      }%>
+      </div>

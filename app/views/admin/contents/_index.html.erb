@@ -1,0 +1,33 @@
+<div class=" clearfix">
+       
+         <div class="table-responsive cus-table">
+           <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  
+                  <th>Title</th>
+                  <th>Slug</th>
+                  <th>Published</th>
+                  <th colspan="3">Actions</th>
+                </tr>
+              </thead>
+             
+              <tbody>
+                 <% @contents.each do |m| %>
+                <tr>
+                  
+                  <td><%= "#{m.try(:title)}" %></td>
+                  <td><%= "#{m.try(:slug)}" %></td>
+                  <td><%= "#{m.try(:published)}"%></td>
+                  <td><%= link_to 'Edit', edit_admin_content_path(m),:class=>"btn btn-success", method: :get %>
+                  <%= link_to 'Delete', admin_content_path(id: m.id),:data => {:confirm => "Are you sure you want to delete this content?"},:class=> "btn btn-danger", method: :delete %></td>
+                  <% end %> 
+                </tr>
+              </tbody>
+            </table>
+           <%= will_paginate @contents,  renderer: BootstrapPagination::Rails %>
+
+
+
+        </div>
+      </div>

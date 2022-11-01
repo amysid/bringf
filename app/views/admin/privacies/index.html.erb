@@ -1,0 +1,40 @@
+<section class="content">
+      
+      <div class="row">
+        <div class="col-sm-6">
+           <!-- <div class="ownerlist-heading">Frequently Asked Questions</div> -->
+           <div class="global-heading user-head">Privacy & Statement</div>
+        </div>
+      <!--   <div class="col-sm-6 text-right">
+          <%#= link_to "Create a new FAQ", new_admin_faq_path, :class => "btn btn-default btn-createSalon" %>
+        </div> -->
+      </div>
+      <div class="global-box clearfix">
+        <div class="table-responsive cus-table">
+           <table class="table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Title</th>
+                  <th>Body</th>
+                  <th colspan="3">Action</th>
+                </tr>
+              </thead>
+              <% @privacies.each do |m| %>
+              <tbody>
+                <tr>
+                  <td><%= m.try(:id) %></td>
+                    <td><%= m.try(:title) %></td>
+                    <td><%= m.try(:body) %></td>
+                    <td><%#= link_to 'View', admin_faq_path(m) %></td>
+                    <td><%= link_to 'Edit', edit_admin_privacy_path(m) %></td>
+                    <td><%#= link_to 'Delete', admin_faq_path(id: m.id),:data => {:confirm => "Are you sure you want to delete"}, method: :delete %></td>
+                </tr>
+              </tbody>
+              <% end %>
+            </table>
+            <%#= will_paginate @faqs, :param_name => 'page_1', renderer: BootstrapPagination::Rails %>
+
+        </div>
+      </div>
+    </section>

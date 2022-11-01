@@ -1,0 +1,2 @@
+class ReceiverStatus < ApplicationRecord
+end

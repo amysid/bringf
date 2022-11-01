@@ -1,0 +1,134 @@
+                                 <div class="row">
+                                    <div class="col-sm-7 col-md-9">
+                                       <h3 class="page-head">Transactions</h3>
+                                    </div>
+                                     <div class="col-sm-5 col-md-3">
+                                       <div class="text-right">
+                                        
+                                        <label>Filter by</label>
+                                           <%= select_tag "Month", options_for_select(["Please Select","By Date", "By Weight", "By Price" ]) , id: "received_filter", class: "form-control" %>
+                                        
+                                     </div>
+                                    </div>
+                                 </div>
+                                     <div class="dash-transaction-block">
+                                  <%  @received_laggages&.each do |m| %>
+                                    <ul class="transaction-list">
+                                       <li>
+                                          <span class="city-img"><img src="/assets/city-img2.png" alt="city-img"/></span>
+                                          <div class="transaction-list-inner clearfix">
+                                             <div class="f-left ariv-city"><span><%= "#{m.try(:departure_state)}"%>,<%= "#{m.try(:departure_city)}"%></span></div>
+                                             <div class="f-right depart-city"><span><%= "#{m.try(:arrival_state)}"%>,<%= "#{m.try(:arrival_city)}"%></span></div>
+                                          </div>
+                                          <div class="transaction-info clearfix">
+                                             <div class="billing-date"><img src="/assets/cal.png" alt="calendar icon"/><%= "#{m.try(:date)&.to_date&.strftime("%B " "%d, " "%Y")}"%></div>
+                                             <div class="billing-date"><img src="/assets/weight-icon.png" alt="calendar icon"/><%= "#{m.try(:total_weight)}"%><%= m.try(:package_details).first.try(:weight_unit)%></div>
+                                             <div class="billing-date"><img src="/assets/cash-icon.png" alt="calendar icon"><%= Traveller.find_by(id: m.traveller_id).arrival_date.to_date&.strftime("%B " "%d, " "%Y")%></div>
+                                          </div>
+                                          <div class="trans-btn-block">
+                                           <!-- <button class="btn btn-gray">Detail</button> -->
+                                           <% if m.status == "received" %>
+                                           <%= link_to 'Delivered', "#",disabled: true,:class=>"btn btn-danger" %>
+                                           <%else%>
+                                           <%= link_to 'Deliver', receiver_deliver_status_dashboards_path(id: m.id),:data => {:confirm => " luggage delivered?"},:class=>"btn btn-warning" %>
+                                           <%end%>
+                                           <td><button class="btn btn-warning" type="button" data-toggle="modal" data-target="#viewreceived_<%= m.id%>">View Detail</button></td>
+                                      </div>
+                                          
+                                            <!-- view -->
+                                 <%= form_tag('/cancel_request', method: :post,id: "request_form") do %>
+                        <div class="modal fade global-modal2" id="viewreceived_<%= m.id %>" role="dialog">
+                           <div class="modal-dialog">
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <!-- service_view Modal -->
+                                    <h4 class="modal-title">View Request</h4>
+                                 </div>
+                                 <div class="modal-body">
+                                    <ul class="view-servicemodal horizontal_labels">
+                                       <li>
+                                          <label>Meeting Address</label> 
+                                          <span><%= Traveller.find_by(id: m.traveller_id).try(:arrival_meeting_address)%> ,<%= Traveller.find_by(id: m.traveller_id).try(:arrival_meeting_country)%> ,<%= Traveller.find_by(id: m.traveller_id).try(:arrival_meeting_state)%> ,<%= Traveller.find_by(id: m.traveller_id).try(:arrival_meeting_city)%> ,<%= Traveller.find_by(id: m.traveller_id).try(:arrival_meeting_zip)%></span>
+                                       </li>
+                                       <li>
+                                          <label> Contanct Person</label>
+                                          <span><%= Traveller.find_by(id: m.traveller_id).try(:contact_person)%> </span>
+                                       </li>
+                                       <li>
+                                          <label> Contact Number </label>
+                                          <span><%= Traveller.find_by(id: m.traveller_id).try(:contact_phone)%></span>
+                                       </li>
+                                       <li>
+                                          <label> Receiving Date </label>
+                                          <span><%= Traveller.find_by(id: m.traveller_id).try(:arrival_date).try(:to_date)&.strftime("%B " "%d, " "%Y")%></span>
+                                       </li>
+                                       <li>
+                                          <label> Last date to receive item </label>
+                                          <span><%= Traveller.find_by(id: m.traveller_id).try(:last_date_to_recieve_item).try(:to_date)&.strftime("%B " "%d, " "%Y")%></span>
+                                       </li>
+                                       <li>
+                                              <!-- <label>Package Image </label> -->
+                                              <div class="owl-carousel owl-theme">
+                                                  <%m.package_details.each do |pd|%>
+                                                  <%pd.images.each do |i|%>
+                                                
+                                                    <div class="item"><%= image_tag(i.package_image.url) %></div>
+                                                   
+                                                    <%end%>
+                                                    <%end%>
+                                                   
+                                                </div>
+                                               </li>
+                                
+                                       <%= hidden_field_tag "laggage_id", m.id %>
+                                       <%#= hidden_field_tag "departure_country", f.departure_country %>
+                                       <%#= hidden_field_tag "weight", f.total_weight %>
+                                       <%#= hidden_field_tag "amount", f.total_amount %>
+                                    </ul>
+                                 
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <% end %>
+                              <!-- view end -->
+
+                                       </li>
+                                    </ul>
+                                    <% end %>
+                                    <div class="btn-group btn-group-custom" role="group pull-right">
+                                      <%#= will_paginate @received_laggages, :param_name => 'page_3', renderer: BootstrapPagination::Rails %>
+                                    </div>
+                                 </div>
+
+
+  <script>
+      $("#received_filter").change(function(){
+       var received_filter = $(this).val();
+       $.ajax({
+           url:"/dashboards/sort_by_filter",
+           type:"GET",
+           data: {received_filter: received_filter } 
+     });
+});  
+</script>
+
+<script>
+jQuery(".view_det").click(function(){
+  var id = "#travel_earning"+$(this).val();
+  jQuery(id).toggle();
+ 
+});
+
+
+jQuery('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+     nav:true,
+     items: 1,
+   autoPlay: 2000,
+     responsive: true
+});
+</script>

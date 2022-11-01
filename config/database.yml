@@ -1,0 +1,32 @@
+
+
+
+default: &default
+  adapter: postgresql
+  username: postgres
+  password: postgres
+  host: localhost
+  port: 5432
+  timeout: 5000
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= Rails.application.secrets.RAILS_MAX_THREADS %>
+
+development:
+  <<: *default
+  database: BringItFast_development
+
+test:
+  <<: *default
+  database: BringItFast_test
+
+production:
+  database: BringItFast_production
+  adapter: postgresql
+  username: postgres
+  password: postgres
+  host: localhost
+  port: 5432
+  timeout: 5000
+  encoding: unicode

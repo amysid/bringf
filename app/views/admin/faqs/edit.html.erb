@@ -1,0 +1,98 @@
+<!-- <section class="content">
+    <div class="global-heading">Edit Question Answer</div>
+    <%#= form_for(:faq, url: admin_faq_path, method: :put,html: {:id=>"edit_faq"}) do |f| %>
+      <div class="global-box clearfix">
+        <div class="global-view">
+          <div class="details-row">
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Question</label>
+                <span class="col-sm-8 control-label"><%#= f.text_field :question,:value => @faq.try(:question) %></span>
+              </div>
+            </div>
+          </div>
+          <div class="details-row">
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Answer</label>
+                <span class="col-sm-8 control-label"><%#= f.text_field :answer,:value => @faq.try(:answer) %></span>
+              </div>
+            </div>
+          </div>
+          <%#= f.hidden_field :id, value: "#{@faq.try(:id)}" %>
+        </div>
+      <div class="col-sm-12 btn_save-cancel text-center">
+        <button type="submit" class="btn btn-default common-btn black">SUBMIT</button>
+        <%#= link_to "CANCEL", admin_faqs_path, class: "btn btn-default common-btn grey" %>
+      </div>
+      </div>
+    <%# end %>  
+</section> -->
+
+
+
+<section class="content">
+      <div class="clearfix">
+        <div class="global-heading user-head">Edit Question Answer</div>
+      </div>
+    <div class="boxoutter-form"> 
+       <fieldset class="global-fieldset">
+              <legend>Edit Statement & Privacy</legend>
+          <div class="content-form">
+            <%= form_for(:faq, url: admin_faq_path, method: :put,html: {:id=>"edit_faq"}) do |f| %>
+            <%#= form_for [:admin, @privacy], html: { id: "admin_content"} do |f|%>
+            
+              <div class="form-group">
+                           <label for="">Question<span class="required">*</span> </label>
+                          
+                           <%= f.text_field :question, :readonly => true, class: "form-control custom-control",  placeholder: "Title"%>
+                        
+                           
+              </div>
+              <div class="form-group">
+                           <label for="">Answer<span class="required">*</span> </label>
+                           
+                           <%= f.cktext_area :answer, class: "form-control", placeholder: "", required: true%>
+                           
+                           
+              </div>
+             <%= f.hidden_field :id, value: "#{@faq.try(:id)}" %>
+              <div class="form-group">
+                    
+                    <div class="form-add">
+                      
+                       <%= submit_tag 'Submit', :class => "btn btn-primary btn-md"%>
+                       <%= link_to "CANCEL", admin_faqs_path, class: "btn btn-default common-btn grey" %>
+                    </div>
+                  </div>
+        
+
+            
+            <%end%>
+           </div>
+         </fieldset>
+        </div>
+</section>
+
+
+<style type="text/css">
+
+
+.form-control.custom-control.txarea{height: auto;
+resize: none;
+min-height: 190px;}
+.content-form{max-width: 600px;width: 100%;padding: 20px;}
+.content-form .aduser-btn{float: none;}
+.boxouter-form h5{position: relative;padding-left: 30px;font-size: 18px;color: #000;margin-top: 30px;}
+.boxouter-form h5:before{position: absolute;
+content: "";
+background: #000;
+top: 0px;
+left: 0;
+height: 1px;
+width: 100%;}
+.boxouter-form{border:1px solid #000;border-top: 0;}
+
+
+
+</style>

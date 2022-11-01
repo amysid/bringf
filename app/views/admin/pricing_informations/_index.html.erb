@@ -1,0 +1,36 @@
+<div class="userlist-block">
+	
+			        <div class="table-responsive cus-table">
+			           <table class="table table-bordered table-striped">
+			              <thead>
+			                <tr>
+			                  
+			                  <th>Country</th>
+			                  <th>Published</th>
+			                
+			                  <!-- <th>Age</th> -->
+			                  <th colspan="3">Actions</th>
+			                </tr>
+			              </thead>
+			               <% @pricing_informations&.each do |m| %>
+			              <tbody>
+			                <tr>
+			                  
+			                 <!--  <td></td> -->
+
+			                 <td><%= find_country_name_by_country_id(m.country_id) %></td>
+                             <td><%= "#{m.is_publish?}"%></td>
+			             
+			                  <td>
+			                  	<%= link_to 'Edit', edit_admin_pricing_information_path(id: m.id),:class=>"btn btn-success" %>
+			                  	 <%= link_to 'Delete', admin_pricing_information_path(id: m.id),:data => {:confirm => "Are you sure you want to delete this pricing information ?"},:class=>"btn btn-danger" , method: :delete %>
+			          		</td>
+			      
+			                </tr>
+			              </tbody>
+			              <% end %>
+			            </table>  
+         <%= will_paginate @pricing_informations,  renderer: BootstrapPagination::Rails if @pricing_informations.present? %>
+
+			        </div>
+      			</div>

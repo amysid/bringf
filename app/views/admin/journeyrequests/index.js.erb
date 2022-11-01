@@ -1,0 +1,3 @@
+$("#pending_request").html('<%=escape_javascript(render :partial => "pending", received_laggages: @received_laggages, carried_laggages: @carried_laggages,   sent_laggages: @sent_laggages).html_safe %>');
+$("#accepted_request").html('<%=escape_javascript(render :partial => "accepted", received_laggages: @received_laggages, carried_laggages: @carried_laggages,   sent_laggages: @sent_laggages ).html_safe %>');
+$("#received_request").html('<%=escape_javascript(render :partial => "received", received_laggages: @received_laggages, carried_laggages: @carried_laggages,   sent_laggages: @sent_laggages).html_safe %>');

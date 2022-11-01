@@ -1,0 +1,113 @@
+
+      <section class="content">
+      <div class="clearfix">
+        <div class="global-heading user-head">Transaction Details</div>
+      </div>
+     
+     <div id="content-content">
+        <%#= render partial: "index"%>
+        <div class=" clearfix">
+       
+         <div class="table-responsive cus-table">
+           <table class="table table-bordered table-striped">
+             <h3>User Details</h3>
+              <thead>
+                <tr>
+                  
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                
+                </tr>
+              </thead>
+             
+              <tbody>
+                <tr>
+                  
+                  <td><%= @user.try(:first_name) %></td>
+                  <td><%= @user.try(:last_name) %></td>
+                  <td><%= @user.try(:email) %></td>
+                  
+                </tr>
+              </tbody>
+             
+            </table>
+
+        </div>
+      
+
+
+         <div class="table-responsive cus-table">
+           <table class="table table-bordered table-striped">
+             <h3>Bank Details</h3>
+
+              <thead>
+                <tr>
+                  
+                  <th>Account Number</th>
+                  <th>Holder Name</th>
+                  <th>IFSC Code</th>
+                  <th>Account Type</th>
+                </tr>
+              </thead>
+             
+              <tbody>
+                <tr>
+                  
+<td> <%= @user.bank_detail.account_number rescue nil%></td>
+<td> <%= @user.bank_detail.holder_name rescue nil%></td>  
+<td> <%= @user.bank_detail.spacial_code rescue nil%></td>
+<td> <%= @user.bank_detail.account_type rescue nil%></td>
+                </tr>
+              </tbody>
+             
+            </table>
+
+        </div>
+
+
+
+
+    
+         <div class="table-responsive cus-table">
+           <table class="table table-bordered table-striped">
+               <h3>Luggage Details</h3>
+
+              <thead>
+                <tr>
+                  
+                  <th>Departure Country</th>
+                  <th>Departure State</th>
+                  <th>Departure City</th>
+                  <th>Arrival Country</th>
+                  <th>Arrival State</th>
+                  <th>Arrival City</th>
+                  <th>Total Weight</th>
+                
+                </tr>
+              </thead>
+             
+              <tbody>
+                <tr>
+                  
+                  <td><%= @laggage.departure_country rescue nil%></td>
+                  <td><%= @laggage.departure_state rescue nil%></td>
+                  <td><%= @laggage.departure_city rescue nil%></td>
+                  <td><%= @laggage.arrival_country rescue nil%></td>
+                  <td><%= @laggage.arrival_state rescue nil%></td>
+                  <td><%= @laggage.arrival_city rescue nil%></td>
+                  <td> <%= @laggage.total_weight rescue nil%> <%= @laggage.try(:package_details).first.try(:weight_unit)%></td>
+                  
+                </tr>
+              </tbody>
+             
+            </table>
+
+        </div>
+
+      </div>
+     </div>
+    </section>
+
+
+

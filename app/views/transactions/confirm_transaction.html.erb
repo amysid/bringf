@@ -1,0 +1,67 @@
+   
+    
+    <div id="confirm_transaction11" class="modal fade global-modal" role="dialog" data-backdrop="static">
+         <div class="modal-dialog">
+            
+            <%= form_tag('/create_receiver', method: :post,id: "transaction_form") do %>
+               <div class="modal-content">
+                  <div class="modal-body">
+                     <h4 class="modal-head">Add Receiver</h4>
+                     <div class="form-box common-form">
+                        <div class="form-group">
+                           <%=  text_field_tag 'email', nil,class: "form-control text-center", placeholder: "Receiver Emai ID" , required: true%>
+                        </div>
+                        <div class="submit-btn-block">
+                           <button class="btn btn-dark-red" type="submit">NOTIFY RECEIVER</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <%end%>
+         </div>
+      </div>
+
+
+
+    <script>
+    if ( window.location.pathname == "/confirm_transaction" ) {
+      setTimeout(function(){
+        $('#confirm_transaction11').modal('show'); 
+      },1000);
+      
+    }
+    </script>
+
+
+    <script>
+   
+jQuery(document).ready(function(){
+  
+  jQuery("#transaction_form").validate({
+ 
+    
+    rules: {
+     
+      "email":{
+        required: true,
+        emailRegex: true,
+        maxlength: 50
+      }
+         
+    },
+   
+  });
+
+  
+  jQuery.validator.addMethod("emailRegex", function(value, element) { 
+    return this.optional(element) || /^[A-Z0-9_]+([\.][A-Z0-9_]+)*@[A-Z0-9-]+(\.[a-zA-Z]{2,3})+$/i.test(value);
+  }, "Please enter a valid email address.");
+  
+  
+});
+
+
+</script>
+
+
+

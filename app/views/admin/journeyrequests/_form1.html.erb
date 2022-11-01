@@ -1,0 +1,383 @@
+
+      <section class="common-banner-sec text-center" style="background-image:url(/assets/traveller-banner.png);">
+         <div class="banner-text-parent">
+            <div class="banner-text-child">
+               <h1>Ship Anything, Anytime, Anywhere</h1>
+               <p>There is no hidden place where you wouldn’t go, and where your parcel will not reach.  </p>
+            </div>
+         </div>
+      </section>
+      <!-- Main Start -->
+      <main>
+         <section class="sender-treveller-section common-section">
+            <div class="container">
+               <!-- <form class="traveller-form sender-register-form"> -->
+                   <%= nested_form_for Laggage.new, url: senders_path, method: :post, html: {id: "sender-sign-up-form", class: "traveller-form sender-register-form"} do |f| %>
+                  <fieldset>
+                     <legend>Request Details</legend>
+                     <div class="form-box common-form">
+                        <div class="row">
+                           <div class="col-sm-6">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <label class="control-label">Mode Of Travel</label>
+                                       <%= f.select :mode_of_travel,options_for_select(["Plane", "Bus", "Train", "Ship"]), {:include_blank => false},class:  "form-control blackdropicon", id:"mode_of_travel"  %> 
+                                    
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <div class="form-group">
+                                       <!-- <input placeholder="Date" class="form-control datepicker" type="text"/> -->
+                                       <%= f.text_field :date, class: "form-control custom-control", id: "date1", placeholder: "Date"%>
+                                    </div>
+                                 </div>
+                                 
+                                 <div class="col-sm-6">
+                                    <div class="form-group">
+                                       <!-- <input placeholder="Time" class="form-control datepicker" type="text"/> -->
+                                       <%= f.text_field :time, class: "form-control timepicker",  placeholder: "Time", id: "time1"%>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="row">
+                           <div class="col-sm-6">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <label class="control-label">Departure</label>
+                                          <%= f.select :departure_country, Country.all.order("country_name asc").collect {|s| [s.country_name]},{:prompt => "Select Country"},  :include_blank => true, :class => "form-control blackdropicon", id: "sender_departure_country"%>
+                                         <!--  <select class="form-control blackdropicon">
+                                          </select> -->
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <div class="form-group">
+                                           <%= f.select(:departure_state,(@states),{:include_blank => "Please select state"}, { :class => 'form-control blackdropicon',id: "sender_departure_state" }) %>
+                                          
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <div class="form-group">
+                                            
+                                            <%#= f.text_field :departure_city, class: "form-control custom-control",  placeholder: "Departure City"%> 
+                                            <%= f.select :departure_city , CS.cities((CS.states(CS.countries.key(:departure_country))).key(:departure_state).to_s, CS.countries.key(:departure_state).to_s),{:include_blank => "Please select city"}, class: "form-control blackdropicon" %> 
+                                       </div>
+                                    </div>
+                                   
+                                    
+                                 </div>
+                              </div>
+                             <div class="col-sm-6">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <label class="control-label">Arrival</label>
+                                           <%= f.select :arrival_country, Country.all.order("country_name asc").collect {|s| [s.country_name]},{:prompt => "Select Country"},  :include_blank => true, :class => "form-control blackdropicon", id: "sender_arrival_country"%>
+                                        
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <div class="form-group">
+                                            <%= f.select(:arrival_state,(@states),{:include_blank => "Please select state"}, { :class => 'form-control blackdropicon',id: "sender_arrival_state" }) %>
+                                         
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <div class="form-group">
+                                           <%#= f.text_field :arrival_city, class: "form-control custom-control",  placeholder: "Arrival City"%>
+                                           <%= f.select :arrival_city , CS.cities((CS.states(CS.countries.key(:departure_country))).key(:departure_state).to_s, CS.countries.key(:departure_state).to_s),{:include_blank => "Please select city"}, class: "form-control blackdropicon" %> 
+                                       </div>
+                                    </div>
+                                    
+                                    
+                                 </div>
+                              </div>
+                        </div>
+                     </div>
+                  </fieldset>
+				  
+              <fieldset>
+                     <legend>Package Details</legend>
+                     <div class="form-box common-form">
+				     <%= f.fields_for :package_details do |package_details_form|%>
+                 <%= render 'package_details', :a => package_details_form %>
+                <%end%>
+               </div>
+
+               <div class="row">
+                <div class="col-sm-12" style="margin-bottom: 20px;">
+                 <div class="addmore-quantity">
+                 <%= f.link_to_add 'Add More Package'.html_safe, :package_details, class: "btn btn-dark-red" %>
+                   <!-- <p><%#= f.link_to_add "Add a Pacckage", :package_details %></p> -->
+                 </div>
+                </div>
+              </div>
+             </fieldset>
+				  
+				  
+				  <fieldset>
+                     <legend>Description</legend>
+                     <div class="form-box common-form">
+					 
+					    
+						
+						  <div class="col-sm-6">
+						    <div class="form-group">
+						     
+                       <%= f.cktext_area :description, class: "form-control", placeholder: "", required: true%>
+						   </div>
+						  </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                   
+                    <%= f.text_field :value_of_shipment, class: "form-control",  placeholder: "Value of shipment"%>
+                  </div>
+                </div>
+              </div>
+            </div>
+				</fieldset>
+
+
+                               
+
+				  
+                 <div class="submit-btn-block">
+						<!-- <button class="btn btn-dark-red">CANCEL</button> -->
+            <%= link_to "CANCEL", dashboards_path, :class=> "btn btn-dark-red" %>
+						<!-- <button class="btn btn-gray">SEARCH</button> -->
+                  <%= f.submit 'SEARCH', :class => "btn btn-gray"%>
+					  </div>
+               <!-- </form> -->
+               <% end %>
+               <!-- Form End -->
+            </div>
+         </section>
+       
+      </main>
+      <!-- Main End -->
+
+
+<script type="text/javascript">
+          $(document).on('ready page:change', function() {
+        $('#time1').datetimepicker({
+         format: 'LT'
+        });
+
+        $('#date1').datetimepicker({
+         format: 'LL',
+         minDate:  new Date().setHours(0,0,0,0)
+
+        });
+    });
+
+
+        </script>
+
+ <script>
+jQuery("#sender_departure_country, #sender_arrival_country").change(function(){
+  var state_value = jQuery(this).val();
+  var slider = "#" + this.id;
+ jQuery.ajax({
+ 
+   url:  "/senders/country_change",
+      type: "POST",
+      data: { country_name: state_value
+
+      },
+       dataType: "JSON",
+       success: function(response){
+       console.log(response); 
+       var str="";
+       jQuery.each( response.state , function(i,l){
+                     str += '<option value="'+l+'">' + l+'</option>';
+                      
+                 
+                  });
+    if(slider == "#sender_departure_country") {
+       jQuery('#sender_departure_state').empty().append('<option value="">Select State</option>');
+       jQuery('#sender_departure_state').append(str);
+
+     } else if(slider == "#sender_arrival_country"){
+        jQuery(' #sender_arrival_state').empty().append('<option value="">Select State</option>');
+       jQuery(' #sender_arrival_state').append(str);
+
+     }
+     
+
+      }
+
+       });
+
+});
+</script>
+
+
+  <script>
+  jQuery(document).ready(function(){
+  
+    jQuery("#sender-sign-up-form").validate({
+ 
+    
+      rules: {
+        "laggage[date]":{
+          required: true
+       
+        },
+      
+
+        "laggage[time]":{
+          required: true
+       
+        },
+      
+        "laggage[departure_country]":{
+          required: true
+       
+        },
+        "laggage[departure_state]":{
+          required: true
+       
+        },
+       
+        "laggage[mode_of_travel]":{
+          required: true
+      
+      
+        },
+                 
+             
+      
+         "laggage[arrival_country]":{
+          required: true
+       
+        },
+        "laggage[arrival_state]":{
+          required: true
+       
+        },
+        
+        "laggage[package_details_attributes][1522240559743][package_content]":{
+             required: true,
+             userRegex: true
+
+        },
+         "laggage[package_details_attributes][1522240992987][weight]":{
+             required: true
+            
+       
+     }
+    
+      
+           
+         
+      },
+   
+    });
+  
+    jQuery.validator.addMethod("regxfloat", function(value, element, regexpr) {          
+      return regexpr.test(value);
+     }, "Please enter only digits.");
+
+  
+    jQuery.validator.addMethod("userRegex", function(value, element) {
+      return this.optional(element) || /^(?=[^@]*[A-Za-z])([a-zA-Z -])+$/i.test(value);
+    }, "Please enter characters only.");
+
+    jQuery.validator.addMethod("noSpace", function(value, element) { 
+      return value.indexOf(" ") < 0;
+    }, "No space please.");
+
+    jQuery.validator.addMethod("emailRegex", function(value, element) { 
+      return this.optional(element) || /^[A-Z0-9_]+([\.][A-Z0-9_]+)*@[A-Z0-9-]+(\.[a-zA-Z]{2,3})+$/i.test(value);
+    }, "Please enter a valid email address.");
+
+
+
+  });
+
+
+
+
+
+
+  </script>
+
+
+<script> 
+  
+   jQuery(document).on('change', '#sender_departure_state', function(e){
+    var input_state = $(this);
+          var state_value = $(this).val();
+          var user_city = $("#laggage_departure_city");
+          if($(this).val() == "") {
+          user_city.html("");
+   
+          } else {
+               var opt = '<option value="" selected="">Please select city</option>';
+                   $.ajax({
+                    type: 'POST',
+                    url: '/senders/state_change',
+                    data: {
+                      state_name: state_value, country_name: $('#sender_departure_country').val()
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                            if(data.length == 0){
+   
+                              } else {
+                                  $.each(data.city, function(k,v) {
+                                    console.log(data);
+                                      opt += '<option value='+ v +'>' + v + '</option>';
+                                  });
+                                  user_city.html(opt);
+   
+                            }
+                       }
+                  });
+              }
+      });  
+   
+   
+</script>
+
+<script> 
+  
+   jQuery(document).on('change', '#sender_arrival_state', function(e){
+    var input_state = $(this);
+          var state_value = $(this).val();
+          var user_city = $("#laggage_arrival_city");
+          if($(this).val() == "") {
+          user_city.html("");
+   
+          } else {
+               var opt = '<option value="" selected="">Please select city</option>';
+                   $.ajax({
+                    type: 'POST',
+                    url: '/senders/state_change',
+                    data: {
+                      state_name: state_value, country_name: $('#sender_arrival_country').val()
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                            if(data.length == 0){
+   
+                              } else {
+                                  $.each(data.city, function(k,v) {
+                                    console.log(data);
+                                      opt += '<option value='+ v +'>' + v + '</option>';
+                                  });
+                                  user_city.html(opt);
+   
+                            }
+                       }
+                  });
+              }
+      });  
+   
+   
+</script>

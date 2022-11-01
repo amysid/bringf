@@ -1,0 +1,36 @@
+
+    <section class="content">
+      <div class="clearfix">
+        <div class="global-heading user-head">Country Management</div>
+        <div class="aduser-btn"><a href="/admin/countries/new" class="btn btn-add"><i class="fa fa-plus"></i>Add Country</a></div>
+      </div>
+      <div class="clearfix">
+        <fieldset class="global-fieldset">
+        <legend>Filter</legend>
+        <div class="filter-form">
+        <!-- <form action="/admin/users" method="get" accept-charset="UTF-8" enctype="multipart/form-data" id="web-user-val" class="form-common clearfix"> -->
+         <%= form_tag "/admin/countries", method: :get,  class:"form-common clearfix", remote: true do  %>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label>NAME</label>
+              <!-- <input type="text" class="form-control custom-control " name="user_name"> -->
+              <input type="text" name="search" class="form-control custom-control" placeholder="SEARCH COUNTRY" id="country_serch">
+            </div>
+          </div>
+         
+          <div class="col-sm-3">
+            <div class="filter-btn">
+              <button class="btn btn-primary"> <i class="fa fa-search"></i> Filter </button>
+            </div>
+          </div>
+          
+         
+        <!-- </form> -->
+        <%end%>
+      </div>
+    </fieldset>
+      </div>
+     <div id="country-content">
+        <%= render partial: "index"%>
+     </div>
+    </section>

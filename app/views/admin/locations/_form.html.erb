@@ -1,0 +1,384 @@
+ 
+  <section class="content">
+  <div class="global-heading"> Location Management</div>
+  		<fieldset class="global-fieldset">
+  						<legend>Location</legend>
+       
+      
+         <% if params[:action] == 'new' or params[:action] == 'create' %>
+            <div class="heading__custom text-center m-0">
+               <h2>Create Location</h2>
+            </div>
+        <% elsif params[:action] == 'edit' %>
+          <div class="heading__custom text-center m-0">
+               <h2>Edit Location</h2>
+            </div>
+         <%end%> 
+
+        <%= form_for [:admin, @location], :html => {:id => "add_staff"}  do |f| %>
+        
+            
+            <div class="location-manage-block">
+   
+ 
+                  <div class="form-group">
+                    <label for="">Location Name</label>
+                  <%= f.text_field :location_name, class: "form-control custom-control",  placeholder: "First Name"%></div>
+              
+               
+               
+                <div class="form-group">
+                     <label for="">Phone Number<span class="required">*</span> </label>
+                     <div class="row">
+                        <div class="col-sm-4">
+                          <%= f.select(:country_code, all_iso_codes, {:include_blank => "Dailing code"}, {:class => "form-control"}) %>
+                        </div>
+                        <div class="col-sm-8">
+                           <!-- <input type="text" class="form-control custom-control"> -->
+                           
+                            <%= f.text_field :phone_no, class: "form-control custom-control",  placeholder: "Phone Number"%>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="form-group">
+                     <label for="">Address<span class="required">*</span> </label>
+                      <%= f.collection_select(:country_id, Country.order(:country_name),:id,:country_name ,{:prompt => "Please select country"}, {:class => "form-control"}) %>
+                     
+
+               
+                     <div class="row sub-add">
+                        <div class="col-sm-4">
+                        <%#= f.text_field :state, class: "form-control custom-control",  placeholder: "State Name"%> 
+                         <%= f.select(:state,(@states),{:prompt => "Please select state"}, { :class => 'user_state select-dropdown form-control' }) %>
+
+                        </div>
+                        <div class="col-sm-8">
+                           <!-- <input type="text" class="form-control custom-control"> -->
+                           <%= f.text_field :city, class: "form-control custom-control",  placeholder: "City Name"%>
+                        </div>
+                     </div>
+                     <div class="sub-add">
+                        <!-- <input type="text" class="form-control custom-control"> -->
+                        <%= f.text_field :address, class: "form-control custom-control",  placeholder: "Address"%>
+                     </div>
+                     <!-- <input type="text" class="form-control custom-control"> -->
+                     <%= f.text_field :zip, class: "form-control custom-control",  placeholder: "Zip"%>
+                    
+                
+              
+              </div>
+               <%= f.fields_for :timing do |m| %>
+              <div class="row">
+               
+
+
+                <%# end %>
+                 <%#= p "-----m--------"%>
+                <div class="col-sm-12">
+                  <div class="opening-hours-section">
+                    <div class="opening-hours">
+                        OPENING HOURS
+                    </div>
+                    <div class="opening-hours-table table-responsive">
+                      <table class="table  custom-table noborder">
+                        <tbody>
+                          <tr>
+                            <td> Sunday </td>
+                            <td>
+                              <div class="day-checkbox">
+                               <%= m.hidden_field :day,:name => "location[timings_attributes][0][day]",:value => 'sunday' %>
+
+                              <%= m.check_box :is_open, id: "custom-checkbox-1", :class => "custom-checkbox", :name => "location[timings_attributes][0][is_open]",checked: open_close(@location,0) %>
+                              <label for="custom-checkbox-1"> Open </label>
+                              </div>
+                            </td>
+                            <td>
+                              <%= m.text_field :open_time, :class => "form-control b" ,:id => "sun_id" , :name => "location[timings_attributes][0][open_time]", :value => open_timing(@location,0)%>
+                            </td>
+                            <td>
+                           <%#= m.select :am_or_pm_open_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"sun_am_or_pm_id", name: "location[timings_attributes][0][am_or_pm_open_time]" %> 
+                            </td>
+                            <td> To </td>
+                            <td>
+                              <%= m.text_field :close_time, :class => "form-control b" ,:id => "sun1_id" , :name => "location[timings_attributes][0][close_time]",:value => close_timing(@location,0) %>
+                            </td>
+                            <td>
+                               <%#= m.select :am_or_pm_close_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"sun1_am_or_pm_id", name: "location[timings_attributes][0][am_or_pm_close_time]"  %> 
+                            </td>
+                          </tr>
+                          <tr>
+                            <td> Monday </td>
+                            <td>
+                              <div class="day-checkbox">
+                                <%= m.hidden_field :day,:name => "location[timings_attributes][1][day]", :value => 'monday' %>
+                              <%= m.check_box :is_open, id: "custom-checkbox-2", :class => "custom-checkbox" , :name => "location[timings_attributes][1][is_open]",checked: open_close(@location,1) %>
+                              <label for="custom-checkbox-2"> Open </label>
+                              </div>
+                            </td>
+                            <td>
+
+                          <%= m.text_field :open_time,:id => "mon_id", :class => "form-control b", :name => "location[timings_attributes][1][open_time]", :value => open_timing(@location,1) %>
+
+                            </td>
+                             <td>
+                           <%#= m.select :am_or_pm_open_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"mon_am_or_pm_id", name: "location[timings_attributes][1][am_or_pm_open_time]"  %> 
+                            </td>
+                            <td> To </td>
+                            <td>
+                              <%= m.text_field :close_time,:id => "mon1_id", :class => "form-control b" , :name => "location[timings_attributes][1][close_time]", :value => open_timing(@location,1) %>
+                            </td>
+                             <td>
+                           <%#= m.select :am_or_pm_close_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"mon1_am_or_pm_id", name: "location[timings_attributes][1][am_or_pm_close_time]"  %> 
+                            </td>
+                          </tr>
+                          <tr>
+                            <td> Tuesday </td>
+                            <td>
+                              <div class="day-checkbox">
+                                <%= m.hidden_field :day,:name => "location[timings_attributes][2][day]", :value => 'tuesday' %>
+                              <%= m.check_box :is_open, id: "custom-checkbox-3", :class => "custom-checkbox" , :name => "location[timings_attributes][2][is_open]" ,checked: open_close(@location,2) %>
+                              <label for="custom-checkbox-3"> Open </label>
+                              </div>
+                            </td>
+                            <td>
+                              <%= m.text_field :open_time,:id => "tue_id", :class => "form-control b", :name => "location[timings_attributes][2][open_time]" , :value => open_timing(@location,2) %>
+                            </td>
+                               <td>
+                           <%#= m.select :am_or_pm_open_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"tue_am_or_pm_id", name: "location[timings_attributes][2][am_or_pm_open_time]"  %> 
+                            </td>
+                            <td> To </td>
+                            <td>
+                              <%= m.text_field :close_time,:id => "tue1_id", :class => "form-control b" , :name => "location[timings_attributes][2][close_time]", :value => open_timing(@location,2) %>
+                            </td>
+                               <td>
+                           <%#= m.select :am_or_pm_close_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"tue1_am_or_pm_id", name: "location[timings_attributes][2][am_or_pm_close_time]"  %> 
+                            </td>
+                          </tr>
+                          <tr>
+                            <td> Wednesday </td>
+                            <td>
+                              <div class="day-checkbox">
+                                <%= m.hidden_field :day,:name => "location[timings_attributes][3][day]", :value => 'wednesday' %>
+                              <%= m.check_box :is_open, id: "custom-checkbox-4", :class => "custom-checkbox" , :name => "location[timings_attributes][3][is_open]" ,checked: open_close(@location,3) %>
+                              <label for="custom-checkbox-4"> Open </label>
+                              </div>
+                            </td>
+                            <td>
+                              <%= m.text_field :open_time,:id => "wed_id", :class => "form-control b", :name => "location[timings_attributes][3][open_time]" , :value => open_timing(@location,3) %>
+                            </td>
+                           <td>
+                           <%#= m.select :am_or_pm_open_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"wed_am_or_pm_id", name: "location[timings_attributes][3][am_or_pm_open_time]"  %> 
+                            </td>
+                            <td> To </td>
+                            <td>
+                              <%= m.text_field :close_time,:id => "wed1_id", :class => "form-control b" , :name => "location[timings_attributes][3][close_time]" , :value => open_timing(@location,3) %>
+                            </td>
+                             <td>
+                           <%#= m.select :am_or_pm_close_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"wed1_am_or_pm_id", name: "location[timings_attributes][3][am_or_pm_close_time]"  %> 
+                            </td>
+                          </tr>
+                          <tr>
+                            <td> Thursday </td>
+                            <td>
+                              <div class="day-checkbox">
+                                <%= m.hidden_field :day,:name => "location[timings_attributes][4][day]", :value => 'thursday' %>
+                              <%= m.check_box :is_open, id: "custom-checkbox-5", :class => "custom-checkbox" , :name => "location[timings_attributes][4][is_open]" ,checked: open_close(@location,4) %>
+                              <label for="custom-checkbox-5"> Open </label>
+                              </div>
+                            </td>
+                            <td>
+                              <%= m.text_field :open_time,:id => "thu_id", :class => "form-control b", :name => "location[timings_attributes][4][open_time]" , :value => open_timing(@location,4)%>
+                            </td>
+                            <td>
+                           <%#= m.select :am_or_pm_open_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"thu_am_or_pm_id", name: "location[timings_attributes][4][am_or_pm_open_time]"  %> 
+                            </td>
+                            <td> To </td>
+                            <td>
+                              <%= m.text_field :close_time,:id => "thu1_id", :class => "form-control b" , :name => "location[timings_attributes][4][close_time]" , :value => open_timing(@location,4) %>
+                            </td>
+                            <td>
+                           <%#= m.select :am_or_pm_close_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"thu1_am_or_pm_id", name: "location[timings_attributes][4][am_or_pm_close_time]"  %> 
+                            </td>
+                          </tr>
+                          <tr>
+                            <td> Friday </td>
+                            <td>
+                              <div class="day-checkbox">
+                                <%= m.hidden_field :day,:name => "location[timings_attributes][5][day]", :value => 'friday' %>
+                              <%= m.check_box :is_open, id: "custom-checkbox-6", :class => "custom-checkbox" , :name => "location[timings_attributes][5][is_open]" ,checked: open_close(@location,5) %>
+                              <label for="custom-checkbox-6"> Open </label>
+                              </div>
+                            </td>
+                            <td>
+                              <%= m.text_field :open_time,:id => "fri_id", :class => "form-control b", :name => "location[timings_attributes][5][open_time]" , :value => open_timing(@location,5) %>
+                            </td>
+                            <td>
+                           <%#= m.select :am_or_pm_open_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"fri_am_or_pm_id", name: "location[timings_attributes][5][am_or_pm_open_time]" %> 
+                            </td>
+                            <td> To </td>
+                            <td>
+                              <%= m.text_field :close_time,:id => "fri1_id",:class => "form-control b" , :name => "location[timings_attributes][5][close_time]"  , :value => open_timing(@location,5)%>
+                            </td>
+                            <td>
+                           <%#= m.select :am_or_pm_close_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"fri1_am_or_pm_id", name: "location[timings_attributes][5][am_or_pm_close_time]"  %> 
+                            </td>
+                          </tr>
+                          <tr>
+                            <td> Saturday </td>
+                            <td>
+                              <div class="day-checkbox">
+                                <%= m.hidden_field :day,:name => "location[timings_attributes][6][day]", :value => 'saturday' %>
+                              <%= m.check_box :is_open, id: "custom-checkbox-7", :class => "custom-checkbox" , :name => "location[timings_attributes][6][is_open]" ,checked: open_close(@location,6)%>
+                              <label for="custom-checkbox-7"> Open </label>
+                              </div>
+                            </td>
+                            <td>
+
+                              <%= m.text_field :open_time,:id => "sat_id", :class => "form-control b", :name => "location[timings_attributes][6][open_time]" , :value => open_timing(@location,6) %>
+                            </td>
+                            <td>
+                           <%#= m.select :am_or_pm_open_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"sat_am_or_pm_id", name: "location[timings_attributes][6][am_or_pm_open_time]" %> 
+                            </td>
+                            <td> To </td>
+
+                            <td>
+                              <%= m.text_field :close_time, :id => "sat1_id",:class => "form-control b" , :name => "location[timings_attributes][6][close_time]" , :value => open_timing(@location,6) %>
+
+                            </td>
+                            <td>
+                           <%#= m.select :am_or_pm_close_time, options_for_select(["AM","PM"]), {:include_blank => false},class:  "form-control c", id:"sat1_am_or_pm_id", name: "location[timings_attributes][6][am_or_pm_close_time]"  %> 
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- <div class="checkbox">
+		                  <%#= m.check_box :published %> 
+                      <%#= m.label "Published" %>
+		              	</div> -->
+                  </div>
+                 <%# end %>
+                  <div class="col-sm-12 btn_save-cancel text-right">
+                    <%#= link_to "CANCEL", merchant_merchants_path, class: "btn btn-default btn-black" %>
+                  </div>
+                </div>
+              </div>
+                  <% end %>
+                  <div class="form-group">
+                  <div class="checkbox">
+                    <label><%= f.check_box :publish, {}, "True", "False" %>Published</label>
+                    </div>
+                    <div class="form-add">
+                            <%= f.submit 'Save', :class => "btn btn-primary btn-md"%>
+                    </div>
+                </div>
+          </div>    
+            </div>
+          </div>
+        <% end %>
+
+      </fiedset>
+
+</section>
+
+
+
+<script>
+$(document).ready(function(){
+$('.b').timepicker({
+    timeFormat: 'HH:mm p',
+    interval: 60,
+    minTime: '08:00 AM',
+    maxTime: '20:00 PM',
+    startTime: '08:00 AM',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+});
+});
+
+
+
+</script>
+  
+
+
+
+
+
+<script>
+jQuery("#location_country_id").change(function(){
+  var state_value = jQuery(this).val();
+ 
+ jQuery.ajax({
+ 
+   url:  "/admin/locations/country_change",
+      type: "POST",
+      data: { country_name: state_value
+
+      },
+       dataType: "JSON",
+       success: function(response){
+       console.log(response); 
+       var str="";
+       jQuery.each( response.state , function(i,l){
+                     str += '<option value="'+l+'">' + l+'</option>';
+                      
+                  });
+       jQuery('#location_state').empty().append('<option value="">Select State</option>');
+       jQuery('#location_state').append(str);
+
+      }
+
+       });
+
+});
+</script>
+
+  <script>   
+ $("#add_staff").validate({
+
+  
+  rules: {
+     "location[location_name]":{
+        required: true
+      },
+      "location[country_code]": {
+      required: true
+    },
+     "location[phone_no]":{
+         required: true,
+         digits: true,
+      minlength: 7,
+         maxlength: 15
+   
+       },
+       "location[country]":{
+         required: true
+       },
+      "location[state]":{
+         required: true
+      },
+       "location[city]":{
+        required: true,
+        minlength: 2,
+        maxlength: 30
+       },
+      "location[address]":{
+         required: true,
+         minlength: 3,
+         maxlength: 250
+       },
+       "location[zip]":{
+        required: true,
+        minlength: 3,
+        maxlength: 25
+      }
+    }
+
+  
+ });
+
+ </script>
+

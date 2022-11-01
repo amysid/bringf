@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+   
+     <%= favicon_link_tag '/assets/favicon.ico', :rel => 'shortcut icon' %> 
+    <title>BringItFast</title>
+    <%= csrf_meta_tags %>
+   
+    <%= stylesheet_link_tag    'application' %>
+    <%= javascript_include_tag 'application'%>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+  </head>
+  
+
+  <body class="hold-transition skin-blue sidebar-mini">
+  <%if admin_user.present? %>
+  <div class="wrapper cus-wrapper">
+    <header class="main-header">
+      <!-- Logo -->
+      <%# link_to 'Salon Pos', admin_homes_path, :class =>"logo"%>
+     <div class="head-logo"> 
+      <span class="logo-mini"><b>B</b><b>IF</b></span>
+      <span class="logo-large"><img src="/assets/logo.png"/></span>
+    </div>
+     <!--  <a href="/admin/homes" class="logo">
+        <div class="logo1"><img src="/assets/logo.png"></div>
+      </a> -->
+      <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+          <span class="sr-only">Toggle navigation</span>
+        </a>
+
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <li class="dropdown user user-menu">
+              <div class=" logout-ancher">
+                <%= link_to 'Log out', new_admin_session_path(admin_user.id), :class=>"logout-ancher", method: :delete %>
+                  </div>
+                <span class="hidden-xs"></span>
+            </li>
+            <!-- Control Sidebar Toggle Button -->
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+          <!-- Sidebar user panel -->
+          <div class="user-panel">
+            <div class="pull-left image">
+              <figure class="view-inline">
+              <a href="/admin/admin_users/<%= admin_user.id %>/edit">
+              <%= (admin_user.image.present? ? image_tag(admin_user.image.url,:class => "user-image",:alt => "User Image") : image_tag("/assets/4.png",:class => "user-image",:alt => "User Image"))  %>
+               </a>
+               </figure>
+            </div>
+            <div class="pull-left info">
+               <%= "#{admin_user.try(:name)}" %>
+              <!-- <a href="/admin/homes/id/edit_profile"><i class="fa fa-pencil cus-edit" aria-hidden="true"></i></a> -->
+            </div>
+          </div>
+          <ul class="sidebar-menu">
+            <li class="treeview" id="dashboard">
+              <a href="/admin/homes">
+                <i class="fa fa-dashboard"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="treeview" id="user-management">
+              <a href="/admin/users">
+                <i class="fa fa-user"></i>
+                <span>User Management</span>
+              </a>
+            </li>
+            <li class="treeview" id="salon-management">
+              <a href="/admin/countries">
+                <i class="fa fa-th"></i>
+                <span>Country Management
+              </a>
+            </li>
+            <li class="treeview" id="service-cat-management">
+              <a href="/admin/locations">
+                <i class="fa fa-pie-chart"></i>
+                <span>Location Management</span>
+              </a>
+            </li>
+            <li class="treeview" id="marketing-management">
+              <a href="/admin/contents">
+                <i class="fa fa-laptop"></i>
+                <span>Content Management</span>
+              </a>
+            </li>
+            <li class="treeview" id="payment-management">
+              <a href="/admin/pricing_informations">
+                <i class="fa fa-edit"></i>
+                <span>Payment Settings</span>
+              </a>
+            </li>
+            <li class="treeview" id="booking-management">
+              <a href="/admin/transactions">
+                <i class="fa fa-table"></i>
+                <span>Transaction History</span>
+              </a>
+            </li>
+            <li class="treeview" id="subscriptio-management">
+              <a href="/admin/newsletters">
+                <i class="fa fa-calendar"></i>
+                <span>Subscription Management</span>
+              </a>
+            </li>
+            <li class="treeview" id="offer-discount-management">
+              <a href="/admin/journeyrequests">
+                <i class="fa fa-calendar"></i>
+                <span>Journey/Request Management</span>
+              </a>
+            </li>
+           </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+  <%end%>
+  <% if admin_user %>
+  <div class="content-wrapper">
+  <% else %>
+  <div class="">
+  <% end %>
+    <section class="content-header">
+      
+       <!--   Dashboard
+        <small></small> -->
+    <%= yield %>
+     
+    </section>
+    <%= alertify_flash %>
+  </div>
+  </div>
+  </body>
+</html>
+<!-- $('#Date').datepicker({
+    autoclose: true,
+    todayHighlight: true
+}); -->

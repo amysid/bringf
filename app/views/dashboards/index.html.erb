@@ -1,0 +1,373 @@
+
+
+<section class="common-banner-sec text-center" style="background-image:url(/assets/traveller-banner.png);">
+   <div class="banner-text-parent">
+      <div class="banner-text-child">
+         <h1>Ship Anything, Anytime, Anywhere</h1>
+         <p>There is no hidden place where you wouldn’t go, and where your parcel will not reach.</p>
+      </div>
+   </div>
+</section>
+<!-- Main Start -->
+<main>
+   <section class="dashboard-section common-section">
+      <div class="container">
+         <div class="static-page-head">
+            <h2 class="common-content-heading">Dashboard</h2>
+         </div>
+         <div class="row">
+            <div class="col-sm-8 col-md-9">
+               <div class="global-box">
+                  <ul class="nav nav-tabs">
+                     <li class="active" id="carried_tab"><a data-toggle="tab" href="#tab1"  >Carried</a></li>
+                     <li id="sent_tab"><a data-toggle="tab" href="#tab2" >Sent</a></li>
+                     <li  id="received_tab"><a data-toggle="tab" href="#tab3">Received</a></li>
+                  </ul>
+                  <div class="global-box-body">
+                     <div class="tab-content">
+                        <div id="tab1" class="tab-pane fade in active">
+                           <div id = "carried" class = "carried_lagg">
+                              <%= render 'carried_laggages' %>
+                           </div>
+                        </div>
+                        <!-- Tab 1 End -->
+                        <div id="tab2" class="tab-pane fade">
+                           <div id = "sent" class = "sent_lagg">
+                              <%= render 'sent_laggages' %>
+                           </div>
+                        </div>
+                        <!-- Tab 2 End -->
+                        <div id="tab3" class="tab-pane fade">
+                           <div id = "received" class = "received_lagg">
+                              <%= render 'received_laggages' %>
+                           </div>
+                        </div>
+                        <!-- Tab 3 End -->
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-sm-4 col-md-3 col-with-btn">
+               <div class="global-box">
+                  <h2 class="global-box-head">Tracking Number</h2>
+                  <div class="global-box-body">
+                     <div class="tracking-no">
+                        <input type="text" class="form-control custom-form-control text-center" placeholder="Tracking Name"/>
+                     </div>
+                     <button class="btn btn-signup btn-dark-red">Track</button>
+                  </div>
+               </div>
+               <%= link_to "Send", new_sender_path, :class => "btn btn-block btn-red" %>
+               <%= link_to "Carry", new_traveller_path, :class => "btn btn-block btn-green" %>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-sm-4 col-md-3">
+               <div class="global-box">
+                  <h2 class="global-box-head">Pending Deliveries</h2>
+                  <div class="global-box-body">
+                     <figure class="luggage-block">
+                        <div class="luggage-block-img">
+                           <img src="/assets/luggage-icon.png" alt="luggage-icon"/>
+                        </div>
+                        <!-- <figcaption>All sent shipments delivered.</figcaption> -->
+                     </figure>
+                  </div>
+               </div>
+            </div>
+            <!-- Pending Carry Requests -->
+            <div class="col-sm-8 col-md-9">
+               <div class="global-box">
+                  <h2 class="global-box-head">Pending Carry Requests</h2>
+                  <% if @carried.present? %>
+                  <div class="global-box-body">
+                     <div class="dash-transaction-block">
+                        <ul class="transaction-list transaction-list2">
+                           <% @carried.each do |m| %>
+                           <li>
+                              <span class="city-img"><img src="/assets/city-img2.png" alt="city-img"/></span>
+                              <div class="transaction-list-inner clearfix">
+                                 <div class="f-left ariv-city"><span><%= m.departure_state %>,<%= m.departure_city %></span></div>
+                                 <div class="f-right depart-city"><span><%= m.arrival_state %>,<%= m.arrival_city%></span></div>
+                              </div>
+                              <div class="transaction-info clearfix">
+                                 <div class="billing-date"><img src="/assets/cal.png" alt="calendar icon"/><%= "#{m.try(:date)&.to_date&.strftime("%B " "%d, " "%Y")}"%></div>
+                                 <div class="billing-date"><img src="/assets/weight-icon.png" alt="calendar icon"/><%= "#{m.try(:total_weight)}"%><%= m.package_details.first.try(:weight_unit)%></div>
+                                 <div class="billing-date"><img src="/assets/cash-icon.png" alt="calendar icon"><%= Traveller.find_by(id: m.traveller_id).arrival_date.to_date&.strftime("%B " "%d, " "%Y")%></div>
+                              </div>
+                              <div class="trans-btn-block">
+                                 <!-- <button class="btn btn-gray">Detail</button> -->
+                                 <% if m.traveller_laggage_status == true %>
+                                 <%= link_to 'Accepted', accept_carry_request_dashboards_path(id: m.id),:data => {:confirm => "Are you sure you want to Reject this luggage ?"},:class=>"btn btn-danger" %>
+                                 <%else%>
+                                 <%= link_to 'Accept', accept_carry_request_dashboards_path(id: m.id),:data => {:confirm => "Are you sure you want to Accept this luggage ?"},:class=>"btn btn-warning" %></td>
+                                 <%end%>
+                                 <td><button class="btn btn-warning" type="button" data-toggle="modal" data-target="#view_<%= m.id%>">View Detail</button></td>
+                              </div>
+                               <!-- view -->
+                                      <%= form_tag('/cancel_request', method: :post,id: "request_form") do %>
+                        <div class="modal fade global-modal2 " id="view_<%= m.id %>" role="dialog">
+                           <div class="modal-dialog">
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <!-- service_view Modal -->
+                                    <h4 class="modal-title">View Request</h4>
+                                 </div>
+                                 <div class="modal-body">
+                                    <ul class="view-servicemodal horizontal_labels">
+                                        <li>
+                                          <label> Sender Name</label>
+                                          <span><%= m.try(:user).try(:first_name)%> <%= m.try(:user).try(:last_name)%></span>
+                                        </li>
+
+                                        <li>
+                                          <label> Sender Email </label>
+                                          <span><%= m.try(:user).try(:email)%></span>
+                                       </li>
+                                        <li>
+                                          <label> Sender Contact Number</label>
+                                          <span><%= m.try(:user).try(:phone_no)%></span>
+                                       </li>
+                                       
+                                       <li>
+                                          <label>Departure Address</label> 
+                                          <span><%= m.departure_country %> ,<%= m.departure_state %> ,<%= m.departure_city %></span>
+                                       </li>
+                                       <li>
+                                          <label> Arrival Address</label>
+                                          <span><%= m.arrival_country %> ,<%= m.arrival_state %> ,<%= m.arrival_city%></span>
+                                       </li>
+                                       <li>
+                                          <label> Luggage Weight </label>
+                                          <span><%= "#{m.try(:total_weight)}"%><%= m.package_details.first.try(:weight_unit)%></span>
+                                       </li>
+                                       
+                                       <li>
+                                              <!-- <label>Package Image </label> -->
+                                              <div class="owl-carousel owl-theme">
+                                                  <%m.package_details.each do |pd|%>
+                                                  <%pd.images.each do |i|%>
+                                                
+                                                    <div class="item"><%= image_tag(i.package_image.url) %></div>
+                                                   
+                                                    <%end%>
+                                                    <%end%>
+                                                   
+                                                </div>
+                                               </li>
+
+                                       <%= hidden_field_tag "laggage_id", m.id %>
+                                       <%#= hidden_field_tag "user_id", m.user_id %>
+                                       <%#= hidden_field_tag "weight", f.total_weight %>
+                                       <%#= hidden_field_tag "amount", f.total_amount %>
+                                    </ul>
+                                    <div class="clearfix">
+                                       <%#if f.refund_status == false %>
+                                       <div class="  col-sm-8 col-sm-offset-4 butn-center">
+                                          <!-- <button class="btn btn-dark-red btn-md" type="submit">Cancel Request</button> -->
+                                       </div>
+                                       <%#else%>
+                                       <div class="  col-sm-8 col-sm-offset-4 butn-center">
+                                          <!-- <button class="btn btn-dark-red btn-md" type="submit">Refunded</button> -->
+                                       </div>
+                                       <%#end%>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <% end %>
+                               <!-- view end -->
+
+                           </li>
+                           <% end %>
+                           <%# end %>
+                        </ul>
+                     </div>
+                  </div>
+                  <%else%>
+                  <div class="no-item">
+                     <p class="no-found text-center">No pending carry request.</p>
+                  </div>
+                  <%end%>
+               </div>
+            </div>
+            <!-- end -->
+         </div>
+         <div class="row">
+            <!-- Pending Carry Requests -->
+            <div class="col-sm-8 col-md-9">
+               <div class="global-box">
+                  <h2 class="global-box-head">Pending Receive Requests</h2>
+                  <% if @a.present? %>
+                  <div class="global-box-body">
+                     <div class="dash-transaction-block">
+                        <ul class="transaction-list transaction-list2">
+                           <% @a.each do |m| %>
+                           <li>
+                              <span class="city-img"><img src="/assets/city-img2.png" alt="city-img"/></span>
+                              <div class="transaction-list-inner clearfix">
+                                 <div class="f-left ariv-city"><span><%= m.departure_state%>,<%= m.departure_city%></span></div>
+                                 <div class="f-right depart-city"><span><%= m.arrival_state%>,<%= m.arrival_city%></span></div>
+                              </div>
+                              <div class="transaction-info clearfix">
+                                 <div class="billing-date"><img src="/assets/cal.png" alt="calendar icon"/><%= "#{m.try(:date)&.to_date&.strftime("%B " "%d, " "%Y")}"%></div>
+                                 <div class="billing-date"><img src="/assets/weight-icon.png" alt="calendar icon"/><%= "#{m.try(:total_weight)}"%><%= m.package_details.first.try(:weight_unit)%></div>
+                                 <%#= m.traveller_id%>
+                                 <%#= Traveller.find_by(id: m.traveller_id).arrival_date%>
+                                 <div class="billing-date"><img src="/assets/cash-icon.png" alt="calendar icon"><%= Traveller.find_by(id: m.traveller_id).arrival_date.to_date&.strftime("%B " "%d, " "%Y")%></div>
+                              </div>
+                              <div class="trans-btn-block">
+                                 <!-- <button class="btn btn-gray">Detail</button> -->
+                                 <!-- <button class="btn btn-green">Accept</button> -->
+                                 <% if m.laggage_status == true %>
+                                 <%= link_to 'Accepted', accept_dashboards_path(id: m.id),:data => {:confirm => "Are you sure you want to Reject this luggage ?"},:class=>"btn btn-danger" %>
+                                 <%else%>
+                                 <%= link_to 'Accept', accept_dashboards_path(id: m.id),:data => {:confirm => "Are you sure you want to Accept this luggage ?"},:class=>"btn btn-warning" %></td>
+                                 <%end%>
+                                 <td><button class="btn btn-warning" type="button" data-toggle="modal" data-target="#view_<%= m.id%>">View Detail</button></td>
+                              </div>
+                              <!-- view -->
+                                 <%= form_tag('/cancel_request', method: :post,id: "request_form") do %>
+                        <div class="modal fade global-modal2 " id="view_<%= m.id %>" role="dialog">
+                           <div class="modal-dialog">
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <!-- service_view Modal -->
+                                    <h4 class="modal-title">View Request</h4>
+                                 </div>
+                                 <div class="modal-body">
+                                    <ul class="view-servicemodal horizontal_labels">
+                                       <li>
+                                          <label>Meeting Address</label> 
+                                          <span><%= Traveller.find_by(id: m.traveller_id).arrival_meeting_address%> ,<%= Traveller.find_by(id: m.traveller_id).arrival_meeting_country%> ,<%= Traveller.find_by(id: m.traveller_id).arrival_meeting_state%> ,<%= Traveller.find_by(id: m.traveller_id).arrival_meeting_city%> ,<%= Traveller.find_by(id: m.traveller_id).arrival_meeting_zip%></span>
+                                       </li>
+                                       <li>
+                                          <label> Contanct Person</label>
+                                          <span><%= Traveller.find_by(id: m.traveller_id).contact_person%> </span>
+                                       </li>
+                                       <li>
+                                          <label> Contact Number </label>
+                                          <span><%= Traveller.find_by(id: m.traveller_id).contact_phone%></span>
+                                       </li>
+                                       <li>
+                                          <label> Receiving Date </label>
+                                          <span><%= Traveller.find_by(id: m.traveller_id).arrival_date.to_date&.strftime("%B " "%d, " "%Y")%></span>
+                                       </li>
+                                       <li>
+                                          <label> Last date to receive item </label>
+                                          <span><%= Traveller.find_by(id: m.traveller_id).last_date_to_recieve_item.to_date&.strftime("%B " "%d, " "%Y")%></span>
+                                       </li>
+
+                                        <li>
+                                              <!-- <label>Package Image </label> -->
+                                              <div class="owl-carousel owl-theme">
+                                                  <%m.package_details.each do |pd|%>
+                                                  <%pd.images.each do |i|%>
+                                                
+                                                    <div class="item"><%= image_tag(i.package_image.url) %></div>
+                                                   
+                                                    <%end%>
+                                                    <%end%>
+                                                   
+                                                </div>
+                                               </li>
+
+                                       <%= hidden_field_tag "laggage_id", m.id %>
+                                       <%#= hidden_field_tag "departure_country", f.departure_country %>
+                                       <%#= hidden_field_tag "weight", f.total_weight %>
+                                       <%#= hidden_field_tag "amount", f.total_amount %>
+                                    </ul>
+                                    <div class="clearfix">
+                                       <%#if f.refund_status == false %>
+                                       <div class="  col-sm-8 col-sm-offset-4 butn-center">
+                                          <!-- <button class="btn btn-dark-red btn-md" type="submit">Cancel Request</button> -->
+                                       </div>
+                                       <%#else%>
+                                       <div class="  col-sm-8 col-sm-offset-4 butn-center">
+                                          <!-- <button class="btn btn-dark-red btn-md" type="submit">Refunded</button> -->
+                                       </div>
+                                       <%#end%>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <% end %>
+                              <!-- view end -->
+
+                       </li>
+                     <%end%>
+                     
+                        </ul>
+                     </div>
+                  </div>
+                  <%else%>
+                  <div class="no-item">
+                     <p class="no-found text-center">No pending receive request.</p>
+                  </div>
+                  <%end%>
+               </div>
+            </div>
+            <!-- end -->
+            <!-- <div class="col-sm-8 col-md-9">
+               <div class="global-box">
+                  <h2 class="global-box-head">Notification</h2>
+                  <div class="global-box-body">
+                     <ul class="notify-list">
+                        <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</li>
+                        <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</li>
+                        <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</li>
+                     </ul>
+                  </div>
+               </div>
+               </div> -->
+            <div class="col-sm-4 col-md-3">
+               <div class="global-box">
+                  <h2 class="global-box-head">Request to Receive</h2>
+                  <div class="global-box-body">
+                     <figure class="luggage-block">
+                        <div class="luggage-block-img">
+                           <img src="/assets/luggage-icon.png" alt="luggage-icon"/>
+                        </div>
+                        <!-- <figcaption>No request for receiving package.</figcaption> -->
+                     </figure>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- Account Section End -->
+</main>
+<!-- Main End -->
+<script type="text/javascript">
+   $(document.body).on("click", ".pagination a", function(){
+      $.getScript(this.href);
+      return false;
+   });
+   
+   
+</script>
+
+<script>
+jQuery(".view_det").click(function(){
+  var id = "#travel_earning"+$(this).val();
+  jQuery(id).toggle();
+ 
+});
+
+
+jQuery('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+     nav:true,
+     items: 1,
+   autoPlay: 2000,
+    responsive: true
+});
+</script>

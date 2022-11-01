@@ -1,0 +1,2 @@
+class RefundPolicy < ApplicationRecord
+end

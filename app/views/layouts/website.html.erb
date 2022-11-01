@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+
+     <%= favicon_link_tag '/assets/favicon.ico', :rel => 'shortcut icon' %> 
+    <title>BringItFast</title>
+    <%= csrf_meta_tags %>
+    
+    <%= stylesheet_link_tag    'website' %>
+    <%= javascript_include_tag 'application' %>
+    <%#= javascript_include_tag "http://www.google.com/jsapi", "chartkick" %>
+    <%= alertify_flash %>
+  </head>
+
+  <body>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <!-- header start -->
+     <header class="global-header">
+         <nav class="navbar">
+            <div class="container-fluid">
+               <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span> 
+                  </button>
+                <!--   <a class="navbar-brand logo" href="index.html"> -->
+                  <a class = "logo-anchor" href="#" ><img src="/assets/logo.png" class="logo" alt="Logo"/></a>
+                  <!-- </a> -->
+               </div>
+               <!-- <span class="top-user-img hide-large"><img src="/assets/test-user-img1.png" alt="user pic"/></span> -->
+               <div class="collapse navbar-collapse" id="myNavbar">
+                  <% if current_user.blank? %>
+                  <ul class="nav navbar-nav navbar-right">
+                     <li><a href="/">Home</a></li>
+                     <li><a href="/about_us">ABOUT</a></li>
+                     <li><a href="/pricings">PRICING</a></li>
+                     <li><a href="/users/new">SENDERS</a></li>
+                     <li><a href="/users/new">TRAVELERS</a></li>
+                     <li><a href="/contacts/new">CONTACT</a></li>
+                     <li><a href="/user_sessions/new">SIGN IN</a></li>
+                     <li><a href="/users/new">SIGN UP</a></li>
+                      <!-- language -->
+                           <li class="language-list">
+                           <span id="google_translate_element"></span>
+                          </li>
+                      <!-- end -->
+                  </ul>
+                <% else %>
+                <ul class="nav navbar-nav navbar-right">
+                     <li><a href="/dashboards">DASHBOARD</a></li>
+                     <li><a href="/users/<%= current_user.id %>/edit">MY ACCOUNT</a></li>
+                     <!-- <li><a href="/accounts">MY ACCOUNT</a></li> -->
+                     <li><a href="/pricings">PRICING</a></li>
+                     <li><a href="/senders/new">SENDERS</a></li>
+                     <li><a href="/travellers/new">TRAVELERS</a></li>
+                     <li><a href="/contacts/new">CONTACT</a></li>
+                     <li class="top-username">
+                        <div class="username">WELCOME <span><%= current_user.try(:first_name)%></span></div>
+                        <!-- <span class="top-user-img"><img src="/assets/test-user-img1.png" alt="user pic"/></span> -->
+                        <span class="top-user-img"><%= current_user.image.present? ? image_tag(current_user.image.url, :width => 128, :height => 128, class: "img-circle") : image_tag("user-img.png", :width => 128, :height => 128, class: "img-circle") %></span>
+                     </li>
+                    
+                     
+                    <li><%= link_to 'Logout', user_session_path(current_user.id), method: :delete, class: "" %></li>
+                  </ul>
+                  <% end %>
+               </div>
+            </div>
+         </nav>
+      </header>
+      <!-- HEADER END -->
+      <!-- Main Start -->
+      <!-- <main>
+       <%#= yield %>
+      </main> -->
+    <!-- Main End -->
+      <%= yield %>
+    <%= render template: "layouts/footer" %>
+    
+  </body>
+</html>
+
+
+  <script>
+      $(function(){
+         var shrinkHeader = 50;
+          $(window).scroll(function() {
+            var scroll = getCurrentScroll();
+              if ( scroll >= shrinkHeader ) {
+                   $('.global-header').addClass('shrink');
+                }
+                else {
+                    $('.global-header').removeClass('shrink');
+                }
+          });
+        function getCurrentScroll() {
+            return window.pageYOffset || document.documentElement.scrollTop;
+            }
+        });
+
+
+    function googleTranslateElementInit() {
+     new google.translate.TranslateElement({pageLanguage: 'en',includedLanguages: 'en,fr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
+     }
+    </script>
+

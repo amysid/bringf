@@ -1,0 +1,165 @@
+
+
+      <section class="common-banner-sec text-center" style="background-image:url(/assets/traveller-banner.png);">
+         <div class="banner-text-parent">
+            <div class="banner-text-child">
+               <h1>Ship Anything, Anytime, Anywhere</h1>
+               <p>There is no hidden place where you wouldn’t go, and where your parcel will not reach.  </p>
+            </div>
+         </div>
+      </section>
+      <!-- Main Start -->
+      <main>
+         <section class="treveller-section common-section">
+            <div class="container">
+               <div class="static-page-head">
+                  <h2 class="common-content-heading">Request List</h2>
+               </div>
+			   
+			   <!-- biling-info-block Start -->
+			   <%if @laggage_list.present?%>
+			   <div class="biling-info-block clearfix">
+			   	<% @count = 1 %>
+			   	<% @laggage_list&.each do |m| %>
+			   	<div class="clearfix"> 
+			       <div class="package-photo-block">
+				     <h3>Package Photos</h3>
+					
+					 <div class="owl-carousel owl-theme">
+					 	<%m.package_details.each do |pd|%>
+					 	<%pd.images.each do |i|%>
+					    <div class="item"><%= image_tag(i.package_image.url) %></div>
+
+					    <%end%>
+					    <%end%>
+					   
+					</div>
+				   
+
+				   </div>
+				   <!-- package-photo-block End -->
+				   <div class="package-detail-block">
+				     <div class="billing-date"><img src="/assets/cal.png" alt="calendar icon"/><%= "#{m.try(:date)&.to_date&.strftime("%B " "%d, " "%Y")}"%></div>
+					 
+					 <div class="arival-departure clearfix">
+					   <div class="arival-city common-city-style f-left">
+					     <span><img src="/assets/location2.png" alt="location icon"/><%= m.try(:departure_state) %>, <%= m.try(:departure_city) %></span>
+					   </div>
+					    
+					   <!--  <div class="middle-plane-icon f-left">
+					     <span class="plane-icon"><img src="/assets/plane-icon.png" alt="plane icon"/></span>
+					    </div> -->
+					   
+                         <div class="middle-plane-icon f-left">
+                            <% if m["mode_of_travel"] == "Ship" %>
+                            <span class="plane-icon"><img src="/assets/ship-icon.png" alt="plane icon"/></span>
+                            <% elsif m["mode_of_travel"] == "Plane" %>
+                            <span class="plane-icon"><img src="/assets/plane-icon.png" alt="plane icon"/></span>
+                            <% elsif m["mode_of_travel"] == "Bus" %>
+                            <span class="plane-icon"><img src="/assets/car-icon.png" alt="plane icon"/></span>
+                            <% else %>
+                            <span class="plane-icon"><img src="/assets/train-icon.png" alt="plane icon"/></span>
+                           <% end %>
+
+                        </div>
+
+
+
+
+
+					   <div class="destination-city common-city-style f-right">
+					     <span><img src="/assets/location2.png" alt="location icon"/> <%= m.try(:arrival_state)%>, <%= m.try(:arrival_city)%></span>
+					   </div>
+					 </div>
+						<% m.try(:package_details).each do |i|%>
+					 <ul class="clearfix package-info">
+					   <li>
+					     <strong class="custom-strong">Package Content</strong>
+                              <%= i.package_content %>  <br>
+						 
+						</li>
+					   <li>
+					    <strong class="custom-strong">Package Weight</strong>
+						<span> <%= i.try(:weight)%> <%= m.package_details.first.try(:weight_unit)%></span>
+						</li>
+					   <li>
+					    <strong class="custom-strong">Package Size</strong>
+					    <span><%= i.try(:size)%></span>
+					  </li>
+					 </ul>
+                    <%end%>
+                    <div class="des_para">
+					 <strong class="custom-strong">Package Description</strong>
+					 <p><%= m.try(:description).html_safe%></p>
+					</div>
+					 
+             <div class="text-right"> <button name="button" type="button" class="view_det btn btn-green", id= "#view_details<%= @count %>" value="<%= @count %>" ><strong>View Details</strong></div>
+                 
+                </button>
+				   </div>
+				</div>
+				<% @arr.each do |n| %>
+				<div class="traveller-earning", id="travel_earning<%= @count %>" style="display: none;">
+					<form>
+                     <fieldset class="global-fieldset">
+                   <legend>Details</legend>
+			     <h3>Order Detail</h3>
+				 <ul class="earning-detail-list">
+				   <li class="clearfix">
+				    <strong class="f-left">Traveler Earning</strong><span class="f-right">$ <%=n["traveller_earning"] %> </span>
+				   </li>
+				   <li class="clearfix">
+				    <strong class="f-left">Commission</strong><span class="f-right">$ <%=n["admin_commission_from_traveller"] %> </span>
+				   </li>
+				   <li class="clearfix">
+				    <strong class="f-left">Tax</strong><span class="f-right">$ <%=n["tax"] %> </span>
+				   </li>
+				   <li class="total-earning clearfix">
+				    <strong class="f-left r-color">Total</strong><span class="f-right">$ <%=n["total_price"] %> </span>
+				   </li>
+				 </ul>
+				 <div class="text-right earning-btns">
+	              <a class="btn btn-dark-red" href="/travellers/new">Back</a>
+				  </div>
+				  </fieldset>
+				</form>
+			   </div>
+			   <%end%>
+			     <% @count = @count +1  %>
+
+               <%end%>
+			   </div>
+			  <%else%>
+			   <div class="no-item">
+                   <p class="no-found text-center">No sender found in the searched area.</p>
+                </div>
+              <%end%>
+			   
+			  
+            </div>
+         </section>
+         <!-- Account Section End -->
+
+      </main>
+      <!-- Main End -->
+   
+
+
+
+<script>
+jQuery(".view_det").click(function(){
+  var id = "#travel_earning"+$(this).val();
+  jQuery(id).toggle();
+ 
+});
+
+
+jQuery('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+     nav:true,
+     items: 1,
+	 autoPlay: 500,
+    responsive: true
+});
+</script>

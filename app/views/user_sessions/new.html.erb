@@ -1,0 +1,57 @@
+
+	  <section class="common-banner-sec text-center" style="background-image:url(/assets/about-banner.png);">
+          <div class="banner-text-parent">
+            <div class="banner-text-child">
+              <h1>Ship Anything, Anytime, Anywhere</h1>
+              <p>There is no hidden place where you wouldn’t go, and where your parcel will not reach. </p>
+            </div>
+         </div>
+    </section>
+	  
+      <!-- Main Start -->
+      <main>
+        <section class="about-us-sec pd30">
+            <div class="container">
+               <div class="common-form-page text-center">
+                    <h2 class="common-content-heading">Login to Your Account</h2>
+                    <p class="common-paragraph">There is no hidden place where you wouldn’t go, and where your parcel will not reach.</p>
+                    <!-- <form class="login-form"> -->
+                    <%= form_tag '/user_sessions', id: "user-login-form", class: "login-form", method: :post do %>
+					           <div class="form-box common-form">
+					
+                       <div class="form-group">
+                          <!-- <input type="email" placeholder="Email ID" class="form-control"/> -->
+                          <input type="email" class="form-control" placeholder="Email*" name="email" required="true" maxlength="50">
+                       </div>
+					    <div class="form-group">
+                          <!-- <input type="text" placeholder="Password" class="form-control"/> -->
+                          <input type="password" class="form-control" placeholder="Password*" name="password" required="true" minlength="8" maxlength="32">
+                       </div>
+					   <div class="form-group clearfix">
+                          <label class="custom-checkbox f-left">Remember me
+					       <input type="checkbox"/>
+					       <span class="checkmark"></span>
+					     </label>
+						 <!-- <a class="forgotlink f-right" href="forget-password.html">Forgot Password?</a> -->
+             <%= link_to 'Forgot password',  forget_password_user_sessions_path %>
+                       </div>
+					   
+					   
+                       <div class="button-box text-center mt20">
+                          <button class="btn btn-dark-red submit-btn" type="submit">LOGIN</button>
+                       </div>
+					</div>
+					</form>
+					<p class="login-info">
+            New User? 
+            <a href="/users/new">Sign UP</a></p>
+               </div> 
+               <% end %>
+           </div>
+        </section> 
+ 
+      </main>
+      <!-- Main End -->
+     
+      
+   

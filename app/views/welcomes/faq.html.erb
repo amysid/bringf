@@ -1,0 +1,59 @@
+
+	  <section class="common-banner-sec text-center" style="background-image:url(/assets/about-banner.png);">
+          <div class="banner-text-parent">
+            <div class="banner-text-child">
+              <h1>Ship Anything, Anytime, Anywhere</h1>
+              <p>There is no hidden place where you wouldn’t go, and where your parcel will not reach.  </p>
+            </div>
+         </div>
+    </section>
+	  
+      <!-- Main Start -->
+      <main>
+        <section class="about-us-sec pd30">
+            <div class="container">
+               
+                     <h2 class="common-content-heading">FAQ</h2>
+                      <div class="help-faq-block">
+                           <div class="panel-group custom-panel" id="accordion">
+                            <% @faqs.each do |faq|%>
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h4 class="panel-title">
+                                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse_<%= faq.id%>" aria-expanded="true" class="collapsed">
+                                    <%= faq.try(:question)%>
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapse_<%= faq.id%>" class="panel-collapse collapse" aria-expanded="true">
+                                <div class="panel-body">
+                                  <div class="txt-a">
+                                     <%#= faq.try(:answer).html_safe%>
+                                     <%= sanitize(faq.try(:answer))%> 
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <% end %>
+                          </div>
+                      </div>
+              
+           </div>
+        </section> 
+       
+
+        
+		 
+		 
+		 
+      </main>
+      <!-- Main End -->
+     
+
+
+
+
+<script type="text/javascript">
+    $('.navbar-nav li.active').removeClass('active');
+    $('.faq').addClass('active');
+</script>

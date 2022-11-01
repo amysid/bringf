@@ -1,0 +1,66 @@
+		<div class="journey-request-tabs">
+						<div class="text-right filter-s">
+						<label>Filter</label>
+						   <%= select_tag "Month", options_for_select(["Please Select","By Date", "By Weight", "By Price" ]) , id: "select_filter_type2", class: "	form-control" %>
+						
+					</div>
+					 <%  @received_laggages&.each do |m| %>
+					
+					<div class="journey-request-part">
+						<div class="row">
+							<div class="col-sm-1">
+								<div class="indication green">
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<label>
+									<%= "#{m.try(:departure_country)}"%> ,<%= "#{m.try(:departure_state)}"%>
+								</label>
+								<div class="unit-content">
+									<i class="fa fa-calendar"></i>
+									<span><%= "#{m.try(:date)&.to_date&.strftime("%B " "%d, " "%Y")}"%></span>
+								</div>
+							</div>
+							<div class="col-sm-3 text-center">
+								<label><i class="fa fa-arrow-right"></i></label>
+								<div class="unit-content">
+									<i class="fa fa-balance-scale" aria-hidden="true"></i>
+									<span><%= "#{m.try(:total_weight)}" %> <%= m.try(:package_details).first.try(:weight_unit)%></span>
+									
+								</div>
+							</div>
+							<div class="col-sm-4 text-right">
+								<label>
+									<%= "#{m.try(:arrival_country)}"%> ,<%= "#{m.try(:arrival_state)}"%>
+								</label>
+								<div class="unit-content">
+									<i class="fa fa-money"></i>
+									<span>$ <%= Transaction.find_by(laggage_id: m.id).try(:total_amount)%></span>
+								</div>
+							</div>
+						</div>
+					</div>
+			     <%end%>
+			   
+				</div>
+ <div class="table_pagination text-right">
+    <div class="btn-group btn-group-custom" role="group pull-right">
+      <%#=will_paginate @received_requests, :param_name => 'page_3', renderer: BootstrapPagination::Rails %>
+    </div>
+  </div>
+
+
+<script>
+$("#select_filter_type2").change(function(){
+  var filt2 = $(this).val();
+  $.ajax({
+           url:"/admin/journeyrequests/sort_order",
+           type:"get",
+           data: {filt2: filt2},
+         });
+});  
+</script>
+
+<style type="text/css">
+.filter-s select{width:80px;display:inline-block;}
+</style>

@@ -1,0 +1,421 @@
+
+    <div id= "scroll-class"> 
+      <section class="common-banner-sec text-center" style="background-image:url(/assets/about-banner.png);">
+         <div class="banner-text-parent">
+            <div class="banner-text-child">
+               <h1>Ship Anything, Anytime, Anywhere</h1>
+               <p>There is no hidden place where you wouldn’t go, and where your parcel will not reach. </p>
+            </div>
+         </div>
+      </section>
+      <!-- Main Start -->
+      <main>
+         <section class="about-us-sec pd30">
+            <div class="container">
+               <div class="common-form-page signup-block">
+                  <h2 class="common-content-heading">Sign Up</h2>
+                  <p class="common-paragraph">Not yet a member? Register now for free!</p>
+                  <!-- <form class="signup-form"> -->
+                     <%= form_for @user, url: users_path, html: {id: "user-sdssign-up-form", class: "form-block", multipart: true, autocomplete: :off} do |f| %>
+
+                     
+
+                     
+                     <div class="form-box common-form clearfix">
+
+                        <!-- <div class="profile-upload f-left">
+                           <img src="/assets/user-profile.png" alt="User image"/>
+                           <span class="camera fa fa-camera"><input type="file"/></span>
+                        </div> -->
+                    
+                      <% if @user.image.blank? %>
+    
+                         <div class="form-group addupload upload-preview">
+                           <label for="file-upload" class="custom-file-upload ">
+                               <img src="/assets/userimage.png" id="user_pic">
+                            </span>
+                           </label>
+                    
+                          <input id="file-upload" type="file" name="user[image]" accept="image/*" >
+            
+                         </div>
+
+                     <% else %>
+                  
+                  <div class="form-group addupload upload-preview">
+                    
+                   <label for="file-upload" class="custom-file-upload ">
+                     <span class="fileinput-preview thumbnail">  
+                     <%= image_tag @user.image_url, id: "user_pic" %> 
+                   </span>
+
+                  </label>
+                     <input id="file-upload" type="file" name="user[image]" accept="image/*" >
+   
+                   </div>
+
+                      <% end %>
+
+
+                        <!-- profile-upload end -->
+                        <div class="signup-field-block f-right">
+                           <div class="row">
+                              <div class="col-sm-6">
+                                 <h3 class="form-head">Personal Information</h3>
+                                 <div class="form-group">
+                                    <%= f.text_field :first_name, class: "form-control",  placeholder: "First Name"%> 
+                                 </div>
+                                 <div class="form-group">
+                                 <%= f.text_field :last_name, class: "form-control ",  placeholder: "Last Name"%>
+                                 </div>
+                                 <div class="form-group">
+                                 <%= f.text_field :dob, class: "form-control ", id: "user_dob", placeholder: "Date Of Birth"%>
+                                 </div>
+                                 <div class="form-group">
+                                 <%= f.email_field :email, class: "form-control",  placeholder: "Email Address" %>
+                                 </div>
+                                 <div class="form-group">
+                                    <%= f.password_field :password, class: "form-control ",  placeholder: "Password" %>
+                                 </div>
+                                 <div class="form-group select-with-field">
+                                    
+                                    <%= f.select("country_code", all_iso_codes, {:include_blank => "Dailing code"}, {:class => "form-control"}) %>
+                                    
+                                     <%= f.text_field :phone_no, class: "form-control ",  placeholder: "Phone Number"%>
+                                 </div>
+                              </div>
+                              <div class="col-sm-6">
+                                 <h3 class="form-head">Address*</h3>
+                                 <div class="form-group">
+                                   
+                                    <%= f.select :country, Country.all.order("country_name asc").collect {|s| [s.country_name]},{:prompt => "Select Country"},  :include_blank => true, :class => "form-control blackdropicon", id: "user_country_website"%>
+                                 </div>
+                                 <div class="form-group">
+                                    
+                                    <%= f.select(:state,(@states),{:include_blank => "Please select state"}, { :class => 'form-control blackdropicon', id: "user_state_website" }) %>
+                                 </div>
+                                 <div class="form-group">
+                                    <!-- <input placeholder="City" class="form-control" type="text"/> -->
+                                    <%#= f.text_field :city, class: "form-control ",  placeholder: "City Name"%>
+                                    <%= f.select :city , CS.cities((CS.states(CS.countries.key(:country))).key(:state).to_s, CS.countries.key(:state).to_s),{:include_blank => "Please select city"}, class: "form-control blackdropicon", :id =>"user_city_website" %> 
+                                 </div>
+                                 <div class="form-group">
+                                    <!-- <input placeholder="Address" class="form-control" type="text"/> -->
+                                    <%= f.text_field :address, class: "form-control ",  placeholder: "Address"%>
+                                 </div>
+                                 <div class="form-group">
+                                    <!-- <input placeholder="Zip Code" class="form-control" type="text"/> -->
+                                    <%= f.text_field :zip, class: "form-control ",  placeholder: "Zip"%>
+                                 </div>
+                                 <div class="form-group">
+                                    <label class="custom-checkbox"><%= f.check_box :t_and_c, required: true%>I agree to the Terms & Services
+                                      <!-- <label class="custom-checkbox"><%#= f.check_box :t_and_c, %>I agree to the Terms & Services -->
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                    </label>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- signup-field-block end -->
+                        <div class="submit-btn-block">
+                           <!-- <button class="btn btn-yellow">Submit</button> -->
+                           <button class="btn btn-dark-red" type="submit">SIGN UP</button>
+                        </div>
+                     </div>
+					    
+                     <p class="login-info text-center">
+                        Already have an account? 
+                     <a href="/user_sessions/new">Login</a></p>
+                  <!-- </form> -->
+               </div>
+               <%end%>
+               <!-- Sign up block End -->
+            </div>
+         </section>
+        
+      </main>
+</div>
+
+
+
+
+<script type="text/javascript">
+    jQuery('.navbar-nav li.active').removeClass('active');
+    jQuery('.business').addClass('active');
+
+    function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            jQuery('#user_pic').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#file-upload").change(function(){
+      readURL(this);
+  });
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+<script>
+   
+jQuery(document).ready(function(){
+  
+  jQuery("#user-sign-up-form ").validate({
+ 
+    
+    rules: {
+     
+      "user[first_name]":{
+        required: true,
+        // noSpace: true,
+        userRegex: true,
+        minlength: 2,
+        maxlength: 30
+      },
+      "user[last_name]":{
+        required: true,
+        // noSpace: true,
+        userRegex: true,
+        minlength: 2,
+        maxlength: 30
+      },
+      "user[dob]":{
+        required: true,
+      },
+      "user[email]":{
+        required: true,
+        emailRegex: true,
+        maxlength: 50
+      },
+
+      "user[password]":{
+        required: true,
+        minlength: 8,
+        maxlength: 32
+      },
+
+      "user[phone_no]":{
+        required: true,
+        digits: true,
+        minlength: 7,
+        maxlength: 15
+      },      
+      "user[country]":{
+        required: true
+        
+      },    
+      "user[state]":{
+        required: true
+        
+      },   
+      
+      "user[city]":{
+
+       
+        required: true
+        
+      }, 
+
+      
+      "user[address]":{
+        required: true,
+        minlength: 2,
+        maxlength: 250
+      }, 
+
+       "user[zip]":{
+        required: true,
+        minlength: 4,
+        maxlength: 10
+        
+      }    
+       
+         
+    },
+   
+  });
+
+  
+
+  jQuery.validator.addMethod("userRegex", function(value, element) {
+    return this.optional(element) || /^(?=[^@]*[A-Za-z])([a-zA-Z -])+$/i.test(value);
+  }, "Please enter characters only.");
+
+  jQuery.validator.addMethod("noSpace", function(value, element) { 
+    return value.indexOf(" ") < 0;
+  }, "No space please.");
+
+  jQuery.validator.addMethod("emailRegex", function(value, element) { 
+    return this.optional(element) || /^[A-Z0-9_]+([\.][A-Z0-9_]+)*@[A-Z0-9-]+(\.[a-zA-Z]{2,3})+$/i.test(value);
+  }, "Please enter a valid email address.");
+  
+  
+});
+
+
+</script>
+
+
+
+
+
+<script>
+$('#file-upload').change(function () {
+    
+        if(this.files[0].size/(1000*1024*1) > 5) {
+        alert("Please upload file below 5 MB.");
+          $('#err-label').text('Please upload file below 5 MB');
+          this.value = "";
+          return false;
+        }
+        var ext = this.value.split('.').pop();
+        switch (ext) {
+            case 'jpg':
+            case 'jpeg':
+            case 'png':
+            break;
+            default:
+            // hideLoading();
+            alert("This is not an allowed file type. Please upload image file jpg, jpeg, png.");
+            this.value = "";
+               $('#err-label').text('This is not an allowed file type.').fadeOut(10000);
+        }
+    });
+</script>
+
+
+
+
+
+<script>
+jQuery(document).ready(function(){
+  // var $j = $.noConflict();
+  jQuery("#user_dob").datepicker({
+    autoclose: true,
+    format: 'yyyy-mm-dd',
+    endDate: '+0d'
+   });
+
+ var dtPckr = $('#user_dob')
+
+var datePicker = $('#user_dob').datepicker();
+
+jQuery('#scroll-class').scroll(function() {
+  // datePicker.datepicker('hide');
+  // jQuery('#user_dob').blur();
+  alert();
+});
+
+jQuery(window).resize(function() {
+  datePicker.datepicker('hide');
+  jQuery('#user_dob').blur();
+});
+
+
+});
+</script>
+
+
+
+   
+
+
+<script>
+jQuery("#user_country_website").change(function(){
+  var state_value = jQuery(this).val();
+ 
+ jQuery.ajax({
+ 
+   url:  "/users/country_change",
+
+      type: "POST",
+      data: { country_name: state_value},
+
+      
+       dataType: "JSON",
+       success: function(response){
+       console.log(response); 
+       var str="";
+       jQuery.each( response.state , function(i,l){
+                     str += '<option value="'+l+'">' + l+'</option>';
+                      
+                  });
+       jQuery('#user_state_website').empty().append('<option value="">Select State</option>');
+       jQuery('#user_state_website').append(str);
+
+      }
+
+       });
+
+});
+</script>
+
+
+<script> 
+  
+   jQuery(document).on('change', '#user_state_website', function(e){
+    var input_state = $(this);
+          var state_value = $(this).val();
+          var user_city = $("#user_city_website");
+          if($(this).val() == "") {
+          user_city.html("");
+   
+          } else {
+               var opt = '<option value="" selected="">Please select city</option>';
+                   $.ajax({
+                    type: 'POST',
+                    url: '/users/state_change',
+                    data: {
+                      state_name: state_value, country_name: $('#user_country_website').val()
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                            if(data.length == 0){
+   
+                              } else {
+                                  $.each(data.city, function(k,v) {
+                                    console.log(data);
+                                      opt += '<option value='+ v +'>' + v + '</option>';
+                                      /// do stuff
+                                  });
+                                  user_city.html(opt);
+   
+                            }
+                       }
+                  });
+              }
+      });  
+   
+   
+</script>
+
+
+  <script>
+   jQuery(document).ready(function(){
+     var preview = jQuery(".upload-preview img");
+   
+   jQuery("#user_pic").change(function(event){
+      var input = jQuery(event.currentTarget);
+      var file = input[0].files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+   });
+});
+</script>

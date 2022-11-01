@@ -1,0 +1,43 @@
+Sender:
+
+    He cannot edit his search without making another one. :WIP
+    Once he pays, he is directed straight to the dashboard section of "transaction sent", while he have not send anything yet.
+    Once paid, while waiting for the carrier approval, the sender does not have anymore information about the meeting location, name and contact of the carrier. 
+
+    Comment :DONE
+
+Carrier:
+
+    Here, as I have shared the screenshot on Skype, he receives a request of the transaction on "pending carry request" but with no option of either "accept" or "deny". But the area where the request is located is good. "pending deliveries", once the carrier agrees to take the item should come up with a button "delivered" where the carrier will click on after the meeting with the sender. 
+    Once he accepts to meet with the sender, he does not have any information about his name and contact.
+    What is the use of notifications then, if we can't have any information about the transaction? Is it there for decoration?
+    Once he accepts the item from the sender, 
+    
+    Comment: Now  in "pending carry request"  traveler can "Accept" and view the details of the luggage.(Done) 
+
+Receiver:
+
+    After, the sender pays for the transaction to be carried on, he receives a pop-up window to enter the email of the receiver; when he entered the email, I have said it countless times that if he is registered, the request will go on "pending receive request" but if he is not, he will sent an email to register to the site and once he is registered with that same email, he will have the same transaction on "pending receive request" where he can "accept" or "deny". If he accepts, it will go to "request to receive". 
+
+    Comment: Done
+
+    But if he denies, he will just be erased and the sender will receive another pop-up window to choose another "receiver" as soon as he signs in again. 
+    
+    Comment: WIP
+    
+    Once he accepts to receive on "pending receive request", a button to click "delivered" where he should click after he receives the item. But that button cannot come up before the carrier click on "delivered" in the "pending deliveries".
+
+Admin part of site:
+
+     I really do not understand how transaction history works, I have made a payment $13 US but it is no where to be found, no trace of it at all. I am not even talking about the fee that I should send back to the carrier and his information. Nothing works, and I mean nothing.
+
+     Comment: When the receiver accept the luggage then you can see the transaction in the admin transaction history.(We have already done this.)
+
+    I have a graph of registered users but I do not even have a counter or any clue at all about the number of users I have and number of transaction done on a daily, monthly, yearly basis.
+
+     Comment: ON - x axis - Showing dates.(On daily basis)
+                   y axis - showing registrations count
+    
+    The journey and request log does  not even have the right amount of the charge or the amount being paid by the sender. I just doesn't work. 
+    Comment :Done
+

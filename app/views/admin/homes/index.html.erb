@@ -1,0 +1,418 @@
+<div class="content-box">
+  <div class="dashboard-box">
+      <div class="row">
+
+
+
+           <div class="col-lg-4 ">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+             <h3> <%= User.all.count  %> </h3>
+              <p>Total User</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+            
+          </div>
+        </div>
+        
+            <div class="col-lg-4 ">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+               <h3>$ <%=Transaction.revenue_total_data.round(2) %> </h3>
+
+              <p>Total Revenue</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-bag"></i>
+            </div>
+            
+          </div>
+        </div>
+
+
+
+           <div class="col-lg-4">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>$ <%=Transaction.revenue_shipper_data.round(2) %></h3>
+
+              <p>Revenue Shipper</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+            
+          </div>
+        </div>
+
+
+          
+          
+           <div class="col-lg-4 ">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+             <h3>$ <%=Transaction.revenue_traveller_data.round(2) %> </h3>
+              <p>Revenue Traveler</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+            
+          </div>
+        </div>
+
+
+
+      </div>
+  </div>
+
+<div id = "charts">
+  <div class="row">
+    <div class="col-sm-6 ">
+        <div id="chart1" class="graph">
+        <%= line_chart [ {name: "Shipper" ,data: Transaction.shipper_registrations}, { name: "Traveler" ,data: Traveller.group_by_day(:created_at).count} ] ,width: "100%", height: "250px", colors: ["#008000", " #FF8000"], library: {
+      title: {text: 'Travelers vs Shippers Registrations'},
+      yAxis: {
+          title: {
+              text: 'New Users'
+          }
+      },
+      xAxis: {
+          title: {
+              text: 'Date'
+          }
+        }
+      }
+         %>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div id="chart33" class="graph">
+        <%= line_chart [name: "User" ,data: User.group_by_day(:created_at).count, width: "100%", color: "#0080FF" ], height: "250px", library: {
+      title: {text: 'New Registrations'},
+      yAxis: {
+          title: {
+              text: 'New Users'
+          }
+      },
+      xAxis: {
+          title: {
+              text: 'Date'
+          }
+        }
+      }
+       %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--  ===================
+  client request -->
+
+<div id = "charts">
+  <div class="row">
+    <div class="col-sm-13">
+  <h3> Total revenue </h3>
+        
+   <!-- filter -->
+            <%= form_tag "/admin/homes", method: :get, id: "graph_date", remote: true do  %>
+
+   <div class="row">
+     <div class="col-sm-6">
+            <div class="form-group">
+              <div class="row">
+                  <div class="col-sm-4">
+                      <div class="form-group">
+                        <label>From</label>
+                        <div class="calendaricon-input">
+                          <!-- <input type="text" class="form-control custom-control " name="user_name"> -->
+                          <%= text_field_tag 'from_date', nil, id: "from_date",:class => 'form-control custom-control' %>
+                          <!-- <i class="fa fa-calendar" aria-hidden="true"></i> -->
+ 
+
+                        </div>
+
+                      </div>
+                  </div>
+                   <div class="col-sm-4">
+                      <div class="form-group">
+                        <label>To</label>
+                        <div class="calendaricon-input">
+                          <!-- <input type="text" class="form-control custom-control " name="user_name"> -->
+                          <!-- <i class="fa fa-calendar" aria-hidden="true"></i> -->
+
+                        </div>
+                          <%= text_field_tag 'to_date', nil, id: "to_date",:class => 'form-control custom-control' %>
+
+                      </div>
+                      </div>
+                         <div class="col-sm-2">
+                           <button class="btn btn-primary" style="margin-top:25px;"> <i class="fa fa-search"></i></button>
+                         </div>
+
+                  
+              </div>
+            </div>
+          </div>
+        </div>
+        <%end%>
+          <!-- filter end -->
+
+
+          <div id= "total_revenue", class= "revenue_graph_value">
+                 <%= render "total_revenue" %> 
+          </div>
+
+    </div>
+    
+  </div>
+</div>
+
+
+<div id = "charts">
+<!--   <div class="row">
+ -->    <div class="clearfix" style="margin:0 0 10px;">
+        <div id="chart12" class="graph">
+      <%= column_chart [ name: "Country Revenue", data: Transaction.country_revenue ] ,width: "100%", height: "250px", colors: ['green'],  library: {
+      title: {text: 'Country wise revenue(Based on revenue)'},
+      yAxis: {
+          title: {
+              text: 'Amount(in dollars)'
+          }
+      },
+      xAxis: {
+          title: {
+              text: 'Country Names'
+          }
+      }
+      }
+
+      %>
+      </div>
+    </div>
+    <div class="clearfix" style="margin:0 0 10px;">
+       <div class="form-group">
+                       <div class="col-sm-3">
+                         <%#= select_tag  Country.country_list %>
+                   <%= collection_select(:country_name, :country_id, Country.all, :country_name,:country_name, {:class => "form-control blackdropicon", :prompt => "Select Country"} )%>
+
+
+                        </div>
+
+                      </div>
+        <div id= "state_value", class= "state_graph_value">
+      <%= render "state_graph" %> 
+    </div>
+    </div>
+<!--   </div>
+ --></div>
+
+<div id = "charts">
+  <div class="row">
+    <div class="col-sm-6">
+        <div id="chart13" class="graph">
+        <%=  column_chart [ {name: "Revenue" ,data: Transaction.total_revenue},{ name: "Profit" ,data: Transaction.total_profit} ] ,width: "100%", height: "250px", colors: ["#008000", " #99FFFF"],
+        library: {
+      title: {text: 'Revenue vs Profit'},
+      yAxis: {
+          title: {
+              text: 'Amount(in dollars)'
+          }
+      },
+      xAxis: {
+          title: {
+              text: 'Revenue'
+          }
+      }
+      }%>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div id="chart14" class="graph">
+        <%=  column_chart [ {name: "Traveler Profit" ,data: Transaction.admin_earning_by_traveller,library: {curveType: "none", pointSize: 0}},{ name: " Shipper Profit" ,data:Transaction.admin_earning_by_shipper} ] ,width: "100%", height: "250px", colors: ["#008000", " #99FFFF"],
+        library: {
+      title: {text: 'Shipper profit Vs Traveler Profit'},
+      yAxis: {
+          title: {
+              text: 'Amount(in dollars)'
+          }
+      },
+      xAxis: {
+          title: {
+              text: 'Revenue'
+          }
+      }
+      }%>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- end -->
+
+
+  <!-- <div class="top-block">
+      <div class="row">
+          <div class="col-sm-6">
+         
+            <div class="top-outer pull-left">
+                <h3> Top Shippers </h3>
+                <div class="top-content">
+                  <ul>
+                    <li><span>John Smith </span><span>$ 200.00</span></li>
+                    <li><span>John Smith </span> <span>$ 200.00</span></li>
+                    <li><span>John Smith </span> <span>$ 200.00</span></li>
+                    <li><span>John Smith </span> <span>$ 200.00</span></li>
+                    <li><span>John Smith </span> <span>$ 200.00</span></li>
+                    <li><span>John Smith </span><span>$ 200.00</span></li>
+
+                  </ul>
+                </div>
+                
+            </div>
+
+          </div> -->
+          <div class="row">
+         
+          <div class="col-sm-6">
+            <div class="top-outer">
+                <h3> Top Shippers </h3>
+                <div class="top-content">
+                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Amount</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+         <% @top_shippers&.each do |i| %>
+            <tr>
+                <td><%= i.email %> </td>
+                <td>$ <%= i.total_amount%> </td>
+                
+            </tr>
+           
+  <%end%>
+           
+    </table>
+                </div>
+                
+            </div>
+ </div>
+      
+
+
+     <div class="col-sm-6">
+         
+            <div class="top-outer">
+                <h3> Top Travelers </h3>
+                <div class="top-content">
+                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Amount</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                
+            </tr>
+            
+            
+          
+           
+    </table>
+                </div>
+                
+            </div>
+
+          </div>
+        </div>
+   
+      </div>
+  </div>
+
+</div>
+
+
+<style>
+.graph{margin:0px 0 15px 0;}
+</style>
+
+<script>
+jQuery("#country_name_country_id").change(function(){
+  var state_value = jQuery(this).val();
+ jQuery.ajax({
+ 
+   url:  "/admin/homes",
+      type: "GET",
+      data: { country_name: state_value},
+       });
+});
+</script>
+
+
+<script>
+   $(document).on('ready page:change', function() {
+        $('#from_date, #to_date').datetimepicker({
+         format: 'LL'
+        });
+      
+
+
+     $("#graph_date").validate({
+    rules: {
+      "from_date": {
+        required: true
+      },
+    
+      "to_date": {
+        required: true,
+        greaterThan: "#from_date" 
+      }
+    },
+    messages: {
+      "from_date":{
+        required: "Please enter the from date.",
+      },
+    
+      
+      "to_date": {
+        required: "Please enter the to date."
+      }
+    },
+    submitHandler: function(form) {
+      form.submit();
+    }
+   });
+
+     jQuery.validator.addMethod("greaterThan", 
+      function(value, element, params) {
+
+    if (!/Invalid|NaN/.test(new Date(value))) {
+        return new Date(value) > new Date($(params).val());
+    }
+
+    return isNaN(value) && isNaN($(params).val()) 
+        || (Number(value) > Number($(params).val())); 
+},'Date interval is invalid.');
+  
+
+});
+
+</script>
+

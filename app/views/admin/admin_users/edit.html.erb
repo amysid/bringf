@@ -1,0 +1,118 @@
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-lQ-u7das4d7DuTcjLii2G89FB2FqO-I&sensor=false&libraries=places"></script> -->
+<h1 class="heading">EDIT PROFILE</h1>
+<div class="box box-blue mb40">
+  <div class="box-body">
+    <%= form_for [:admin, @admin_user],html: {id: "new_admin_user", multipart: true, autocomplete: :off} do |f|%>
+
+
+
+      <div class="user-detail-block mt20 mb20">                    
+        <div class="userdetail-part common-detail-box common-detail-box1 change-pass-s">
+          <div class="profile-picture">
+            <div class="imgupload">
+              <!-- <img src="/assets/profile.jpg"> -->
+         <!--      <%# if @admin_user.try(:image).present? %>
+                <div class="uploadimg">                        
+                    <%#= @admin_user.image.present? ? image_tag(@admin_user.image.try(:image_url),:width => 200, :height => 100, :class => 'news-content', :id=> "black_cat_img") : image_tag("/1.png",:width => 200, :height => 100, :class => 'news-content') %>
+                </div>
+                <div class="addupload addupload1">
+                  <div class="fileUpload btn btn-pri choose-file">
+                    <i class="fa fa-camera" aria-hidden="true"></i><%#= f.file_field :image,:class=>"btn btn-pri btn-blue btn-file upload imgupload",data: { preview_element_id: 'black_cat_img', preview_element_type: 'id'}, :accept=>"Image/*" %>
+                  </div>
+                </div>
+              <%#else%>
+                <div class="uploadimg">
+                  <img src="/4.png" class="fileinput-preview thumbnail" id= "black_cat_img" alt="" width="200px" height="150px">
+                </div>
+                <div class="addupload addupload1">
+                  <div class="fileUpload btn btn-pri choose-file">
+                    <i class="fa fa-camera" aria-hidden="true"></i><%#= f.file_field :image,:class=>"btn btn-pri btn-blue btn-file upload imgupload",data: { preview_element_id: 'black_cat_img', preview_element_type: 'id'}, required: true, :accept=>"Image/*" %>
+                  </div>
+                </div>
+              <%#end%> -->
+
+                 <% if @admin_user.image.blank? %>
+                              <div class="form-group addupload upload-preview">
+                                 <label for="file-upload" class="custom-file-upload ">
+                                 <img src="/assets/4.png" id="user_pic">
+                                 </span>
+                                 </label>
+                                 <input id="file-upload" type="file" name="admin_user[image]" accept="image/*" >
+                              </div>
+                              <% else %>
+                              <div class="form-group addupload upload-preview">
+                                 <label for="file-upload" class="custom-file-upload ">
+                                 <span class="fileinput-preview thumbnail">  
+                                 <%= image_tag @admin_user.image_url, id: "user_pic" %> 
+                                 </span>
+                                 </label>
+                                 <input id="file-upload" type="file" name="admin_user[image]" accept="image/*" >
+                              </div>
+                              <% end %>
+
+
+
+
+            </div>
+          </div>
+          <ul class="edit-profile-list">
+            <li class="detail-list">
+              <label>Name</label>
+              <span><%= f.text_field :name, class: "form-control", required: true, placeholder: ""%></span>
+            </li>
+            <li class="detail-list">
+              <label>Email</label>
+              <span><%= f.email_field :email, class: "form-control", required: true, placeholder: ""%></span>
+            </li>
+          
+                       
+          </ul>
+         <!--  <ul class="edit-profile-list">
+            <li class="detail-list">
+              <label>Date of Birth</label>
+              <span><%#= f.text_field :dob, class: "form-control calendar-icon", required: true, placeholder: "", :id=>'userdatetimepicker2', value: (f.object.dob rescue "")%></span>
+            </li>
+          </ul> -->
+         
+          <div class="table-button text-center mt20">
+            <button class="btn btn-primary" type="submit">Update Profile</button>  
+            <%= link_to 'Change Password', change_password_admin_admin_user_path, class: "btn btn-success" %>
+          </div>
+        </div>    
+      </div>
+    <%end%>
+  </div>
+</div>
+
+<script type="text/javascript">
+$("#admin_user_address").click(function(){
+  $("#admin_user_address").placepicker();
+});
+</script>>
+
+
+
+
+<script type="text/javascript">
+   jQuery('.navbar-nav li.active').removeClass('active');
+   jQuery('.business').addClass('active');
+   
+   function readURL(input) {
+   
+   if (input.files && input.files[0]) {
+       var reader = new FileReader();
+   
+       reader.onload = function (e) {
+           jQuery('#user_pic').attr('src', e.target.result);
+       }
+   
+       reader.readAsDataURL(input.files[0]);
+   }
+   }
+   
+   $("#file-upload").change(function(){
+     readURL(this);
+   });
+   
+   
+</script>
