@@ -6,7 +6,7 @@ layout "admin"
    @contents = Content.all
    end
    
-
+#ammad
   
 
   def edit
